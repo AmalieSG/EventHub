@@ -3,7 +3,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
 
   // Name of your worker
-  "name": "event-hub",
+  "name": "eventhub",
 
   // Entry point for your worker
   "main": "src/worker.tsx",
@@ -30,7 +30,7 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "event-hub",
+      "database_name": "eventhub",
       "database_id": "__change_me__",
       "migrations_dir": "drizzle"
     }
@@ -39,7 +39,7 @@
   "r2_buckets": [
     {
       "binding": "R2",
-      "bucket_name": "event-hub"
+      "bucket_name": "eventhub"
     }
   ]
 }
