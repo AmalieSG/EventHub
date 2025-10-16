@@ -7,7 +7,9 @@ export function AppLayout({ children }: LayoutProps) {
   return (
     <div className="app-container">
       <header>
-       <Navigation />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <Navigation />
+        </div>
       </header>
 
       <main>{children}</main>
