@@ -11,44 +11,49 @@ interface EventDetailBoxProps {
 }
 
 const EventDetailBox: React.FC<EventDetailBoxProps> = (props) => {
-  return (
-    <div className="event-details-container">
-      
-      <h3 className="detail-header">Event Details</h3>
+  
+    return (
+      <div className="border p-6 rounded-lg bg-white shadow-md">
+        <div className="event-details-container">
+          
+          <h3 className="detail-header">Event Details</h3>
 
-      <div className="detail-row">
-        
-        <div className="detail-item detail-date-col">
-          <span className="icon">🗓️</span>
-          <p className="detail-text">{props.date}</p>
-        </div>
+          <div className="detail-row">
+            
+            <div className="detail-item detail-date-col">
+              <span className="icon">🗓️</span>
+              <p className="detail-text">{props.date}</p>
+            </div>
 
-        <div className="detail-item detail-time-col">
-          <span className="icon">🕒</span>
-          <p className="detail-text">{props.time}</p>
+            <div className="detail-item detail-time-col">
+              <span className="icon">🕒</span>
+              <p className="detail-text">{props.time}</p>
+            </div>
+          </div>
+
+          <div className="detail-row">
+            
+            <div className="detail-item detail-location-col">
+              <span className="icon">📍</span>
+              <p className="detail-heading">{props.locationName}</p>
+              <p className="detail-subtext">
+                {props.address.split('\n').map((line, index) => (
+                  <React.Fragment key={index}>{line}<br/></React.Fragment>
+                ))}
+              </p>
+            </div>
+
+            <div className="detail-item detail-organizer-col">
+              <span className="icon">👤</span>
+              <p className="detail-heading">{props.organizerName}</p>
+              <p className="detail-subtext">{props.organizerDetails}</p>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="detail-row">
-        
-        <div className="detail-item detail-location-col">
-          <span className="icon">📍</span>
-          <p className="detail-heading">{props.locationName}</p>
-          <p className="detail-subtext">
-            {props.address.split('\n').map((line, index) => (
-              <React.Fragment key={index}>{line}<br/></React.Fragment>
-            ))}
-          </p>
-        </div>
-
-        <div className="detail-item detail-organizer-col">
-          <span className="icon">👤</span>
-          <p className="detail-heading">{props.organizerName}</p>
-          <p className="detail-subtext">{props.organizerDetails}</p>
-        </div>
-      </div>
-    </div>
-  );
+    );
+     
+    
 };
 
 export default EventDetailBox;

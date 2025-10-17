@@ -2,7 +2,7 @@ import React from 'react'
 import {PriceBox} from '../../components/PriceBox';
 import EventDetailBox from '../../components/EventDetailBox';
 
-const EventDetail: React.FC = () => {
+export const EventDetail: React.FC = () => {
 
   const eventData = {
         date: 'Saturday, 12. Oct',
@@ -53,4 +53,4 @@ const EventDetail: React.FC = () => {
     );
 };
 
-export default EventDetail;
+
