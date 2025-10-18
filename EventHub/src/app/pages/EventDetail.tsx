@@ -7,7 +7,7 @@ export const EventDetail: React.FC = () => {
 
   const eventData = {
         date: 'FRI, OCT 25',
-        time: 'Doors 7:00 PM - Show 8:00 PM',
+        time: '7:00 PM - 8:00 PM',
         locationName: 'City Central Auditorium, Oslo',
         address: 'Øvre Slottsgate 3, 0157 Oslo',
         organizerName: 'EventHub Norge',

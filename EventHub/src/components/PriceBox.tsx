@@ -39,10 +39,10 @@ export const PriceBox: React.FC<PriceBoxProps> = ({ price, description, features
         </div>
         
         <button 
-            className="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg text-lg 
-                       hover:bg-indigo-700 transition duration-150 shadow-md hover:shadow-lg"
+            className="w-full bg-black text-white font-bold py-3 rounded-lg text-lg 
+                       hover:bg-white hover:text-black transition duration-150 shadow-md hover:shadow-none hover:border hover:border-gray-300 cursor-pointer"
         >
-            Meld Deg På Nå
+            Join Now
         </button>
     </div>
 );

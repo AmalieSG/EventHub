@@ -1,4 +1,5 @@
 import React from 'react';
+import { CalendarIcon, ClockIcon, MapPinIcon, UsersIcon } from '@heroicons/react/24/solid';
 
 
 interface EventDetailBoxProps {
@@ -23,33 +24,42 @@ const EventDetailBox: React.FC<EventDetailBoxProps> = (props) => {
 
           <div className="flex justify-around w-full">
             
-            <div className="detail-item detail-date-col flex items-center">
-              <span className="icon">🗓️</span>
-              <p className="detail-text ml-2">{props.date}</p>
+            <div className="detail-item detail-date-col flex items-center mr-6">
+              <CalendarIcon className="w-5 h-5 text-gray-600 mr-2" />
+              <p className="font-medium detail-text">{props.date}</p>
             </div>
 
             <div className="detail-item detail-time-col flex items-center">
-              <span className="icon">🕒</span>
-              <p className="detail-text ml-2">{props.time}</p>
+              <ClockIcon className="w-5 h-5 text-gray-600 mr-2" />
+              <p className="detail-text font-medium">{props.time}</p>
             </div>
           </div>
+        
 
-          <div className="detail-row">
-            
-            <div className="detail-item detail-location-col">
-              <span className="icon">📍</span>
-              <p className="detail-heading">{props.locationName}</p>
-              <p className="detail-subtext">
-                {props.address.split('\n').map((line, index) => (
-                  <React.Fragment key={index}>{line}<br/></React.Fragment>
-                ))}
-              </p>
+          <div className="flex justify-between w-full"> 
+            <div className="detail-item detail-date-col w-full md:w-1/2 mb-4 md:mb-0">
+              <div className="flex items-start"> 
+                <MapPinIcon className="w-5 h-5 text-gray-600 mr-2 flex-shrink-0" />
+                    <div>
+                      <p className="detail-heading font-medium">{props.locationName}</p>
+                      <p className="detail-subtext">
+                          {props.address.split('\n').map((line, index) => (
+                              <React.Fragment key={index}>{line}<br/></React.Fragment>
+                          ))}
+                      </p>
+                  </div>
+              </div>
             </div>
 
-            <div className="detail-item detail-organizer-col">
-              <span className="icon">👤</span>
-              <p className="detail-heading">{props.organizerName}</p>
-              <p className="detail-subtext">{props.organizerDetails}</p>
+          
+            <div className="detail-item detail-date-col w-full md:w-1/2">
+              <div className="flex items-start"> 
+                <UsersIcon className="w-5 h-5 text-gray-600 mr-2 flex-shrink-0" />
+                  <div>
+                    <p className="detail-heading font-medium">{props.organizerName}</p>
+                    <p className="detail-subtext">{props.organizerDetails}</p>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
