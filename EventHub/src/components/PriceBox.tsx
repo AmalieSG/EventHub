@@ -19,7 +19,7 @@ interface PriceBoxProps {
 
 
 export const PriceBox: React.FC<PriceBoxProps> = ({ price, description, features }) => (
-    <div className="border p-6 rounded-lg bg-white shadow-md">
+    <div className="border border-gray-300 p-6 rounded-lg bg-white shadow-md">
 
       
         <div className="text-4xl font-extrabold text-gray-900 mb-2">
