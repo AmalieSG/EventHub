@@ -13,23 +13,24 @@ interface EventDetailBoxProps {
 const EventDetailBox: React.FC<EventDetailBoxProps> = (props) => {
   
     return (
+    
       <div className="border p-6 rounded-lg bg-white shadow-md">
-        <img
-          src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500"/>
+        
         <div className="event-details-container">
-          
-          <h3 className="detail-header">Event Details</h3>
+          <h1 className="text-2xl font-medium text-left mb-6 text-gray-800">
+                Event Details
+          </h1>
 
-          <div className="detail-row">
+          <div className="flex justify-around w-full">
             
-            <div className="detail-item detail-date-col">
+            <div className="detail-item detail-date-col flex items-center">
               <span className="icon">🗓️</span>
-              <p className="detail-text">{props.date}</p>
+              <p className="detail-text ml-2">{props.date}</p>
             </div>
 
-            <div className="detail-item detail-time-col">
+            <div className="detail-item detail-time-col flex items-center">
               <span className="icon">🕒</span>
-              <p className="detail-text">{props.time}</p>
+              <p className="detail-text ml-2">{props.time}</p>
             </div>
           </div>
 
