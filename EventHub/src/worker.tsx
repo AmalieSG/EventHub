@@ -5,6 +5,7 @@ import { setCommonHeaders } from "@/app/headers";
 import { Home } from "@/app/pages/Home";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
+import { CreateEvent } from "./app/pages/CreateEvent";
 
 export type AppContext = {};
 
@@ -18,6 +19,7 @@ export default defineApp([
     layout(AppLayout, [
       route("/", Home),
       route("/about", About),
+      route("/opprett-arrangement", CreateEvent),
     ]), 
   ],
   )
