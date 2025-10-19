@@ -3,7 +3,7 @@ import { defineApp } from "rwsdk/worker";
 
 import { Document } from "@/app/Document";
 import { setCommonHeaders } from "@/app/headers";
-import { Home } from "@/app/pages/Home";
+import { Search } from "@/app/pages/Search";
 
 export type AppContext = {};
 
@@ -13,5 +13,5 @@ export default defineApp([
     // setup ctx here
     ctx;
   },
-  render(Document, [route("/", Home)]),
+  render(Document, [route("/", Search)]),
 ]);
