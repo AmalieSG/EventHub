@@ -71,7 +71,7 @@ export const EventCardEventPage = ({ event }) => {
       </div>
 
       {/* Action Buttons and Price */}
-      <div className="flex-shrink-0 flex flex-col items-end space-y-2">
+      <div className="flex-shrink-0 flex flex-col space-y-2">
         <button 
           className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           aria-label={`Join ${event.title}`} // Provide a descriptive label for screen readers
@@ -79,7 +79,7 @@ export const EventCardEventPage = ({ event }) => {
           Bli Med
         </button>
         <button 
-          className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className=" px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           aria-label={`View details for ${event.title}`}
         >
         <a href="/events/1">Se Detaljer</a>

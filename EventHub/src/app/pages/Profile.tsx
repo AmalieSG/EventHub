@@ -81,25 +81,25 @@ const [firstName, setFirstName] = useState('Aaron');
 
         <form className="space-y-6">
           {/* Profile Picture */}
-          <fieldset>
-            <legend className="text-sm font-medium text-gray-700 mb-2">Profile Picture</legend>
-            <div className="flex items-center gap-4">
-              <div className="size-16 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xl">
-                AW
-              </div>
-              <div>
-                <label htmlFor="profile-picture" className="block text-sm text-gray-600 mb-1">
-                  Change picture (JPG, PNG, GIF, max 5MB)
-                </label>
-                <input
-                  type="file"
-                  id="profile-picture"
-                  accept=".jpg,.jpeg,.png,.gif"
-              className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
-          </fieldset>
+        <fieldset>
+  <legend className="text-sm font-medium text-gray-700 mb-2">Profile Picture</legend>
+  
+  <div className="size-16 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xl mb-4">
+    AW
+  </div>
+  
+  <div>
+    <label htmlFor="profile-picture" className="block text-sm text-gray-600 mb-1">
+      Change picture (JPG, PNG, GIF, max 5MB)
+    </label>
+    <input
+      type="file"
+      id="profile-picture"
+      accept=".jpg,.jpeg,.png,.gif"
+      className="max-w-xs rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    />
+  </div>
+</fieldset>
 
           {/* Personal Info */}
           <fieldset className="grid grid-cols-1 sm:grid-cols-2 gap-6">
