@@ -1,9 +1,12 @@
-import { render, route } from "rwsdk/router";
+import { layout, render, route } from "rwsdk/router";
 import { defineApp } from "rwsdk/worker";
 
 import { Document } from "@/app/Document";
 import { setCommonHeaders } from "@/app/headers";
-import { Search } from "@/app/pages/Search";
+import { Home } from "@/app/pages/Home";
+import {EventDetail} from "@/app/pages/EventDetail";
+import { AppLayout } from './app/layouts/AppLayout' 
+import { About } from "./app/pages/About";
 
 export type AppContext = {};
 
@@ -13,5 +16,13 @@ export default defineApp([
     // setup ctx here
     ctx;
   },
-  render(Document, [route("/", Search)]),
+
+  render(Document, [
+    layout(AppLayout, [
+      route("/", Home),
+      route("/about", About),
+       route("/events/:id", EventDetail as any),
+    ]), 
+  ],
+  ),
 ]);
