@@ -40,7 +40,7 @@ export default function EventCard() {
         <div className="my-4 border-t border-gray-100 dark:border-gray-700"></div>
 
         <a 
-          href="/events/jazz-night-oslo-2025" 
+          href="/events/1" 
           className="mt-4 w-full block text-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:bg-red-500 dark:hover:bg-red-600"
         >
           View Details & Tickets
