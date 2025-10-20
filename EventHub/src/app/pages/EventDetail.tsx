@@ -5,7 +5,7 @@ import EventDescription from '../components/EventDescription';
 import ArtistLineup, { Artist } from '../components/ArtistLineup';
 
 
-export const EventDetail: React.FC = () => {
+export const EventDetail = () => {
 
   const eventData = {
         date: 'FRI, OCT 25',

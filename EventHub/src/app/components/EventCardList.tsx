@@ -1,7 +1,7 @@
-import { Event } from "../types/Event"
+import { EventWithHost } from "../hooks/useEventData"
 
 interface EventCardProps {
-  event: Event
+  event: EventWithHost
 }
 
 export function EventCardList({ event }: EventCardProps) {
@@ -10,6 +10,8 @@ export function EventCardList({ event }: EventCardProps) {
         className="bg-white border rounded-xl shadow-sm p-5 flex flex-col gap-3"
         aria-label={`Event: ${event.title}`}
         >
+            <img src={event.imageUrl} alt={`Image of ${event.title}`} className="w-full h-48 object-cover rounded-lg" />
+            
             <section className="flex justify-between items-start">
                 <h2 className="text-lg font-semibold">
                     {event.title}
@@ -20,7 +22,7 @@ export function EventCardList({ event }: EventCardProps) {
             </section>
 
             <p className="text-gray-600">
-                {event.description}
+                {event.shortDescription}
             </p>
 
             <section className="flex flex-wrap gap-4 text-sm text-gray-500 mt-2">
@@ -37,7 +39,7 @@ export function EventCardList({ event }: EventCardProps) {
 
             <section className="flex justify-between items-center mt-3">
                 <p className="text-sm text-gray-500">
-                    {event.attendees} attending
+                    {event.attendeeCount} attending
                 </p>
                 <p className="font-semibold">
                     ${event.price}
@@ -45,7 +47,10 @@ export function EventCardList({ event }: EventCardProps) {
             </section>
 
             <p className="text-xs text-gray-400">
-                Hosted by {event.host}
+                Hosted by{" "} 
+                {event.host
+                    ? `${event.host.firstName} ${event.host.lastName}`
+                    : "Unknown"}
             </p>
 
             <section className="flex gap-2 mt-3">

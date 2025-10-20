@@ -1,8 +1,8 @@
 import { EventCardList } from "./EventCardList"
-import { Event } from "../types/Event"
+import { EventWithHost } from "../hooks/useEventData"
 
 interface EventListProps {
-  events: Event[]
+  events: EventWithHost[]
 }
 
 export function EventList({ events }: EventListProps) {
