@@ -21,7 +21,7 @@ export default defineApp([
     layout(AppLayout, [
       route("/", Home),
       route("/about", About),
-       route("/eventdetail/:id", EventDetail as any),
+       route("/events/:id", EventDetail as any),
     ]), 
   ],
   ),
