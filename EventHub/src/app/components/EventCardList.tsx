@@ -4,7 +4,7 @@ interface EventCardProps {
   event: Event
 }
 
-export function EventCard({ event }: EventCardProps) {
+export function EventCardList({ event }: EventCardProps) {
     return (
         <article
         className="bg-white border rounded-xl shadow-sm p-5 flex flex-col gap-3"

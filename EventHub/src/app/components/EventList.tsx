@@ -1,4 +1,4 @@
-import { EventCard } from "./EventCard"
+import { EventCardList } from "./EventCardList"
 import { Event } from "../types/Event"
 
 interface EventListProps {
@@ -10,7 +10,7 @@ export function EventList({ events }: EventListProps) {
         <ul className="flex flex-col gap-4 list-none p-0">
             {events.map((event) => (
                 <li key={event.id}>
-                    <EventCard event={event} />
+                    <EventCardList event={event} />
                 </li>
             ))}
         </ul>
