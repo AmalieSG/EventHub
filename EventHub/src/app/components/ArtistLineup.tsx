@@ -11,7 +11,7 @@ interface ArtistLineupProps {
     artists: Artist[];
 }
 
-const ArtistLineup: React.FC<ArtistLineupProps> = ({ artists }) => {
+export default function ArtistLineup({ artists }: ArtistLineupProps) {
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg mt-8">
             <h2 className="text-2xl p-6 font-bold text-gray-800 exmb-6 flex items-center">
@@ -45,5 +45,3 @@ const ArtistLineup: React.FC<ArtistLineupProps> = ({ artists }) => {
         </div>
     );
 };
-
-export default ArtistLineup;

@@ -1,12 +1,18 @@
 "use client";
 
-export default function EventCard() {
+import { EventWithHost } from "../hooks/useEnrichedEvents";
+
+interface EventCardProps {
+  event: EventWithHost
+}
+
+export default function EventCard({ event }: EventCardProps) {
   return (
     <div className=" overflow-hidden rounded-lg bg-white shadow-lg transition duration-300 hover:shadow-xl dark:bg-gray-800">
       <div className="h-48 w-full">
         <img
-          src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500"
-          alt="A vibrant concert crowd under stage lights"
+          src={event.imageUrl}
+          alt={`Image of ${event.title}`}
           className="h-full w-full object-cover"
         />
       </div>
@@ -15,25 +21,29 @@ export default function EventCard() {
         
         <div className="flex items-center justify-between mb-3">
           <p className="text-sm font-medium text-red-600 dark:text-red-400">
-            Music & Concerts
+            {event.category}
           </p>
-          <div className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-            FRI, OCT 25
-          </div>
+          <time dateTime={event.date.toISOString()} className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+            {event.date.toLocaleDateString("en-GB", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </time>
         </div>
         
         <h3 className="text-xl font-bold leading-tight text-gray-900 dark:text-white line-clamp-2 mb-2">
-          The Future of Jazz: Global Rhythms Night
+          {event.title}
         </h3>
 
         <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center">
             <span className="mr-2">📍</span>
-            <span>City Central Auditorium, Oslo</span>
+            <span>{event.location}</span>
           </div>
           <div className="flex items-center">
             <span className="mr-2">⏰</span>
-            <span>Doors 7:00 PM - Show 8:00 PM</span>
+            <span>Doors {event.time} - Show {event.time}</span>
           </div>
         </div>
 
