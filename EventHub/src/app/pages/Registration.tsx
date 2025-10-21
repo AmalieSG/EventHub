@@ -27,19 +27,19 @@ export const Registration = () => {
         </section>
 
         <section className="relative my-6">
-          <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-gray-300" />
-          </div>
-          <div className="relative flex justify-center text-sm">
+          <span className="absolute inset-0 flex items-center" aria-hidden="true">
+            <span className="w-full border-t border-gray-300" />
+          </span>
+          <p className="relative flex justify-center text-sm">
             <span className="bg-white px-2 text-gray-500">Or sign up with email</span>
-          </div>
+          </p>
         </section>
 
         <form className="space-y-6">
           <fieldset className="space-y-4">
             <legend className="sr-only">Registration details</legend>
 
-            <div>
+            <p>
               <label htmlFor="full-name" className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name
               </label>
@@ -52,9 +52,9 @@ export const Registration = () => {
                 placeholder="Enter your full name"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
 
-            <div>
+            <p>
               <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address
               </label>
@@ -67,9 +67,9 @@ export const Registration = () => {
                 placeholder="Enter your email"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
 
-            <div>
+            <p>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
@@ -82,9 +82,9 @@ export const Registration = () => {
                 placeholder="Enter your password"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
 
-            <div>
+            <p>
               <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
                 Confirm password
               </label>
@@ -97,12 +97,12 @@ export const Registration = () => {
                 placeholder="Confirm your password"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
           </fieldset>
 
           <fieldset className="space-y-3">
              <legend className="sr-only">Agreements</legend>
-             <div className="flex items-start">
+             <p className="flex items-start">
                <input
                  id="terms"
                  name="terms"
@@ -113,8 +113,8 @@ export const Registration = () => {
                <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
                  I agree to <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
                </label>
-             </div>
-             <div className="flex items-start">
+             </p>
+             <p className="flex items-start">
                <input
                  id="updates"
                  name="updates"
@@ -124,7 +124,7 @@ export const Registration = () => {
                <label htmlFor="updates" className="ml-2 block text-sm text-gray-900">
                  Send me updates about new events and features (optional)
                </label>
-             </div>
+             </p>
           </fieldset>
 
           <button

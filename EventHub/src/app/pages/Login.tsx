@@ -29,19 +29,19 @@ export const Login = () => {
         </section>
 
         <section className="relative my-6">
-          <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-gray-300" />
-          </div>
-          <div className="relative flex justify-center text-sm">
+          <span className="absolute inset-0 flex items-center" aria-hidden="true">
+            <p className="w-full border-t border-gray-300" />
+          </span>
+          <p className="relative flex justify-center text-sm">
             <span className="bg-white px-2 text-gray-500">Or continue with email</span>
-          </div>
+          </p>
         </section>
 
         <form className="space-y-6">
           <fieldset className="space-y-4">
             <legend className="sr-only">Login details</legend>
             
-            <div>
+            <p>
               <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address
               </label>
@@ -54,9 +54,9 @@ export const Login = () => {
                 placeholder="Enter your email"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
 
-            <div>
+            <p>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
@@ -69,11 +69,11 @@ export const Login = () => {
                 placeholder="Enter your password"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-            </div>
+            </p>
           </fieldset>
 
           <footer className="flex items-center justify-between">
-            <div className="flex items-center">
+            <p className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
@@ -83,13 +83,13 @@ export const Login = () => {
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                 Remember Me
               </label>
-            </div>
+            </p>
 
-            <div className="text-sm">
+            <p className="text-sm">
               <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Forgot Password?
               </a>
-            </div>
+            </p>
           </footer>
 
           <button
