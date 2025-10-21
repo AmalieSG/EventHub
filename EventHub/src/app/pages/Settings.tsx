@@ -2,6 +2,7 @@
 import React from 'react';
 import { SettingsHeader } from '../components/SettingsHeader';
 import {SettingsNav} from '../components/SettingsNav';
+import {AccountTab} from '../components/AccountTab';
 
 
 export const Settings: React.FC = () => {
@@ -10,6 +11,8 @@ export const Settings: React.FC = () => {
       <div> <SettingsHeader/></div>
      
       <div><SettingsNav/></div>
+
+      <div><AccountTab/> </div>
     </div>
     
   );
