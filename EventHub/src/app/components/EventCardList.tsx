@@ -26,8 +26,12 @@ export function EventCardList({ event }: EventCardProps) {
             </p>
 
             <section className="flex flex-wrap gap-4 text-sm text-gray-500 mt-2">
-                <time dateTime={event.date}> 
-                    {event.date}
+                <time dateTime={event.date.toISOString()}>
+                    {event.date.toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    })}
                 </time>
                 <p> 
                     {event.time}

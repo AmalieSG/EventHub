@@ -7,15 +7,16 @@ export const events: Event[] = [
     shortDescription: "An unforgettable evening of Beethoven and Mozart.",
     longDescription:
       "Join the Oslo Philharmonic for a magical night of classical masterpieces. This special performance will feature Beethoven’s Symphony No. 5 and Mozart’s Piano Concerto No. 21, all in the stunning Oslo Concert Hall.",
-    date: "2025-11-12",
+    date: new Date("2025-11-12T19:30:00"),
     time: "19:30",
     location: "Oslo Concert Hall",
     price: 250,
     attendeeIds: [1, 2, 3],
     hostId: 1,
     category: "Music",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-    createdAt: "2025-10-15",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
+    createdAt: new Date("2025-10-15T12:00:00"),
   },
   {
     id: 2,
@@ -23,15 +24,16 @@ export const events: Event[] = [
     shortDescription: "A networking event for startup founders and developers.",
     longDescription:
       "The Tech Innovators Meetup brings together entrepreneurs, engineers, and investors to discuss the latest in technology, product development, and funding opportunities. Snacks and drinks provided.",
-    date: "2025-12-01",
+    date: new Date("2025-12-01T18:00:00"),
     time: "18:00",
     location: "StartupLab, Oslo",
     price: 0,
     attendeeIds: [2, 4],
     hostId: 2,
     category: "Technology",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-    createdAt: "2025-10-16",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
+    createdAt: new Date("2025-10-16T12:00:00"),
   },
   {
     id: 3,
@@ -39,15 +41,16 @@ export const events: Event[] = [
     shortDescription: "Smooth jazz with a view over the city skyline.",
     longDescription:
       "Experience an intimate open-air jazz concert on the rooftop of the Oslo Opera House. Enjoy performances by top Norwegian jazz artists as the sun sets over the city. Bar and light snacks available.",
-    date: "2025-11-28",
+    date: new Date("2025-11-28T20:00:00"),
     time: "20:00",
     location: "Oslo Opera House Rooftop",
     price: 180,
     attendeeIds: [1, 3, 5, 6],
     hostId: 3,
     category: "Music",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-    createdAt: "2025-10-17",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
+    createdAt: new Date("2025-10-17T12:00:00"),
   },
   {
     id: 4,
@@ -55,15 +58,16 @@ export const events: Event[] = [
     shortDescription: "Taste the best of Nordic cuisine.",
     longDescription:
       "Discover a wide range of delicious dishes at the Winter Food Festival. Local chefs and restaurants offer seasonal specialties, street food, and sweet treats. Perfect for food lovers and families.",
-    date: "2025-12-15",
+    date: new Date("2025-12-15T12:00:00"),
     time: "12:00",
     location: "Youngstorget, Oslo",
     price: 50,
     attendeeIds: [2, 5],
     hostId: 4,
     category: "Food & Drink",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-    createdAt: "2025-10-18",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
+    createdAt: new Date("2025-10-18T12:00:00"),
   },
   {
     id: 5,
@@ -71,14 +75,15 @@ export const events: Event[] = [
     shortDescription: "A glamorous night to welcome 2026.",
     longDescription:
       "Celebrate New Year’s Eve in style with live music, dinner, and fireworks. Dress code: black tie. The evening includes a three-course meal, champagne at midnight, and a spectacular fireworks show.",
-    date: "2025-12-31",
+    date: new Date("2025-12-31T21:00:00"),
     time: "21:00",
     location: "Grand Hotel Oslo",
     price: 600,
     attendeeIds: [1, 2, 3, 4, 5, 6],
     hostId: 5,
     category: "Celebration",
-    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-    createdAt: "2025-10-19",
+    imageUrl:
+      "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
+    createdAt: new Date("2025-10-19T12:00:00"),
   },
 ]

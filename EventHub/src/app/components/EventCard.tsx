@@ -23,9 +23,13 @@ export default function EventCard({ event }: EventCardProps) {
           <p className="text-sm font-medium text-red-600 dark:text-red-400">
             {event.category}
           </p>
-          <div className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-            {event.date}
-          </div>
+          <time dateTime={event.date.toISOString()} className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+            {event.date.toLocaleDateString("en-GB", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </time>
         </div>
         
         <h3 className="text-xl font-bold leading-tight text-gray-900 dark:text-white line-clamp-2 mb-2">

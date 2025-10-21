@@ -3,7 +3,7 @@ export interface Event {
   title: string;
   shortDescription: string;
   longDescription: string;
-  date: string;
+  date: Date;
   time: string;
   location: string;
   price: number;
@@ -11,5 +11,6 @@ export interface Event {
   hostId: number;
   category: string;
   imageUrl: string;
-  createdAt: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
