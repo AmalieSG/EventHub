@@ -12,7 +12,7 @@ export function Search() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-4">
+        <section className="max-w-6xl mx-auto p-4">
             <FilterBar />
 
             <h1 className="mt-4 mb-3">
@@ -24,6 +24,6 @@ export function Search() {
             </p>
 
             <EventList events={events} />
-        </div>
+        </section>
     )
 }
