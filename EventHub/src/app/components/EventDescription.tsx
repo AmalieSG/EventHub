@@ -5,7 +5,7 @@ interface EventDescriptionProps {
   content: string[]
 }
 
-const EventDescription: React.FC<EventDescriptionProps> = ({title, content}) => {
+export default function EventDescription({title, content}: EventDescriptionProps) {
   return (
     <div className="mt-8 p-6">
 
@@ -26,8 +26,6 @@ const EventDescription: React.FC<EventDescriptionProps> = ({title, content}) => 
     
   )
 }
-
-export default EventDescription
 
 
 
