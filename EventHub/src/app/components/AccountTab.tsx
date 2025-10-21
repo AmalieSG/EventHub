@@ -26,8 +26,8 @@ export function AccountTab() {
 
 return(
   <section className="bg-white mx-auto min-h-[60vh] shadow-lg rounded-xl p-6 max-w-7xl pt-8 px-4 sm:px-6 lg:px-8">
-    <div className="flex items-center space-x-4">
-      <div className="size-24 rounded-full bg-gray-200 text-white mr-8 flex items-center justify-center font-bold text-xl flex-shrink-0"></div>      
+    <div className="flex items-center space-x-4 border-b border-gray-300">
+        <div className="size-24 rounded-full bg-gray-200 text-white mr-8 flex items-center justify-center font-bold text-xl flex-shrink-0"></div>      
         <div>
             <label htmlFor="profile-picture" className="block text-sm text-gray-600 mb-1">
               Upload new photo (JPG, PNG, GIF, max 5MB)
