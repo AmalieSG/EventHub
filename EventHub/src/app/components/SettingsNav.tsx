@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'; // <-- Nå bruker vi useState her
+import React, { useState } from 'react'; 
 import {
   UserIcon, BellIcon, ShieldCheckIcon, AdjustmentsHorizontalIcon,
   CreditCardIcon, LifebuoyIcon
@@ -20,8 +20,9 @@ export const SettingsNav = () => {
   const [activeTabName, setActiveTab] = useState('Account'); 
   
   return (
-    <div className="bg-white p-6 shadow-md rounded-lg mx-8 mt-4 mb-4">
-      <nav className="flex space-x-2 overflow-x-auto pb-2">
+    <div className="bg-white p-2 shadow-md rounded-3xl  mx-8 mt-4 mb-4">
+
+      <nav className="flex space-x-16 overflow-x-auto p-2 justify-center">
         {navItems.map((item) => {
           const Icon = item.icon;
           
