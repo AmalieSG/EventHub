@@ -8,6 +8,7 @@ import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
 import { Search } from "./app/pages/Search";
+import { Settings} from "./app/pages/Settings";
 
 export type AppContext = {};
 
@@ -24,6 +25,7 @@ export default defineApp([
       route("/about", About),
       route("/events/:id", Event as any),
       route("/search", Search),
+      route("/settings", Settings as any ),
     ]), 
   ],
   ),
