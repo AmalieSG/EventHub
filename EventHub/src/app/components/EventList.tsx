@@ -1,5 +1,5 @@
 import { EventCardList } from "./EventCardList"
-import { EventWithHost } from "../hooks/useEventData"
+import { EventWithHost } from "../hooks/useEnrichedEvents"
 
 interface EventListProps {
   events: EventWithHost[]

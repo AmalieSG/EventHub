@@ -14,7 +14,7 @@ export const events: Event[] = [
     attendeeIds: [1, 2, 3],
     hostId: 1,
     category: "Music",
-    imageUrl: "https://placehold.co/600x400?text=Classical+Concert",
+    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     createdAt: "2025-10-15",
   },
   {
@@ -30,7 +30,7 @@ export const events: Event[] = [
     attendeeIds: [2, 4],
     hostId: 2,
     category: "Technology",
-    imageUrl: "https://placehold.co/600x400?text=Tech+Meetup",
+    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     createdAt: "2025-10-16",
   },
   {
@@ -46,7 +46,7 @@ export const events: Event[] = [
     attendeeIds: [1, 3, 5, 6],
     hostId: 3,
     category: "Music",
-    imageUrl: "https://placehold.co/600x400?text=Jazz+Concert",
+    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     createdAt: "2025-10-17",
   },
   {
@@ -62,7 +62,7 @@ export const events: Event[] = [
     attendeeIds: [2, 5],
     hostId: 4,
     category: "Food & Drink",
-    imageUrl: "https://placehold.co/600x400?text=Food+Festival",
+    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     createdAt: "2025-10-18",
   },
   {
@@ -78,7 +78,7 @@ export const events: Event[] = [
     attendeeIds: [1, 2, 3, 4, 5, 6],
     hostId: 5,
     category: "Celebration",
-    imageUrl: "https://placehold.co/600x400?text=New+Year+Gala",
+    imageUrl: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amF6enxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     createdAt: "2025-10-19",
   },
 ]

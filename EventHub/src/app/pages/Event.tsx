@@ -1,12 +1,13 @@
-import React from 'react'
+import { useState } from 'react'
 import {PriceBox} from '../components/PriceBox';
 import EventDetailBox from '../components/EventDetailBox';
 import EventDescription from '../components/EventDescription';
 import ArtistLineup, { Artist } from '../components/ArtistLineup';
+import { useEventsContext } from '../context/EventsProvider';
 
 
-export const EventDetail = () => {
-
+export const Event = () => {
+    
   const eventData = {
         date: 'FRI, OCT 25',
         time: '7:00 PM - 8:00 PM',

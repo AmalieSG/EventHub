@@ -11,7 +11,7 @@ export interface EventWithHost extends Event {
   attendeeCount: number
 }
 
-export function useEventData() {
+export function useEnrichedEvents() {
   const [events, setEvents] = useState<EventWithHost[]>([])
   const [loading, setLoading] = useState(true)
 

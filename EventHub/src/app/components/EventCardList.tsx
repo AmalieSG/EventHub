@@ -1,4 +1,4 @@
-import { EventWithHost } from "../hooks/useEventData"
+import { EventWithHost } from "../hooks/useEnrichedEvents"
 
 interface EventCardProps {
   event: EventWithHost

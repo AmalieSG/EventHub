@@ -2,10 +2,10 @@
 
 import { FilterBar } from "../components/FilterBar"
 import { EventList } from "../components/EventList"
-import { useEventData } from "../hooks/useEventData"
+import { useEventsContext } from "../context/EventsProvider";
 
 export function Search() {
-    const { events, loading } = useEventData()
+    const { events, loading } = useEventsContext();
 
     if (loading) {
         return <p>Loading events...</p>
