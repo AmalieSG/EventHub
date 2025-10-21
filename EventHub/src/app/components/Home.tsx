@@ -10,17 +10,17 @@ export const Home = () => {
         Upcoming Events
       </h1>
       
-      <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/*<section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         <EventCard />
         <EventCard />
         <EventCard />
-        {/* Add more cards to see the grid in action */}
+        {/* Add more cards to see the grid in action /}
         <EventCard />
         <EventCard />
         <EventCard />
 
-      </section>
+      </section>*/}
         
     </div>
   )
