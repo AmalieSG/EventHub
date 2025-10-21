@@ -8,6 +8,9 @@ import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
 import { Search } from "./app/pages/Search";
+import { CreateEvent } from "./app/pages/CreateEvent";
+import { Login } from "./app/pages/Login";
+import { Registration } from "./app/pages/Registration";
 import { Settings } from "./app/pages/Settings";
 import { Profile } from "./app/pages/Profile";
 
