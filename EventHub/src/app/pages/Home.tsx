@@ -17,26 +17,13 @@ export const Home = () => {
         Upcoming Events
       </h1>
 
-      {/*
       <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-        <EventCard />
-        <EventCard />
-        <EventCard />
-        {/* Add more cards to see the grid in action /}
-        <EventCard />
-        <EventCard />
-        <EventCard />
-
-      </section>*/}
-
-      <ul>
         {events.map((event) => (
-          <li key={event.id} className="mb-4">
-            <EventCard event={event} />
-          </li>
+            <EventCard key={event.id} event={event} />
         ))}
-      </ul>     
+      </section>
+
+      
         
     </div>
   )
