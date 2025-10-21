@@ -6,6 +6,8 @@ import { Home } from "@/app/pages/Home";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
 import { CreateEvent } from "./app/pages/CreateEvent";
+import { Login } from "./app/pages/Login";
+import { Registration } from "./app/pages/Registration";
 
 export type AppContext = {};
 
@@ -19,7 +21,9 @@ export default defineApp([
     layout(AppLayout, [
       route("/", Home),
       route("/about", About),
-      route("/opprett-arrangement", CreateEvent),
+      route("/create-event", CreateEvent),
+      route("/login", Login),
+      route("/registrering", Registration),
     ]), 
   ],
   )
