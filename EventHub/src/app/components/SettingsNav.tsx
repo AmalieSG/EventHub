@@ -20,9 +20,9 @@ export const SettingsNav = () => {
   const [activeTabName, setActiveTab] = useState('Account'); 
   
   return (
-    <div className="bg-white p-2 shadow-md rounded-3xl  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-white p-2 shadow-md rounded-3xl  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-4 py-8">
 
-      <nav className="flex space-x-16 overflow-x-auto p-2 justify-center">
+      <nav className="flex space-x-8 overflow-x-auto p-2 justify-center">
         {navItems.map((item) => {
           const Icon = item.icon;
           
