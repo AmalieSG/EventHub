@@ -1,11 +1,10 @@
-import React from 'react'
-import {PriceBox} from '../components/PriceBox';
-import EventDetailBox from '../components/EventDetailBox';
-import EventDescription from '../components/EventDescription';
-import ArtistLineup, { Artist } from '../components/ArtistLineup';
+import {PriceBox} from './PriceBox';
+import EventDetailBox from './EventDetailBox';
+import EventDescription from './EventDescription';
+import ArtistLineup, { Artist } from './ArtistLineup';
 
 
-export function EventDetail() {
+export function Event() {
 
   const eventData = {
         date: 'FRI, OCT 25',

@@ -7,8 +7,8 @@ import { Home } from "@/app/pages/Home";
 import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
-import { Events } from "./app/pages/Events";
 import { Search } from "./app/pages/Search";
+import { Settings } from "./app/pages/Settings";
 import { Profile } from "./app/pages/Profile";
 
 export type AppContext = {};
@@ -24,10 +24,10 @@ export default defineApp([
     layout(AppLayout, [
       route("/", Home),
       route("/about", About),
-      route("/events", Events),
+      route("/settings", Settings),
       route("/profile", Profile),
       route("/search", Search),
-      route("/events/:id", EventDetail as any),
+      route("/events/:id", Event),
     ]), 
   ],
   ),
