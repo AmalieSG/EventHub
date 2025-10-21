@@ -4,10 +4,10 @@ import { defineApp } from "rwsdk/worker";
 import { Document } from "@/app/Document";
 import { setCommonHeaders } from "@/app/headers";
 import { Home } from "@/app/pages/Home";
-import {EventDetail} from "@/app/pages/EventDetail";
+import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
-import {Settings} from "./app/pages/Settings"; 
+import { Search } from "./app/pages/Search";
 
 export type AppContext = {};
 
@@ -22,8 +22,8 @@ export default defineApp([
     layout(AppLayout, [
       route("/", Home),
       route("/about", About),
-      route("/events/:id", EventDetail as any),
-      route("/settings", Settings as any),
+      route("/events/:id", Event as any),
+      route("/search", Search),
     ]), 
   ],
   ),

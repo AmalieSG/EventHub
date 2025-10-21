@@ -11,7 +11,7 @@ interface EventDetailBoxProps {
   organizerDetails: string;
 }
 
-const EventDetailBox: React.FC<EventDetailBoxProps> = (props) => {
+export default function EventDetailBox(props: EventDetailBoxProps) {
   
     return (
     
@@ -75,5 +75,3 @@ const EventDetailBox: React.FC<EventDetailBoxProps> = (props) => {
      
     
 };
-
-export default EventDetailBox;

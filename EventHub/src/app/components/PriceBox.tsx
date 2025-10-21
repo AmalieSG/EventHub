@@ -18,32 +18,33 @@ interface PriceBoxProps {
 }
 
 
-export const PriceBox: React.FC<PriceBoxProps> = ({ price, description, features }) => (
-    <div className="border border-gray-300 p-6 rounded-lg bg-white shadow-md">
+export function PriceBox({ price, description, features }: PriceBoxProps) {
+    return (
+        <div className="border border-gray-300 p-6 rounded-lg bg-white shadow-md">
 
-      
-        <div className="text-4xl font-extrabold text-gray-900 mb-2">
-            {price}
-        </div>
-
-      
-        <p className="text-sm text-gray-500 mb-6">
-            {description}
-        </p>
         
-        <div className="space-y-4 mb-8">
-           
-            {features.map((feature, index) => (
-                <ChecklistItem key={index} text={feature} />
-            ))}
-        </div>
-        
-        <button 
-            className="w-full bg-black text-white font-bold py-3 rounded-lg text-lg 
-                       hover:bg-white hover:text-black transition duration-150 shadow-md hover:shadow-none hover:border hover:border-gray-300 cursor-pointer"
-        >
-            Join Now
-        </button>
-    </div>
-);
+            <div className="text-4xl font-extrabold text-gray-900 mb-2">
+                {price}
+            </div>
 
+        
+            <p className="text-sm text-gray-500 mb-6">
+                {description}
+            </p>
+            
+            <div className="space-y-4 mb-8">
+            
+                {features.map((feature, index) => (
+                    <ChecklistItem key={index} text={feature} />
+                ))}
+            </div>
+            
+            <button 
+                className="w-full bg-black text-white font-bold py-3 rounded-lg text-lg 
+                        hover:bg-white hover:text-black transition duration-150 shadow-md hover:shadow-none hover:border hover:border-gray-300 cursor-pointer"
+            >
+                Join Now
+            </button>
+        </div>
+    );
+}
