@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {PriceBox} from '../components/PriceBox';
-import {EventDetailBox } from '../components/EventDetailBox';
+import {EventDetailBox} from '../components/EventDetailBox';
 import EventDescription from '../components/EventDescription';
 import ArtistLineup, { Artist } from '../components/ArtistLineup';
 import { useEventsContext } from '../context/EventsProvider';
