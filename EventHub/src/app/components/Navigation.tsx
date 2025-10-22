@@ -27,11 +27,11 @@ function classNames(...classes: any) {
 export function Navigation() {
   return (
     <header className="bg-white font-sans">
-      
+
       <Disclosure as="nav" className="relative bg-white">
-        
+
         <div className="mx-auto max-w-7xl">
-          
+
           <div className="flex h-16 justify-between items-center">
 
             <section aria-label="Primary Navigation and Logo" className="flex items-center">
@@ -43,7 +43,7 @@ export function Navigation() {
                   className="h-8 w-auto"
                 />
               </a>
-              
+
 
               <ul className="hidden lg:ml-6 lg:flex lg:space-x-8" role="list">
                 {navigationItems.map((item) => (
@@ -65,43 +65,31 @@ export function Navigation() {
               </ul>
             </section>
 
-              <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-    <form className="grid w-full max-w-lg grid-cols-1 lg:max-w-xs" role="search">
-      
-      {/* 1. A visually hidden <label> is crucial for accessibility. 
-        It connects the text description to the <input> element. 
-      */}
-      <label htmlFor="global-search" className="sr-only">
-        Search the entire site
-      </label>
-      
-      {/* 2. The <input> is connected to the <label> via the 'id' and 'htmlFor'.
-        The grid layout is preserved to layer the input and icon.
-      */}
-      <input
-        id="global-search" // Connects to the label
-        name="search"
-        type="search" // Use type="search" for semantic accuracy
-        placeholder="Search"
-        className="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-3 pl-10 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-      />
-      
-      {/* 3. The icon is decorative. 
-        It doesn't need to be interactive, so it remains a separate element 
-        (MagnifyingGlassIcon) positioned over the input, but we remove aria-hidden="true" 
-        since the icon is not a div anymore.
-      */}
-      <MagnifyingGlassIcon
-        aria-hidden="true" // Screen readers ignore this decorative icon
-        className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400"
-      />
-    </form>
-  </div>
-            
+            <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+              <form className="grid w-full max-w-lg grid-cols-1 lg:max-w-xs" role="search">
+
+                <label htmlFor="global-search" className="sr-only">
+                  Search the entire site
+                </label>
+                <input
+                  id="global-search"
+                  name="search"
+                  type="search"
+                  placeholder="Search"
+                  className="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-3 pl-10 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
+
+                <MagnifyingGlassIcon
+                  aria-hidden="true"
+                  className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400"
+                />
+              </form>
+            </div>
+
 
             <section aria-label="User Controls" className="flex items-center space-x-4">
-              
-          
+
+
               <div className="flex items-center lg:hidden">
                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-600">
                   <span className="absolute -inset-0.5" />
@@ -110,11 +98,11 @@ export function Navigation() {
                   <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
                 </DisclosureButton>
               </div>
-              
-         
+
+
               <div className="hidden lg:flex lg:items-center">
-                
-          
+
+
                 <button
                   type="button"
                   className="relative shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
@@ -123,8 +111,8 @@ export function Navigation() {
                   <span className="absolute -inset-1.5" />
                   <BellIcon aria-hidden="true" className="size-6" />
                 </button>
-                
-       
+
+
                 <Menu as="div" className="relative ml-4 shrink-0">
                   <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     <span className="absolute -inset-1.5" />
@@ -142,7 +130,7 @@ export function Navigation() {
                   >
                     {userNavigationItems.map((item) => (
                       <MenuItem key={item.name}>
-                        {({ focus  }) => (
+                        {({ focus }) => (
                           <a
                             href={item.href}
                             className={classNames(
@@ -159,13 +147,13 @@ export function Navigation() {
                 </Menu>
               </div>
             </section>
-            
+
           </div>
         </div>
 
 
         <DisclosurePanel className="lg:hidden">
-          
+
           <ul className="space-y-1 pt-2 pb-3" role="list">
             {navigationItems.map((item) => (
               <li key={item.name}>
@@ -185,27 +173,27 @@ export function Navigation() {
               </li>
             ))}
           </ul>
-          
+
 
           <section aria-label="Mobile User Profile" className="border-t border-gray-200 pt-4 pb-3">
-            
-         
+
+
             <div className="flex items-center px-4">
-              
-      
+
+
               <img
                 alt="Tom Cook"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 className="size-10 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
               />
-              
-            
+
+
               <div className="ml-3">
                 <div className="text-base font-medium text-gray-800">Tom Cook</div>
                 <div className="text-sm font-medium text-gray-500">tom@example.com</div>
               </div>
-              
-              
+
+
               <button
                 type="button"
                 className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
@@ -215,8 +203,8 @@ export function Navigation() {
                 <BellIcon aria-hidden="true" className="size-6" />
               </button>
             </div>
-            
-           
+
+
             <ul className="mt-3 space-y-1" role="list">
               {userNavigationItems.map((item) => (
                 <li key={item.name}>
@@ -231,7 +219,7 @@ export function Navigation() {
               ))}
             </ul>
           </section>
-          
+
         </DisclosurePanel>
       </Disclosure>
     </header>
