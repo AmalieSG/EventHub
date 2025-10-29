@@ -11,6 +11,9 @@ import { Search } from "./app/pages/Search";
 import { CreateEvent } from "./app/pages/CreateEvent";
 import { Login } from "./app/pages/Login";
 import { Registration } from "./app/pages/Registration";
+import { Settings } from "./app/pages/Settings";
+import { Profile } from "./app/pages/Profile";
+import { Contact } from "./app/components/Contactus";
 
 export type AppContext = {};
 
@@ -24,9 +27,14 @@ export default defineApp([
   render(Document, [
     layout(AppLayout, [
       route("/", Home),
-      route("/about", About),
-      route("/events/:id", Event as any),
+      route("/contact-us", Contact),
+      route("/settings", Settings),
+      route("/profile", Profile),
       route("/search", Search),
+      route("/create-event", CreateEvent),
+      route("/registration", Registration),
+      route("/login", Login),
+      route("/events/:id", Event),
     ]), 
   ],
   ),
