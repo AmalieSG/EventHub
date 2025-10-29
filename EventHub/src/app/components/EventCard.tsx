@@ -39,7 +39,7 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="flex flex-col space-y-1 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center">
             <span className="mr-2">📍</span>
-            <span>{event.location}</span>
+            <span>{event.address}</span>
           </div>
           <div className="flex items-center">
             <span className="mr-2">⏰</span>

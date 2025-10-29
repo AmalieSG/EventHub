@@ -5,7 +5,8 @@ export interface Event {
   longDescription: string;
   date: Date;
   time: string;
-  location: string;
+  placeName?: string;
+  address: string;
   price: number;
   attendeeIds: number[];
   hostId: number;

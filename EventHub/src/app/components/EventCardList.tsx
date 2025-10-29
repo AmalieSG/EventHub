@@ -37,7 +37,7 @@ export function EventCardList({ event }: EventCardProps) {
                     {event.time}
                 </p>
                 <address className="not-italic"> 
-                    {event.location}
+                    {event.address}
                 </address>
             </section>
 

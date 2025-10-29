@@ -7,7 +7,7 @@ import { fetchAllUsers } from "../api/users/usersService"
 import { Event } from "../types/event"
 
 export interface EventWithHost extends Event {
-  host: User | undefined
+  host: User | null
   attendeeCount: number
 }
 
@@ -22,10 +22,14 @@ export function useEnrichedEvents() {
         fetchAllUsers(),
       ])
       const mapped = eventData.map((event) => {
-        const host = userData.find((u) => u.id === event.hostId)
+        const host = userData.find((u) => u.id === event.hostId) || null
         const attendeeCount = event.attendeeIds.length
 
-        return { ...event, host, attendeeCount }
+        return { 
+          ...event, 
+          host, 
+          attendeeCount 
+        }
       })
 
       setEvents(mapped)
