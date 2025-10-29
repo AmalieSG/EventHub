@@ -6,10 +6,10 @@ export function AccountTab() {
   const [interests, setInterests] = useState(['Music', 'Sport', 'Art', 'Food']);
 
   return (
-    <section className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
+    <main className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
       <h1 className="sr-only">General Settings</h1>
 
-      <main className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
+      <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
         <section aria-labelledby="profile-heading" className="space-y-6">
           <h1 className="text-2xl font-bold text-gray-900">Account Settings</h1>
           <p className="text-sm text-gray-600">Manage your personal information and preferences</p>
@@ -140,7 +140,7 @@ export function AccountTab() {
             </footer>
           </form>
         </section>
-      </main>
-    </section>
+      </section>
+    </main>
   )
 }
