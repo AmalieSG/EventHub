@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { SettingsHeader } from '../components/SettingsHeader';
 import {SettingsNav} from '../components/SettingsNav';
 import {AccountTab} from '../components/AccountTab';
-import {InterestModal} from '../components/AccountTab';
+import { NotificationsTab } from '../components/NotificationsTab';
+
 
 
 export const Settings: React.FC = () => {
@@ -13,8 +14,13 @@ export const Settings: React.FC = () => {
         if (activeTabName === 'Account') {
             return <AccountTab />;
         }
+        if (activeTabName === 'Notifications') {
+            return <NotificationsTab />;
+        }
         return null;
-      }
+        }
+        
+      
   return (
     <div className="bg-gray-50 min-h-screen">
       <div> <SettingsHeader/></div>
