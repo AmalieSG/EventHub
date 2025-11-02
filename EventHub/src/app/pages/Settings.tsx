@@ -4,6 +4,7 @@ import { SettingsHeader } from '../components/SettingsHeader';
 import {SettingsNav} from '../components/SettingsNav';
 import {AccountTab} from '../components/AccountTab';
 import { NotificationsTab } from '../components/NotificationsTab';
+import { PrivacyTab } from '../components/PrivacyTab';
 
 
 
@@ -16,6 +17,9 @@ export const Settings: React.FC = () => {
         }
         if (activeTabName === 'Notifications') {
             return <NotificationsTab />;
+        }
+        if (activeTabName === 'Security') {
+            return <PrivacyTab />;
         }
         return null;
         }
