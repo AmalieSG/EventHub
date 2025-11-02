@@ -1,18 +1,30 @@
-
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import { SettingsHeader } from '../components/SettingsHeader';
 import {SettingsNav} from '../components/SettingsNav';
 import {AccountTab} from '../components/AccountTab';
+import {InterestModal} from '../components/AccountTab';
 
 
 export const Settings: React.FC = () => {
+  const [activeTabName, setActiveTab] = useState<string>('Account');
+
+  const renderTabContent = () => {
+        if (activeTabName === 'Account') {
+            return <AccountTab />;
+        }
+        return null;
+      }
   return (
     <div className="bg-gray-50 min-h-screen">
       <div> <SettingsHeader/></div>
      
-      <div><SettingsNav/></div>
+      <SettingsNav 
+            activeTabName={activeTabName} 
+            setActiveTab={setActiveTab} 
+        />
 
-      <div><AccountTab/> </div>
+      <div>{renderTabContent()}</div>
     </div>
     
   );
