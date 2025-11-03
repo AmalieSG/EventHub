@@ -7,15 +7,15 @@ export const AppPreferencesTab = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   return (
-    <div className="p-4 sm:p-6 bg-white shadow-xl rounded-2xl max-w-4xl mx-auto mt-6 border border-gray-100">
-      <h2 className="text-3xl font-bold text-indigo-700 mb-6 border-b pb-4">Applikasjonspreferanser</h2>
+    <div className="p-4 sm:p-6 shadow-xl mb-20 bg-white rounded-2xl max-w-4xl mx-auto border border-gray-100">
+      <h2 className="text-3xl font-bold text-emerald-700 mb-6 border-b pb-4">Applikasjonspreferanser</h2>
       <p className="text-gray-600 mb-8">Tilpass appens utseende, språk og lydinnstillinger for en bedre opplevelse.</p>
 
      
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-200 rounded-xl bg-gray-50">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-200 rounded-xl bg-white">
           <div className="flex items-center space-x-3 mb-2 sm:mb-0">
-            {theme === 'Dark' ? <Moon className="w-6 h-6 text-indigo-600" /> : <Sun className="w-6 h-6 text-indigo-600" />}
+            {theme === 'Dark' ? <Moon className="w-6 h-6 text-emerald-600" /> : <Sun className="w-6 h-6 text-emerald-600" />}
             <div>
               <p className="font-semibold text-gray-800">Tema</p>
               <p className="text-sm text-gray-500">Velg mellom lyst, mørkt, eller systemstyrt tema.</p>
@@ -28,7 +28,7 @@ export const AppPreferencesTab = () => {
                 onClick={() => setTheme(t)}
                 className={`py-2 px-4 rounded-full font-medium transition-colors duration-200
                   ${theme === t
-                    ? 'bg-indigo-600 text-white shadow-md'
+                    ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-white text-gray-700 hover:bg-indigo-100'
                   }
                 `}
@@ -40,9 +40,9 @@ export const AppPreferencesTab = () => {
         </div>
 
        
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-200 rounded-xl bg-gray-50">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-200 rounded-xl bg-white">
           <div className="flex items-center space-x-3 mb-2 sm:mb-0">
-            <Languages className="w-6 h-6 text-indigo-600" />
+            <Languages className="w-6 h-6 text-emerald-600" />
             <div>
               <p className="font-semibold text-gray-800">Språk</p>
               <p className="text-sm text-gray-500">Angi foretrukket applikasjonsspråk.</p>
@@ -51,7 +51,7 @@ export const AppPreferencesTab = () => {
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"
+            className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-gray-700"
           >
             <option>Norsk (Bokmål)</option>
             <option>Norsk (Nynorsk)</option>
@@ -63,7 +63,7 @@ export const AppPreferencesTab = () => {
 
         <div className="flex justify-between items-center p-4 border border-gray-200 rounded-xl bg-gray-50">
           <div className="flex items-center space-x-3">
-            <Volume2 className="w-6 h-6 text-indigo-600" />
+            <Volume2 className="w-6 h-6 text-emerald-600" />
             <div>
               <p className="font-semibold text-gray-800">Lydvarsler</p>
               <p className="text-sm text-gray-500">Slå lyder for varsler og interaksjoner av eller på.</p>
@@ -76,7 +76,7 @@ export const AppPreferencesTab = () => {
               onChange={() => setSoundEnabled(!soundEnabled)}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600"></div>
           </label>
         </div>
 

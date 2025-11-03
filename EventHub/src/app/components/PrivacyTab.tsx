@@ -22,7 +22,7 @@ interface SecurityToggleProps {
 
 const SecurityToggle: React.FC<SecurityToggleProps> = ({ setting, onToggle }) => {
     return (
-        <li className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0">
+        <li className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0">
             <div className="flex flex-col">
                 <span className={classNames(
                     "text-sm font-medium text-gray-900",
@@ -37,11 +37,11 @@ const SecurityToggle: React.FC<SecurityToggleProps> = ({ setting, onToggle }) =>
                 disabled={setting.disabled}
                 onChange={(enabled) => onToggle(setting.id, enabled)}
                 className={classNames(
-                    setting.enabled ? 'bg-indigo-600' : 'bg-gray-200',
+                    setting.enabled ? 'bg-emerald-600' : 'bg-gray-200',
                     setting.disabled 
             ? 'cursor-not-allowed opacity-50' 
             : '', 
-              'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2'
+              'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2'
                 )}
             >
                 <span className="sr-only">Enable setting for {setting.title}</span>
@@ -96,7 +96,7 @@ export function PrivacyTab() {
                    
                     <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
                         <div className="flex items-center gap-3 mb-4 border-b pb-4">
-                            <EyeSlashIcon className="w-6 h-6 text-indigo-600" />
+                            <EyeSlashIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Privacy Controls</h2>
                         </div>
                         <ul role="list" className="divide-y divide-gray-100">
@@ -113,7 +113,7 @@ export function PrivacyTab() {
                    
                     <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
                         <div className="flex items-center gap-3 mb-4 border-b pb-4">
-                            <ShieldCheckIcon className="w-6 h-6 text-indigo-600" />
+                            <ShieldCheckIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Account Security</h2>
                         </div>
                         <ul role="list" className="divide-y divide-gray-100">
@@ -126,7 +126,7 @@ export function PrivacyTab() {
                             ))}
                         </ul>
                         <div className="mt-4 pt-4 border-t text-right">
-                            <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                            <button className="text-sm text-emerald-600 hover:text-indigo-800 font-medium">
                                 View Connected Devices
                             </button>
                         </div>
@@ -158,7 +158,7 @@ export function PrivacyTab() {
                     <footer className="pt-4 flex justify-start">
                         <button
                             type="button"
-                            className="rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-500/50"
+                            className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
                             onClick={() => console.log('Saving privacy and security changes...')}
                         >
                             Save Settings

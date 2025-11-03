@@ -249,7 +249,7 @@ export function AccountTab() {
                 {interests.map((interest, index) => (
                   <li
                     key={index}
-                    className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm text-indigo-700"
+                    className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-sm text-emerald-700"
                   >
                     {interest}
                   </li>
@@ -269,7 +269,7 @@ export function AccountTab() {
             <footer className="pt-6">
               <button
                 type="submit"
-                className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 Save Changes
               </button>

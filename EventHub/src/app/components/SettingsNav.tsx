@@ -23,7 +23,7 @@ interface SettingsNavProps {
 export const SettingsNav: React.FC<SettingsNavProps> = ({ activeTabName, setActiveTab}) => {
   
   return (
-    <div className="bg-white p-2 shadow-md rounded-3xl  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-4 py-8">
+    <div className="bg-white p-2 shadow-md rounded-3xl  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-4">
 
       <nav className="flex space-x-8 overflow-x-auto p-2 justify-center">
         {navItems.map((item) => {
