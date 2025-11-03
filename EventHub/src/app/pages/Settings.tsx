@@ -1,10 +1,12 @@
 'use client'
 import React, { useState } from 'react';
 import { SettingsHeader } from '../components/SettingsHeader';
-import {SettingsNav} from '../components/SettingsNav';
-import {AccountTab} from '../components/AccountTab';
+import { SettingsNav} from '../components/SettingsNav';
+import { AccountTab} from '../components/AccountTab';
 import { NotificationsTab } from '../components/NotificationsTab';
 import { PrivacyTab } from '../components/PrivacyTab';
+import {AppPreferencesTab } from '../components/AppPreferencesTab';
+
 
 
 
@@ -18,9 +20,13 @@ export const Settings: React.FC = () => {
         if (activeTabName === 'Notifications') {
             return <NotificationsTab />;
         }
-        if (activeTabName === 'Security') {
+        if (activeTabName === 'Privacy & Security') {
             return <PrivacyTab />;
         }
+        if (activeTabName === 'App PReferences') {
+            return <PrivacyTab />;
+        }
+       
         return null;
         }
         

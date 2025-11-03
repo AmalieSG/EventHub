@@ -8,6 +8,7 @@ interface NotificationSetting {
     title: string;
     description: string;
     enabled: boolean;
+    disabled?: boolean;
 }
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
@@ -18,8 +19,9 @@ interface NotificationToggleProps {
     onToggle: (id: string, enabled: boolean) => void;
 }
 
-const NotificationToggle: React.FC<NotificationToggleProps> = ({ setting, onToggle }) => {
-    return (
+const NotificationToggle: React.FC<NotificationToggleProps> = ({ setting, onToggle }) => { 
+  return (
+  
         <li className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0">
             <div className="flex flex-col">
                 <span className="text-sm font-medium text-gray-900">{setting.title}</span>
@@ -43,8 +45,9 @@ const NotificationToggle: React.FC<NotificationToggleProps> = ({ setting, onTogg
             </Switch>
         </li>
     );
-};
 
+
+  };
 export function NotificationsTab() {
    
     const [emailSettings, setEmailSettings] = useState<NotificationSetting[]>([
