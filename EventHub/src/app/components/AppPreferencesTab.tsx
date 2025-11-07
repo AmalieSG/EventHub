@@ -54,9 +54,8 @@ export const AppPreferencesTab = () => {
             onChange={(e) => setLanguage(e.target.value)}
             className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-gray-700"
           >
-            <option>Norwegian (bokmaal)</option>
-            <option>Norwegian (Nynorsk)</option>
             <option>English (US)</option>
+            <option>Norwegian</option>
             <option>Swedish</option>
           </select>
         </div>

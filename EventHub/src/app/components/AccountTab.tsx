@@ -226,7 +226,7 @@ export function AccountTab() {
               <textarea
                 id="about"
                 rows={3}
-                defaultValue="A music-loving person from Oslo who enjoys discovering new events!"
+                defaultValue="Full-stack developer passionate about creating amazing experiences"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -238,7 +238,7 @@ export function AccountTab() {
               <input
                 type="text"
                 id="location"
-                defaultValue="Oslo, Norge"
+                defaultValue="San Francisco, CA"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>

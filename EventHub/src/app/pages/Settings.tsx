@@ -40,7 +40,7 @@ export const Settings = () => {
         
       
   return (
-    <div className="h-full">
+    <main className="h-full">
       <div> <SettingsHeader/></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SettingsNav 
@@ -52,7 +52,7 @@ export const Settings = () => {
         
 
       <div className="bg-gray-50 pb-20" >{renderTabContent()}</div>
-    </div>
+    </main>
     
   );
 }
