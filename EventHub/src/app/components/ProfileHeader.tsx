@@ -26,13 +26,13 @@ export function ProfileHeader() {
                   </div>
               </div>
               <aside className="flex flex-wrap gap-4 sm:ml-auto">
-                  <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full">
+                  <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full cursor-pointer">
                       <PencilIcon className="w-5 h-5" /> 
                       Edit Profile
                   </button>
                   
                   <a href="/settings">
-                      <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full">
+                      <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full cursor-pointer">
                           <Cog6ToothIcon className="w-5 h-5" />
                           Settings
                       </button>

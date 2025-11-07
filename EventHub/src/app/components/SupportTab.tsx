@@ -66,7 +66,7 @@ const InfoLinkItem: React.FC<{ link: InfoLink }> = ({ link }) => {
     return (
         <a 
             href={link.href} 
-            className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0 group hover:bg-gray-50 transition duration-100 -mx-6 px-6"
+            className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0 group hover:bg-gray-50 transition duration-100 -mx-6 px-6 cursor-pointer"
         >
             <div className="flex items-start gap-4">
                 <Icon className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transition" aria-hidden="true" />

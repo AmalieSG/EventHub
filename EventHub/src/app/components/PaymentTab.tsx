@@ -98,7 +98,7 @@ export function PaymentTab() {
                             <button
                                 type="button"
                                 onClick={handleManageSubscription}
-                                className="rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-sm"
+                                className="rounded-lg border border-emerald-600 bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-sm cursor-pointer"
                             >
                                 Change Plan
                             </button>
@@ -106,7 +106,7 @@ export function PaymentTab() {
                                 <button
                                     type="button"
                                     onClick={handleCancelSubscription}
-                                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150"
+                                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150 cursor-pointer"
                                 >
                                     Cancel Subscription
                                 </button>
@@ -130,7 +130,7 @@ export function PaymentTab() {
                             <button
                                 type="button"
                                 onClick={handleUpdatePayment}
-                                className="text-sm font-medium text-emerald-600 hover:text-emerald-800"
+                                className="text-sm font-medium text-emerald-600 hover:text-emerald-800 cursor-pointer"
                             >
                                 Update
                             </button>
@@ -142,7 +142,7 @@ export function PaymentTab() {
 
                   
                     <div className="mt-4 text-left">
-                        <button className="text-sm text-emerald-600 hover:text-emerald-800 font-medium">
+                        <button className="text-sm text-emerald-600 hover:text-emerald-800 font-medium cursor-pointer">
                             View Billing History & Invoices
                         </button>
                     </div>

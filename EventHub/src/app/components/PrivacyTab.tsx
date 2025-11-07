@@ -126,7 +126,7 @@ export function PrivacyTab() {
                             ))}
                         </ul>
                         <div className="mt-4 pt-4 border-t text-right">
-                            <button className="text-sm text-emerald-600 hover:text-indigo-800 font-medium">
+                            <button className="text-sm text-emerald-600 hover:text-indigo-800 font-medium cursor-pointer">
                                 View Connected Devices
                             </button>
                         </div>
@@ -141,13 +141,13 @@ export function PrivacyTab() {
                         <div className="flex justify-start gap-4">
                             <button
                                 type="button"
-                                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150"
+                                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150 cursor-pointer"
                             >
                                 Download My Data
                             </button>
                             <button
                                 type="button"
-                                className="rounded-lg border border-red-500 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition duration-150"
+                                className="rounded-lg border border-red-500 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition duration-150 cursor-pointer"
                             >
                                 Deactivate Account
                             </button>
@@ -158,7 +158,7 @@ export function PrivacyTab() {
                     <footer className="pt-4 flex justify-start">
                         <button
                             type="button"
-                            className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
+                            className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
                             onClick={() => console.log('Saving privacy and security changes...')}
                         >
                             Save Settings

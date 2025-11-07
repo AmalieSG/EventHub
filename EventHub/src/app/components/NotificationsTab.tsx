@@ -118,7 +118,7 @@ return (
                     <footer className="pt-4 flex justify-start">
                         <button
                             type="button"
-                            className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
+                            className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
                             onClick={() => console.log('Saving notification changes...')}
                         >
                             Save Preferences

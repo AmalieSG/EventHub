@@ -49,7 +49,7 @@ export function InterestModal({
           </h3>
           <button
             type="button"
-            className="text-gray-400 hover:text-gray-900 rounded-full p-1 transition"
+            className="text-gray-400 hover:text-gray-900 rounded-full p-1 transition cursor-pointer"
             onClick={onClose}
           >
             <XMarkIcon className="w-6 h-6" />
@@ -69,9 +69,10 @@ export function InterestModal({
                   className={`
                     inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition duration-200
                     ${isSelected 
-                      ? 'bg-emerald-600 text-white shadow-md hover:bg-emerald-700' // Changed color for selected state
+                      ? 'bg-emerald-600 text-white shadow-md hover:bg-emerald-700'
                       : 'bg-gray-100 text-gray-700 border border-gray-300 hover:bg-emerald-50 hover:border-emerald-300'
                     }
+                    cursor-pointer
                   `}
                 >
                   {interest}
@@ -85,7 +86,7 @@ export function InterestModal({
         <div className="p-4 border-t border-gray-200 flex justify-end sticky bottom-0 bg-white">
           <button
             type="button"
-            className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50"
+            className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
             onClick={onClose}
           >
             Done
@@ -153,7 +154,7 @@ export function AccountTab() {
                     <button
                       type="button"
                       onClick={handleButtonClick} 
-                      className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 inline-flex items-center gap-2"
+                      className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 inline-flex items-center gap-2 cursor-pointer"
                     >
                       <CameraIcon className="w-4 h-4" />
                       Change Profile Picture
@@ -258,7 +259,7 @@ export function AccountTab() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(true)}
-                    className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600 hover:bg-gray-200"
+                    className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600 hover:bg-gray-200 cursor-pointer"
                   >
                     + Add more
                   </button>
@@ -269,7 +270,7 @@ export function AccountTab() {
             <footer className="pt-6">
               <button
                 type="submit"
-                className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               >
                 Save Changes
               </button>

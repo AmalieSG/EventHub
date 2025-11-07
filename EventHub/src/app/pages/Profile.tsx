@@ -2,30 +2,33 @@
 import React, { useState } from 'react';
 import { UpcomingTab } from '../components/UpcomingTab';
 import { ProfileNav } from '../components/ProfileNav';
-import {ProfileHeader} from '../components/ProfileHeader'
+import {ProfileHeader} from '../components/ProfileHeader';
+import {MyEventsTab} from '../components/MyEventsTab';
+import {PastEventsTab} from '../components/PastEventsTab';
+import {SavedTab} from '../components/SavedTab';
+import {AchievementsTab} from '../components/AchievementsTab';
 
-import { EventCardList } from "../components/EventCardList";
 import { useEventsContext } from "../context/EventsProvider";
 
 export const Profile = () => {
     const [activeTabName, setActiveTab] = useState<string>('Upcoming');
-    const { events, loading } = useEventsContext();
+    const {loading } = useEventsContext();
     const renderTabContent = () => {
             if (activeTabName === 'Upcoming') {
                 return <UpcomingTab />;
             }
-            // if (activeTabName === 'My Events') {
-            //     return <MyEventsTab />;
-            // }
-            // if (activeTabName === 'Past Events') {
-            //     return <PastEventsTab />;
-            // }
-            // if (activeTabName === 'Saved') {
-            //     return <SavedTab />;
-            // }
-            // if (activeTabName === 'Achievements') {
-            //     return <AchievementsTab/>;
-            // }
+            if (activeTabName === 'My Events') {
+                return <MyEventsTab />;
+            }
+            if (activeTabName === 'Past Events') {
+                return <PastEventsTab />;
+            }
+            if (activeTabName === 'Saved') {
+                return <SavedTab />;
+            }
+            if (activeTabName === 'Achievements') {
+                return <AchievementsTab/>;
+            }
            
             return null;
         }
@@ -34,7 +37,7 @@ export const Profile = () => {
     }
     return (
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10">
-            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6">
+            <div>
                 <ProfileHeader />
                 <div className="max-w-7xl mx-auto mt-4">
                     <ProfileNav 

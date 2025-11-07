@@ -27,12 +27,11 @@ export const AppPreferencesTab = () => {
               <button
                 key={t}
                 onClick={() => setTheme(t)}
-                className={`py-2 px-4 rounded-full font-medium transition-colors duration-200
-                  ${theme === t
+                className={`cursor-pointer py-2 px-4 rounded-full font-medium transition-colors duration-200 ${
+                  theme === t
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-white text-gray-700 hover:bg-indigo-100'
-                  }
-                `}
+                }`}
               >
                 {t}
               </button>
@@ -52,7 +51,7 @@ export const AppPreferencesTab = () => {
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-gray-700"
+            className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-gray-700 cursor-pointer"
           >
             <option>English (US)</option>
             <option>Norwegian</option>

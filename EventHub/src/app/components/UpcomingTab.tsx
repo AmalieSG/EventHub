@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, CalendarIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
 
@@ -48,10 +48,10 @@ const EventCardList: React.FC<EventCardProps> = ({ event }) => {
 
      
       <div className="flex flex-col justify-center items-end ml-4 space-y-2">
-        <button className="w-28 text-center px-4 py-2 text-xs sm:text-sm font-medium text-white bg-gray-900 rounded-full shadow hover:bg-white hover:text-black transition duration-150">
+        <button className="w-28 text-center px-4 py-2 text-xs sm:text-sm font-medium text-white bg-gray-900 rounded-full shadow hover:bg-white hover:text-black transition duration-150 cursor-pointer">
           View Details
         </button>
-        <button className="w-28 text-center px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition duration-150">
+        <button className="w-28 text-center px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition duration-150 cursor-pointer">
           Leave Event
         </button>
       </div>
@@ -70,18 +70,59 @@ const initialEvents = [
 
 export function UpcomingTab() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
+  const defaultFilters = { onlineOnly: false, cities: [] as string[] };
+
+  const availableCities = useMemo(() => {
+    const toCity = (location: string) => {
+      if (!location) return '';
+      if (location.toLowerCase().includes('online')) return 'Online';
+      const [city] = location.split(',');
+      return city.trim();
+    };
+    const unique = new Set<string>();
+    initialEvents.forEach(e => {
+      const c = toCity(e.location);
+      if (c) unique.add(c);
+    });
+    return Array.from(unique);
+  }, []);
 
 
   const filteredEvents = useMemo(() => {
     if (!searchQuery) {
-      return initialEvents;
+      return initialEvents.filter((event) => {
+        const matchesOnline = filters.onlineOnly ? event.location.toLowerCase().includes('online') : true;
+        const matchesCity = filters.cities.length > 0
+          ? filters.cities.some(city => event.location.toLowerCase().includes(city.toLowerCase()))
+          : true;
+        return matchesOnline && matchesCity;
+      });
     }
     const query = searchQuery.toLowerCase();
-    return initialEvents.filter(event =>
-      event.title.toLowerCase().includes(query) ||
-      event.location.toLowerCase().includes(query)
-    );
-  }, [searchQuery]);
+    return initialEvents.filter(event => {
+      const matchesSearch =
+        event.title.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query);
+      const matchesOnline = filters.onlineOnly ? event.location.toLowerCase().includes('online') : true;
+      const matchesCity = filters.cities.length > 0
+        ? filters.cities.some(city => event.location.toLowerCase().includes(city.toLowerCase()))
+        : true;
+      return matchesSearch && matchesOnline && matchesCity;
+    });
+  }, [searchQuery, filters]);
+
+  useEffect(() => {
+    if (!isFilterOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsFilterOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFilterOpen]);
 
 
   return (
@@ -104,8 +145,8 @@ export function UpcomingTab() {
             <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           </div>
 
-   
-          <button className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0">
+  
+          <button onClick={() => setIsFilterOpen(true)} className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer">
             <FunnelIcon className="h-4 w-4" />
             Filter
           </button>
@@ -124,6 +165,91 @@ export function UpcomingTab() {
           </div>
         )}
       </div>
+      {isFilterOpen && (
+        <div className="fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setIsFilterOpen(false)}
+          />
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
+              <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                <h4 className="text-base font-semibold text-gray-900">Filters</h4>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-5 space-y-4">
+                <label className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={filters.onlineOnly}
+                    onChange={(e) =>
+                      setFilters((prev) => ({ ...defaultFilters, ...(prev || {}), onlineOnly: e.target.checked }))
+                    }
+                    className="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
+                  />
+                  <span className="text-sm text-gray-800">Online events only</span>
+                </label>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Cities</label>
+                  <div className="flex flex-wrap gap-2">
+                    {availableCities.map((city) => {
+                      const selected = filters.cities.includes(city);
+                      return (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => {
+                            setFilters((prev) => {
+                              const current = prev?.cities || [];
+                              const next = selected
+                                ? current.filter(c => c !== city)
+                                : [...current, city];
+                              return { ...defaultFilters, ...(prev || {}), cities: next };
+                            });
+                          }}
+                          className={`${selected ? 'bg-gray-900 text-white hover:bg-gray-800' : 'bg-white text-gray-700 hover:bg-gray-50'} border border-gray-300 rounded-full px-3 py-1 text-sm cursor-pointer`}
+                        >
+                          {city}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
+                <button
+                  onClick={() => setFilters(defaultFilters)}
+                  className="text-sm text-gray-600 hover:text-gray-800 cursor-pointer"
+                >
+                  Clear
+                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsFilterOpen(false)}
+                    className="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => setIsFilterOpen(false)}
+                    className="px-4 py-2 text-sm rounded-full bg-gray-900 text-white hover:bg-gray-800 cursor-pointer"
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
+
+export default UpcomingTab;
