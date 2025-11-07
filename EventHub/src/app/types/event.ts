@@ -14,4 +14,6 @@ export interface Event {
   imageUrl: string;
   createdAt: Date;
   updatedAt?: Date;
+  deletedAt?: Date;
+  status: "upcoming" | "ongoing" | "completed" | "cancelled";
 }
