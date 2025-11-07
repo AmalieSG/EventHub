@@ -12,7 +12,7 @@ import {SupportTab} from '../components//SupportTab';
 
 
 
-export const Settings: React.FC = () => {
+export const Settings = () => {
   const [activeTabName, setActiveTab] = useState<string>('Account');
 
   const renderTabContent = () => {

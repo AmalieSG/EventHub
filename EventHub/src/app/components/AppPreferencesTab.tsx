@@ -7,9 +7,10 @@ export const AppPreferencesTab = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   return (
-    <div className="p-4 sm:p-6 shadow-xl mb-20 bg-white rounded-2xl max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-3xl font-bold text-emerald-700 mb-6 border-b pb-4">Applikasjonspreferanser</h2>
-      <p className="text-gray-600 mb-8">Tilpass appens utseende, språk og lydinnstillinger for en bedre opplevelse.</p>
+    <main className="py-8 sm:p-6 shadow-xl bg-white rounded-2xl max-w-7xl mx-auto border border-gray-100">
+                 
+      <h2 className="text-3xl font-bold text-emerald-700 mb-6 border-b pb-4">App Preferences</h2>
+      <p className="text-gray-600 mb-8">Customize the app's appearance, language, and sound settings for a better experience.</p>
 
      
       <div className="space-y-6">
@@ -17,8 +18,8 @@ export const AppPreferencesTab = () => {
           <div className="flex items-center space-x-3 mb-2 sm:mb-0">
             {theme === 'Dark' ? <Moon className="w-6 h-6 text-emerald-600" /> : <Sun className="w-6 h-6 text-emerald-600" />}
             <div>
-              <p className="font-semibold text-gray-800">Tema</p>
-              <p className="text-sm text-gray-500">Velg mellom lyst, mørkt, eller systemstyrt tema.</p>
+              <p className="font-semibold text-gray-800">Theme</p>
+              <p className="text-sm text-gray-500">Choose between light, dark, or system-controlled theme.</p>
             </div>
           </div>
           <div className="flex space-x-2 text-sm">
@@ -44,8 +45,8 @@ export const AppPreferencesTab = () => {
           <div className="flex items-center space-x-3 mb-2 sm:mb-0">
             <Languages className="w-6 h-6 text-emerald-600" />
             <div>
-              <p className="font-semibold text-gray-800">Språk</p>
-              <p className="text-sm text-gray-500">Angi foretrukket applikasjonsspråk.</p>
+              <p className="font-semibold text-gray-800">Language</p>
+              <p className="text-sm text-gray-500">Set preferred language.</p>
             </div>
           </div>
           <select
@@ -53,10 +54,10 @@ export const AppPreferencesTab = () => {
             onChange={(e) => setLanguage(e.target.value)}
             className="py-2 px-4 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-gray-700"
           >
-            <option>Norsk (Bokmål)</option>
-            <option>Norsk (Nynorsk)</option>
-            <option>Engelsk (US)</option>
-            <option>Svenska</option>
+            <option>Norwegian (bokmaal)</option>
+            <option>Norwegian (Nynorsk)</option>
+            <option>English (US)</option>
+            <option>Swedish</option>
           </select>
         </div>
 
@@ -65,8 +66,8 @@ export const AppPreferencesTab = () => {
           <div className="flex items-center space-x-3">
             <Volume2 className="w-6 h-6 text-emerald-600" />
             <div>
-              <p className="font-semibold text-gray-800">Lydvarsler</p>
-              <p className="text-sm text-gray-500">Slå lyder for varsler og interaksjoner av eller på.</p>
+              <p className="font-semibold text-gray-800">Sound Notifications</p>
+              <p className="text-sm text-gray-500">Turn sounds for alerts and interactions on or off.</p>
             </div>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
@@ -81,7 +82,7 @@ export const AppPreferencesTab = () => {
         </div>
 
       </div>
-    </div>
+    </main>
   );
 };
 

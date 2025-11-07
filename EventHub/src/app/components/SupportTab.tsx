@@ -92,7 +92,7 @@ export function SupportTab() {
     const appVersion = "1.7.3";
 
     return (
-        <main className="mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
+        <main className="py-8 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
             <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
                 <section aria-labelledby="support-heading" className="space-y-8">
                     
