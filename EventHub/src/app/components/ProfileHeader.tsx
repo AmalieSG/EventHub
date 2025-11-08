@@ -11,9 +11,9 @@ export function ProfileHeader() {
                   <div>
                       <h2 className=" mb-2 text-lg sm:text-xl font-semibold">Aaron Warner</h2>
                       
-                      <p className=" mb-2 text-gray-500 text-sm sm:text-base">Full-stack developer passionate about creating amazing experiences</p>
-                      <section className="flex gap-2 items-center text-gray-500 text-sm sm:text-baseflex flex-col gap-2 md:flex-row md:gap-10 items-start md:items-center text-gray-500 text-sm sm:text-base">
-                        <div className="flex items-center gap-1">
+                      <p className="mb-2 text-gray-500 text-sm sm:text-base ml-4 ">Full-stack developer passionate about creating amazing experiences</p>
+                      <section className=" ml-4 flex gap-2 items-center text-gray-500 text-sm sm:text-baseflex flex-col gap-2 md:flex-row md:gap-10 items-start md:items-center text-gray-500 text-sm sm:text-base">
+                        <div className=" flex items-center gap-1">
                           <MapPinIcon className="w-4 h-4" />
                           <p>San Francisco, CA</p>
                         </div>
@@ -26,10 +26,7 @@ export function ProfileHeader() {
                   </div>
               </div>
               <aside className="flex flex-wrap gap-4 sm:ml-auto">
-                  <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full cursor-pointer">
-                      <PencilIcon className="w-5 h-5" /> 
-                      Edit Profile
-                  </button>
+                  
                   
                   <a href="/settings">
                       <button className="flex items-center justify-center w-36 gap-2 border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 text-sm sm:text-base px-4 py-2 rounded-full cursor-pointer">
