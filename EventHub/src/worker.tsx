@@ -14,6 +14,7 @@ import { Registration } from "./app/pages/Registration";
 import { Settings } from "./app/pages/Settings";
 import { Profile } from "./app/pages/Profile";
 import { Contact } from "./app/components/Contactus";
+import { AllEvents } from "./app/pages/AllEvents";
 
 export type AppContext = {};
 
@@ -35,6 +36,7 @@ export default defineApp([
       route("/registration", Registration),
       route("/login", Login),
       route("/events/:id", Event),
+      route("/all-events", AllEvents)
     ]), 
   ],
   ),
