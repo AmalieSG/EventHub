@@ -1,10 +1,10 @@
 import { EventCardList } from "./EventCardList"
 import { EventWithHost } from "../hooks/useEnrichedEvents"
 
-interface EventCardListProps {
-  event: EventWithHost;
+interface EventListProps {
+  events: EventWithHost[];
   layout?: 'grid' | 'list';
-  action?: 'join' | 'remove' | 'edit' | 'ended'; // <- include 'ended'
+  action?: 'join' | 'remove' | 'edit' | 'ended';
 }
 
 export function EventList({ events, layout = 'grid', action = 'join' }: EventListProps) {

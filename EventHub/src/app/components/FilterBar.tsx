@@ -12,7 +12,7 @@ export interface FilterState {
 
 export const defaultFilters: FilterState = { onlineOnly: false, cities: [], categories: [] };
 
-export interface FilterPopUpProps {
+export interface FilterBarProps {
     events: any[]; 
     currentFilters: FilterState;
     onApplyFilters: (filters: FilterState) => void;
@@ -20,13 +20,13 @@ export interface FilterPopUpProps {
     setIsFilterOpen: (isOpen: boolean) => void;
 }
 
-export function FilterPopUp({ 
+export function FilterBar({ 
     events, 
     currentFilters, 
     onApplyFilters, 
     isFilterOpen, 
     setIsFilterOpen 
-}: FilterPopUpProps) { 
+}: FilterBarProps) { 
     
     const availableCities = useMemo(() => {
         const unique = new Set<string>();

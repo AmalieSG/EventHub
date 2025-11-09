@@ -21,7 +21,7 @@ export function useEnrichedEvents() {
         fetchAllEvents(),
         fetchAllUsers(),
       ])
-      const mapped = eventData.map((event) => {
+      const mapped = eventData.map((event): EventWithHost => {
         const host = userData.find((u) => u.id === event.hostId)
         const attendeeCount = event.attendeeIds.length
 

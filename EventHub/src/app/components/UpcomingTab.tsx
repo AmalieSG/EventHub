@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
 import { EventList } from './EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
-import{FilterPopUp, FilterState, defaultFilters} from './FilterPopUp';
+import{FilterBar, FilterState, defaultFilters} from './FilterBar';
 
 export function UpcomingTab() {
     const { events: allEvents, loading } = useEventsContext(); 
@@ -123,7 +123,7 @@ export function UpcomingTab() {
                 )}
             </div>
             
-            <FilterPopUp 
+            <FilterBar 
                 events={allEvents} 
                 currentFilters={activeFilters} 
                 onApplyFilters={handleApplyFilters}
