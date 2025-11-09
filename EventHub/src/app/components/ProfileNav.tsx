@@ -4,7 +4,8 @@ import React from 'react';
 
 const navItems = [
   { name: 'Upcoming' },
-  { name: 'My Events' },
+  { name: 'Created Events' },
+  { name: 'Joined Events' },
   { name: 'Past Events' },
   { name: 'Saved'},
   { name: 'Achievements'}
@@ -29,7 +30,7 @@ export const ProfileNav: React.FC<ProfileNavProps> = ({ activeTabName, setActive
           const isActive = activeTabName === item.name;
 
           const baseClasses = "w-full text-center px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer";
-          const activeClasses = "bg-gray-100 text-gray-900 shadow-sm";
+          const activeClasses = "bg-red-600 text-gray-200  shadow-sm";
           const inactiveClasses = "text-gray-600 hover:bg-gray-50 hover:text-gray-900";
 
           return (

@@ -13,4 +13,10 @@ export interface Event {
   imageUrl: string;
   createdAt: Date;
   updatedAt?: Date;
+ isCreatedByMe: boolean; 
+  isJoinedByMe: boolean; 
+  isSavedByMe: boolean;
+  isPast: boolean;
+  city: string;
+  isOnline: boolean;
 }
