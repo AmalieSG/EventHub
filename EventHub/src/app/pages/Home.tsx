@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline';
+import { Squares2X2Icon, Bars3Icon, FunnelIcon } from '@heroicons/react/24/outline';
 import { EventList } from '../components/EventList';
-import { EventCardList } from '../components/EventCardList';
 import { FilterBar, FilterState, defaultFilters, LayoutType } from '../components/FilterBar';
 import { useEventsContext } from "../context/EventsProvider";
 
@@ -13,6 +12,10 @@ export default function Home() {
     const [layout, setLayout] = useState<LayoutType>('grid');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('grid'); 
+    const handleLayoutToggle = () => {
+        setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
+    };
     
 
     const filteredEvents = useMemo(() => {
@@ -71,43 +74,42 @@ export default function Home() {
                         className="w-full sm:w-80 pl-3 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500"
                     />
                     <button
-                        onClick={() => setLayout('grid')}
-                        className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm shadow-sm border border-gray-200 transition duration-150 cursor-pointer ${
-                            layout === 'grid' ? 'bg-red-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-                        }`}
-                    >
-                        <Squares2X2Icon className="h-4 w-4" />
-                        Grid
-                    </button>
-                    <button
-                        onClick={() => setLayout('list')}
-                        className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm shadow-sm border border-gray-200 transition duration-150 cursor-pointer ${
-                            layout === 'list' ? 'bg-red-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-                        }`}
-                    >
-                        <Bars3Icon className="h-4 w-4" />
-                        List
-                    </button>
-                    <button
-                        onClick={() => setIsFilterOpen(true)}
+                        onClick={handleLayoutToggle}
                         className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
                     >
+                        
+                        {currentLayout === 'grid' ? (
+                            <Bars3Icon className="h-4 w-4" /> 
+                        ) : (
+                            <Squares2X2Icon className="h-4 w-4" /> 
+                        )}
+                        {currentLayout === 'grid' ? 'List View' : 'Grid View'}
+                    </button>
+
+                    <button 
+                        onClick={() => setIsFilterOpen(true)} 
+                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
+                    >
+                        <FunnelIcon className="h-4 w-4" />
                         Filter
                     </button>
                 </div>
             </div>
 
-            <div className={`grid ${layout === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'flex flex-col gap-4'}`}>
-                {filteredEvents.length > 0 ? (
-                    filteredEvents.map(event => (
-                        <EventCardList key={event.id} event={event} layout={layout} />
-                    ))
-                ) : (
-                    <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No events found.
-                    </div>
-                )}
+            <div className="mb-20">
+            {filteredEvents.length > 0 ? (
+                <EventList 
+                events={filteredEvents}  
+                layout={currentLayout} 
+                action="join" 
+                />
+            ) : (
+                <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                    No upcoming events match your search criteria.
+                </div>
+            )}
             </div>
+            
 
             <FilterBar
                 events={events}

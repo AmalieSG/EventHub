@@ -74,7 +74,7 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
                     <span className="text-xs bg-red-600 px-3 py-1 rounded-full font-bold text-white flex-shrink-0 mt-1">{event.category}</span>
                 </section>
 
-                <p className="text-gray-300 line-clamp-2 h-[2.5rem] overflow-hidden">{event.shortDescription}</p>
+                <p className="text-gray-300 line-clamp-2 h-[3rem] overflow-hidden">{event.shortDescription}</p>
 
                 <section className="flex flex-col gap-2 text-sm text-gray-400 mt-2 ">
                     <div className="flex flex-wrap gap-x-6 gap-y-2">
