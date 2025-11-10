@@ -1,19 +1,20 @@
 export interface Event {
-  readonly id: number;
+  readonly id: string;
   title: string;
-  shortDescription: string;
-  longDescription: string;
-  date: Date;
-  time: string;
-  placeName?: string;
+  description: string;
+  summary: string;
+  eventStart: string;
+  //date: Date;
+  //time: string;
+  //placeName?: string;
   address: string;
   price: number;
-  attendeeIds: number[];
+  //attendeeIds: number[];
   hostId: number;
   category: string;
   imageUrl: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
-  status: "upcoming" | "ongoing" | "completed" | "cancelled";
+  //createdAt: Date;
+  //updatedAt?: Date;
+  //deletedAt?: Date;
+  status: "upcoming" | "ongoing" | "ended" | "cancelled";
 }

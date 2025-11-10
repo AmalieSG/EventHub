@@ -100,35 +100,3 @@ export function codeToStatus(code: ErrorCode): number {
       return 500;
   }
 }
-
-  return new Response(
-    JSON.stringify({
-      success: false,
-      error: {
-        code: Errors.UNAUTHORIZED,
-        message: "Authentication required",
-      },
-    }),
-    {
-      status: 401,
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-}
-
-export function createAuthorizationResponse() {
-  return new Response(
-    JSON.stringify({
-      success: false,
-      error: {
-        code: Errors.FORBIDDEN,
-        message: "Insufficient permissions",
-      },
-    }),
-    {
-      status: 403,
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-}
-*/
