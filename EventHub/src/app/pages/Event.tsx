@@ -4,24 +4,24 @@ import EventDescription from '../components/EventDescription';
 import ArtistLineup, { Artist } from '../components/ArtistLineup';
 import { useEventsContext } from '../context/EventsProvider';
 import { useEffect, useState } from 'react';
-import { Event } from '../types/event';
-import { fetchEventById } from '../api/events/eventsService';
+//import { Event } from '../types/event';
+//import { fetchEventById } from '../api/events/eventsService';
 
 export async function Event() {
-    const { id } = useParams();
+    //const { id } = useParams();
     const [event, setEvent] = useState<Event | null>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!id) return
+        //if (!id) return
 
         async function loadEvent() {
-            const eventData = await fetchEventById(Number(id))
-            setEvent(eventData ?? null)
+            //const eventData = await fetchEventById(Number(id))
+            //setEvent(eventData ?? null)
             setLoading(false)
         }
         loadEvent()
-    }, [id])
+    }, [])
 
     if (loading) {
         return <p>Loading event details...</p>
@@ -31,7 +31,7 @@ export async function Event() {
         return <p>Event not found.</p>
     }
 
-    /*
+    
     const eventData = {
         date: 'FRI, OCT 25',
         time: '7:00 PM - 8:00 PM',
@@ -60,7 +60,7 @@ export async function Event() {
         "Experience a sonic journey that moves beyond traditional borders, blending contemporary jazz with powerful traditions from Latin America, Africa, the Caribbean, and Europe. This event brings together world-class musicians who are not just playing jazz—they are expanding it, infusing it with hypnotic global percussion, storytelling, and fiery instrumental passion.",
         "Whether you're a lifelong jazz aficionado or simply looking for an evening of truly original and soulful music, prepare for a performance that is both technically brilliant and physically thrilling. Discover the next chapter of jazz where every beat tells a global story. "
     ]
-*/
+
     const JazzLineup: Artist[] = [
     {
         name: 'The Global Rhythms Ensemble',
@@ -89,25 +89,25 @@ export async function Event() {
         <div className="font-sans">
 
             <div className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
-                <img
+                {/*<img
                     className="absolute inset-0 w-full h-full object-cover"
                     src={event.imageUrl}
                     alt={`Image of ${event.title}`} 
-                />
+                />*/}
 
                 <div className="absolute mt-8 ml-5">
                     <span className="rounded-lg  bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
-                        {event.category}
+                        {category}
                     </span>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-5 flex justify-center">
+                {/*<div className="absolute inset-x-0 bottom-5 flex justify-center">
                     <div className="bg-black/30 py-6 px-12 w-full">
                         <h1 className="text-white text-5xl sm:text-6xl font-bold text-center">
                             {event.title}
                         </h1>
                     </div>
-                </div>
+                </div>*/}
             </div>
             
             <div className="max-w-7xl mx-auto px-4 mt-8"> 
@@ -116,12 +116,12 @@ export async function Event() {
                 
                         <div className="lg:col-span-2">
                             <EventDetailBox
-                                date={event.date}
-                                time={event.time}
-                                locationName={event.placeName}
-                                address={event.address}
-                                organizerName={event.h}
-                                organizerDetails={event.organizerDetails}
+                                date={eventData.date}
+                                time={eventData.time}
+                                locationName={eventData.locationName}
+                                address={eventData.address}
+                                organizerName={eventData.organizerDetails}
+                                organizerDetails={eventData.organizerDetails}
                             />
 
                             <EventDescription
