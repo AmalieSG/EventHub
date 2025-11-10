@@ -39,7 +39,7 @@ export function UpcomingTab() {
     if (allEvents.length === 0) return [];
 
     return allEvents.filter(event => {
-        // Skip past events
+       
         if (event.isPast) return false;
 
         const isOnlineEvent = event.isOnline; 

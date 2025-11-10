@@ -5,6 +5,7 @@ interface EventListProps {
   events: EventWithHost[];
   layout?: 'grid' | 'list';
   action?: 'join' | 'remove' | 'edit' | 'ended';
+  className?: string;
 }
 
 export function EventList({ events, layout = 'grid', action = 'join' }: EventListProps) {

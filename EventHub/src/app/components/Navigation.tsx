@@ -25,7 +25,6 @@ function classNames(...classes: any) {
 export function Navigation() {
   const [currentPath, setCurrentPath] = useState<string>('')
 
-  // update path on load and when user navigates
   useEffect(() => {
     const updatePath = () => setCurrentPath(window.location.pathname)
     updatePath()
@@ -38,8 +37,6 @@ export function Navigation() {
       <Disclosure as="nav" className="relative bg-white">
         <div className="mx-auto max-w-7xl">
           <div className="flex h-16 justify-between items-center">
-
-            {/* Left side — Logo and links */}
             <section aria-label="Primary Navigation and Logo" className="flex items-center">
               <a href="/" className="flex shrink-0 items-center">
                 <img
@@ -72,12 +69,12 @@ export function Navigation() {
               </ul>
             </section>
 
-            {/* Middle — Search */}
             <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
               <form className="grid w-full max-w-lg grid-cols-1 lg:max-w-xs" role="search">
                 <label htmlFor="global-search" className="sr-only">
                   Search the entire site
                 </label>
+                
                 <input
                   id="global-search"
                   name="search"
@@ -92,7 +89,6 @@ export function Navigation() {
               </form>
             </div>
 
-            {/* Right side — User controls */}
             <section aria-label="User Controls" className="flex items-center space-x-4">
               <div className="flex items-center lg:hidden">
                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-600">
@@ -146,7 +142,6 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobile panel */}
         <DisclosurePanel className="lg:hidden">
           <ul className="space-y-1 pt-2 pb-3" role="list">
             {navigationItems.map((item) => {

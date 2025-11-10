@@ -1,123 +1,158 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Squares2X2Icon, Bars3Icon, FunnelIcon } from '@heroicons/react/24/outline';
-import { EventList } from '../components/EventList';
+import { EventList } from '../components/EventList'
+import { BriefcaseIcon, MusicalNoteIcon, GlobeAltIcon, CakeIcon, FaceSmileIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import { FilterBar, FilterState, defaultFilters, LayoutType } from '../components/FilterBar';
 import { useEventsContext } from "../context/EventsProvider";
 
+
+const categories= [
+    { name: 'BUSINESS', count: 23, icon: BriefcaseIcon },
+    { name: 'MUSIC', count: 26, icon: MusicalNoteIcon },
+    { name: 'TECHNOLOGY', count: 15, icon: GlobeAltIcon },
+    { name: 'FOOD & DRINK', count: 18, icon: CakeIcon }, 
+    { name: 'CULTURE', count: 12, icon: FaceSmileIcon }, 
+    { name: 'SPORT', count: 29, icon: TrophyIcon }, 
+];
+
 export default function Home() {
-    const { events, loading } = useEventsContext();
-    const [filters, setFilters] = useState<FilterState>(defaultFilters);
-    const [layout, setLayout] = useState<LayoutType>('grid');
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('grid'); 
-    const handleLayoutToggle = () => {
-        setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
-    };
+    const { events, loading } = useEventsContext();
+    const [filters, setFilters] = useState<FilterState>(defaultFilters);
+    const [layout, setLayout] = useState<LayoutType>('grid');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+   
+    const popularEvents = events.slice(0, 3);
     
+    const filteredEvents = useMemo(() => {
+        const baseFilter = (event: typeof events[number]) => {
+            const matchesOnline = filters.onlineOnly ? event.isOnline : true;
+            const matchesCity = filters.cities.length > 0
+                ? filters.cities.includes(event.city)
+                : true;
+            const matchesCategory = filters.categories.length > 0
+                ? filters.categories.includes(event.category)
+                : true;
+            const matchesSearch = searchQuery
+                ? event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  (event.city && event.city.toLowerCase().includes(searchQuery.toLowerCase()))
+                : true;
+            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
+        };
+        return events.filter(baseFilter);
+    }, [events, filters, searchQuery]);
 
-    const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof events[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.isOnline : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.includes(event.city)
-                : true;
-            const matchesCategory = filters.categories.length > 0
-                ? filters.categories.includes(event.category)
-                : true;
-            const matchesSearch = searchQuery
-                ? event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                  (event.city && event.city.toLowerCase().includes(searchQuery.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
-        };
-        return events.filter(baseFilter);
-    }, [events, filters, searchQuery]);
+    useEffect(() => {
+        if (!isFilterOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setIsFilterOpen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isFilterOpen]);
 
-    useEffect(() => {
-        if (!isFilterOpen) return;
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') setIsFilterOpen(false);
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isFilterOpen]);
+    if (loading) return <p>Loading events...</p>;
 
-    if (loading) return <p>Loading events...</p>;
+    const availableCities = useMemo(() => {
+        const unique = new Set<string>();
+        events.forEach(e => { if (e.city) unique.add(e.city); });
+        return Array.from(unique);
+    }, [events]);
 
-    const availableCities = useMemo(() => {
-        const unique = new Set<string>();
-        events.forEach(e => { if (e.city) unique.add(e.city); });
-        return Array.from(unique);
-    }, [events]);
+    const availableCategories = useMemo(() => {
+        const unique = new Set<string>();
+        events.forEach(e => { if (e.category) unique.add(e.category); });
+        return Array.from(unique);
+    }, [events]);
 
-    const availableCategories = useMemo(() => {
-        const unique = new Set<string>();
-        events.forEach(e => { if (e.category) unique.add(e.category); });
-        return Array.from(unique);
-    }, [events]);
-
-    return (
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <h1 className="text-3xl font-extrabold text-black flex-shrink-0">
-                    Upcoming Events
-                </h1>
-                <div className="flex w-full sm:w-auto gap-3">
-                    <input
-                        type="text"
-                        placeholder="Search events ..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full sm:w-80 pl-3 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500"
-                    />
-                    <button
-                        onClick={handleLayoutToggle}
-                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
-                    >
-                        
-                        {currentLayout === 'grid' ? (
-                            <Bars3Icon className="h-4 w-4" /> 
-                        ) : (
-                            <Squares2X2Icon className="h-4 w-4" /> 
-                        )}
-                        {currentLayout === 'grid' ? 'List View' : 'Grid View'}
-                    </button>
-
-                    <button 
-                        onClick={() => setIsFilterOpen(true)} 
-                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
-                    >
-                        <FunnelIcon className="h-4 w-4" />
-                        Filter
-                    </button>
-                </div>
-            </div>
-
-            <div className="mb-20">
-            {filteredEvents.length > 0 ? (
-                <EventList 
-                events={filteredEvents}  
-                layout={currentLayout} 
-                action="join" 
-                />
-            ) : (
-                <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                    No upcoming events match your search criteria.
-                </div>
-            )}
-            </div>
+    return (
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             
+        
+            <section className="text-center mb-16">
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+                    Discover events in your area
+                </h1>
+                <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                    From concerts and workshops to networking events and food festivals - find perfect experiences that match your interests
+                </p>
+                <div className="flex justify-center">
+                    <div className="relative w-full max-w-xl">
+                        <input
+                            type="text"
+                            placeholder="Search for events..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-5 pr-14 py-3 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-gray-800 focus:border-gray-800"
+                        />
+                        <button 
+                            type="button" 
+                            className="absolute right-0 top-0 h-full px-5 bg-gray-800 text-gray-200 rounded-r-lg hover:bg-black hover:cursor-pointer transition duration-150"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </section>
 
-            <FilterBar
-                events={events}
-                currentFilters={filters}
-                onApplyFilters={setFilters}
-                isFilterOpen={isFilterOpen}
-                setIsFilterOpen={setIsFilterOpen}
-            />
-        </div>
-    );
+            <section className="mb-16">
+                <div className="flex justify-between px-4 items-center mb-4">
+                    <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
+                    <a 
+                        href="/all-events"
+                        className="text-sm font-semibold text-gray-700 hover:text-black transition duration-150"
+                    >
+                        See all events
+                    </a>
+                </div>
+                
+             
+                {popularEvents.length > 0 ? (
+                    <EventList 
+                        events={popularEvents} 
+                        layout="grid" 
+                        action="join"
+                       
+                        className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    />
+                ) : (
+                    <p className="text-gray-500">No popular events to display.</p>
+                )}
+            </section>
+
+            <hr className="my-10 border-gray-200" /> 
+            
+           
+            <section className="mb-16 bg-gray-100 w-full p-8 rounded-xl">
+                <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
+                    Explore categories
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                    {categories.map(cat => (
+                        <a 
+                            key={cat.name}
+                           
+                            className="flex flex-col items-center p-4 bg-gray-800 border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group "
+                        >
+                            <div className="p-3 mb-2 bg-gray-200  text-gray-800  rounded-xl text-2xl   transition">
+                                <cat.icon className="w-8 h-8 " />
+                            </div>
+                            <p className="text-sm font-semibold text-gray-200 pb-2 uppercase text-center">
+                                {cat.name}
+                            </p>
+                            <p className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 font-bold transition duration-300 group text-xs text-gray-200 bg-red-600 py-3 px-10  rounded-xl mt-0.5">
+                                {cat.count} Events
+                            </p>
+                        </a>
+                    ))}
+                </div>
+            </section>
+
+            <hr className="my-10 border-gray-200" />
+
+       
+            
+        </main>
+    );
 }
