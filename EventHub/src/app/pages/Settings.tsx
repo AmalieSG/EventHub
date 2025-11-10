@@ -5,7 +5,7 @@ import {SettingsNav} from '../components/SettingsNav';
 import {AccountTab} from '../components/AccountTab';
 
 
-export const Settings: React.FC = () => {
+export function Settings() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div> <SettingsHeader/></div>
