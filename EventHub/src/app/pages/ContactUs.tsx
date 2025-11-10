@@ -46,7 +46,7 @@ export const ContactUs = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-red-600 text-white rounded hover:bg-red-600/90 transition"
+            className=" cursor-pointer w-full py-2 px-4 bg-red-600 text-white rounded-xl hover:bg-black transition"
           >
             Send
           </button>
