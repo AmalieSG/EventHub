@@ -54,3 +54,6 @@ export const eventsRelations = relations(events, ({ one, many }) => ({
   }),
   attendees: many(eventAttendees),
 }));
+
+export type Event = typeof events.$inferSelect;
+export type NewEvent = typeof events.$inferInsert;

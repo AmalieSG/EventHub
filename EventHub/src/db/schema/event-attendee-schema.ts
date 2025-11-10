@@ -30,3 +30,6 @@ export const eventAttendeesRelations = relations(eventAttendees, ({ one }) => ({
         references: [users.id],
     })
 }))
+
+export type EventAttendee = typeof eventAttendees.$inferSelect;
+export type NewEventAttendee = typeof eventAttendees.$inferInsert;

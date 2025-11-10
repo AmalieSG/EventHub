@@ -9,8 +9,8 @@ export default defineScript(async ({ env }) => {
     const db = await getDb()
 
     await db.delete(eventAttendees)
-    await db.delete(users)
     await db.delete(events)
+    await db.delete(users)
     
     const [admin] =await db
       .insert(users)
