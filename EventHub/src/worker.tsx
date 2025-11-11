@@ -1,4 +1,4 @@
-import { layout, render, route } from "rwsdk/router";
+import { layout, prefix, render, route } from "rwsdk/router";
 import { defineApp } from "rwsdk/worker";
 import { Document } from "@/app/Document";
 import { setCommonHeaders } from "@/app/headers";
@@ -15,6 +15,7 @@ import { Profile } from "./app/pages/Profile";
 import { Contact } from "./app/components/Contactus";
 import { setupDb, type DB } from "./db";
 import { env } from "cloudflare:workers";
+import { eventRoutes } from "./app/api/events/eventsRoutes";
 
 export interface Env {
   DB: D1Database;
@@ -30,6 +31,8 @@ export default defineApp([
   async function setup({ctx}) {
     ctx.db = await setupDb(env.DB)
   },
+
+  prefix("/api/v1/events", eventRoutes),
 
   render(Document, [
     layout(AppLayout, [
