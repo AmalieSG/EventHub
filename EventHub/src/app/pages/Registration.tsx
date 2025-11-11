@@ -1,6 +1,54 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
+
+type ApiResponse = {
+  message?: string;
+  error?: string; 
+};
 
 export const Registration = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+    setError('');
+    setMessage('');
+
+    if (password !== confirmPassword) {
+      setError("The passwords are not the same");
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = (await response.json()) as ApiResponse;
+
+      if (response.ok) {
+        setMessage(data.message || "User registered"); 
+        setName('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        setError(data.error || "An error occurred"); 
+      }
+    } catch (err) {
+      setError("Network error");
+    }
+  };
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
       <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
@@ -10,6 +58,8 @@ export const Registration = () => {
             Create your Account
           </h1>
         </header>
+
+        {/*Google og facebook, som må gjøres noe med */}
 
         <section className="space-y-4">
           <button

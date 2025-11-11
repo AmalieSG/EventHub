@@ -6,6 +6,14 @@ import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigationItems = [
+  { name: 'Home', href: '/', current: true },
+  { name: 'All events', href: '/search', current: false },
+  { name: 'Contact us', href: '/contact-us', current: false },
+  { name: 'Create event', href: '/create-event', current: false },
+  { name: 'Login', href: '/login', current: false },
+  { name: 'Registration', href: '/registration', current: false },
+
+];
   { name: 'Home', href: '/' },
   { name: 'All events', href: '/all-events' },
   { name: 'Contact us', href: '/contact-us' },
