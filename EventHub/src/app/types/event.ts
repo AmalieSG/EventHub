@@ -13,4 +13,10 @@ export interface Event {
   createdAt: string | number | Date;
   updatedAt?: string | number | Date | null;
   deletedAt?: string | number | Date | null;
+ isCreatedByMe: boolean; 
+  isJoinedByMe: boolean; 
+  isSavedByMe: boolean;
+  isPast: boolean;
+  city: string;
+  isOnline: boolean;
 }

@@ -136,20 +136,23 @@ export function AccountTab() {
               <legend className="sr-only text-sm font-medium text-gray-700 mb-2">Profile Picture</legend>
 
               <div className="flex items-start gap-6">
-                <div className="size-16 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xl flex-shrink-0 overflow-hidden">
-                    {'AW'}
-                </div>
+                {/* Updated this div to an img tag with the provided source */}
+                <img 
+                    className="size-16 rounded-full object-cover flex-shrink-0"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                    alt="Current Profile"
+                />
 
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-4">
-                      <input
-                        type="file"
-                        id="profile-picture-hidden"
-                        ref={fileInputRef}
-                        accept=".jpg,.jpeg,.png,.gif"
-                        onChange={handleFileChange}
-                        className="sr-only"
-                      />
+                    <input
+                      type="file"
+                      id="profile-picture-hidden"
+                      ref={fileInputRef}
+                      accept=".jpg,.jpeg,.png,.gif"
+                      onChange={handleFileChange}
+                      className="sr-only"
+                    />
                 
                     <button
                       type="button"
@@ -274,7 +277,7 @@ export function AccountTab() {
               >
                 Save Changes
               </button>
-               <InterestModal
+                <InterestModal
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
                 currentInterests={interests} 
@@ -284,7 +287,7 @@ export function AccountTab() {
 
           </form>
         </section>
-       
+        
       </section>
       
     </main>

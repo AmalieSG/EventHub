@@ -1,21 +1,27 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline'; // Added layout icons
+
 import { EventList } from './EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
 
-export function PastEventsTab() {
+
+export function JoinedEventsTab() {
     const { events: allEvents, loading } = useEventsContext(); 
     
+    
     const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isPast === true);
+        return allEvents.filter(event => event.isJoinedByMe === true);
     }, [allEvents]); 
+ 
 
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
-    const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('list'); 
+    const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('list'); // Changed to useState with setter
+    
     const defaultFilters = { onlineOnly: false, cities: [] as string[] };
 
+   
     const handleLayoutToggle = () => {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
@@ -43,6 +49,7 @@ export function PastEventsTab() {
         return Array.from(unique);
     }, [myEventsSeed]); 
 
+
     const filteredEvents = useMemo(() => {
         const baseFilter = (event: typeof myEventsSeed[number]) => {
             const matchesOnline = filters.onlineOnly ? event.location.toLowerCase().includes('online') : true;
@@ -60,6 +67,7 @@ export function PastEventsTab() {
             const matchesSearch =
                 event.title.toLowerCase().includes(query) ||
                 event.location.toLowerCase().includes(query);
+            
             return matchesSearch && baseFilter(event);
         });
     }, [searchQuery, filters, myEventsSeed]);
@@ -75,17 +83,20 @@ export function PastEventsTab() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
 
+
     return (
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
-                    Past Events
+                    My Joined Events
                 </h3>
                 <div className="flex w-full sm:w-auto gap-3">
+                
                     <div className="relative flex-grow sm:flex-grow-0">
                         <input
                             type="text"
-                            placeholder="Search past events ..."
+                            placeholder="Search my events ..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full sm:w-80 pl-10 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500" 
@@ -93,10 +104,12 @@ export function PastEventsTab() {
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </div>
 
+                  
                     <button
                         onClick={handleLayoutToggle}
                         className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
                     >
+                        
                         {currentLayout === 'grid' ? (
                             <Bars3Icon className="h-4 w-4" /> 
                         ) : (
@@ -115,13 +128,13 @@ export function PastEventsTab() {
             <div className="mb-20">
                 {filteredEvents.length > 0 ? (
                     <EventList 
-                      events={filteredEvents} 
-                      layout={currentLayout} 
-                      action="ended"
-                  />
+                    events={filteredEvents} 
+                    layout={currentLayout} 
+                    action="remove" 
+                    />
                 ) : (
                     <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No past events found matching your criteria.
+                        No events found.
                     </div>
                 )}
             </div>
@@ -213,4 +226,4 @@ export function PastEventsTab() {
     );
 }
 
-export default PastEventsTab;
+export default JoinedEventsTab;
