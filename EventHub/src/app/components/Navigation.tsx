@@ -9,6 +9,8 @@ const navigationItems = [
   { name: 'All events', href: '/search', current: false },
   { name: 'Contact us', href: '/contact-us', current: false },
   { name: 'Create event', href: '/create-event', current: false },
+  { name: 'Login', href: '/login', current: false },
+  { name: 'Registration', href: '/registration', current: false },
 
 ];
 
