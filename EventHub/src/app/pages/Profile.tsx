@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { UpcomingTab } from '../components/UpcomingTab';
 import { ProfileNav } from '../components/ProfileNav';
 import {ProfileHeader} from '../components/ProfileHeader';
-import {MyEventsTab} from '../components/MyEventsTab';
+import {CreatedEventsTab} from '../components/CreatedEventsTab';
+import {JoinedEventsTab} from '..//components/JoinedEventsTab';
 import {PastEventsTab} from '../components/PastEventsTab';
-import {SavedTab} from '../components/SavedTab';
+import {SavedEventsTab} from '../components/SavedEventsTab';
 import {AchievementsTab} from '../components/AchievementsTab';
 
 import { useEventsContext } from "../context/EventsProvider";
@@ -17,14 +18,17 @@ export const Profile = () => {
             if (activeTabName === 'Upcoming') {
                 return <UpcomingTab />;
             }
-            if (activeTabName === 'My Events') {
-                return <MyEventsTab />;
+            if (activeTabName === 'Created Events') {
+                return <CreatedEventsTab />;
+            }
+            if (activeTabName === 'Joined Events') {
+                return <JoinedEventsTab />;
             }
             if (activeTabName === 'Past Events') {
                 return <PastEventsTab />;
             }
             if (activeTabName === 'Saved') {
-                return <SavedTab />;
+                return <SavedEventsTab />;
             }
             if (activeTabName === 'Achievements') {
                 return <AchievementsTab/>;
