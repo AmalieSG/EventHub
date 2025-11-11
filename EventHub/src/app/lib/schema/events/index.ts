@@ -30,6 +30,5 @@ export const UpdateEventSchema = z
     message: "No fields provided for update",
   });
 
-// Optional: Types inferred by Zod
 export type CreateEventInput = z.infer<typeof CreateEventSchema>;
 export type UpdateEventInput = z.infer<typeof UpdateEventSchema>;

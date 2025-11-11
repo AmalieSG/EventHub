@@ -1,6 +1,5 @@
-// app/types/errors.ts
+// Hentet fra: https://github.com/mariuswallin/hiof-2025-webapp/blob/main/lectures/l-17/src/app/types/errors.ts
 
-// Base error codes
 export const Errors = {
   INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
   NOT_FOUND: "NOT_FOUND",
@@ -17,7 +16,6 @@ export const Errors = {
 
 export type ErrorCode = keyof typeof Errors;
 
-// Base error structure
 export type Err = {
   code: ErrorCode;
   message: string;

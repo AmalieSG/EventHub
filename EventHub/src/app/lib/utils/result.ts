@@ -1,4 +1,4 @@
-// /app/lib/utils/result.ts
+// Hentet fra: https://github.com/mariuswallin/hiof-2025-webapp/blob/main/lectures/l-17/src/app/lib/utils/result.ts
 
 import type { ResultFn } from "@/app/types/result";
 import { Errors } from "@/app/types/errors";

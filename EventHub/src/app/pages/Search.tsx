@@ -91,7 +91,7 @@ export function Search() {
       <div>
         <label htmlFor="search" className="block text-sm font-medium text-gray-700">
           Search for events
-        </label>
+       </label>
         <input
           id="search"
           type="text"

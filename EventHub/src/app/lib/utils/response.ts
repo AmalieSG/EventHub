@@ -1,8 +1,7 @@
-// /src/app/lib/utils/response.ts
+// Hentet fra: https://github.com/mariuswallin/hiof-2025-webapp/blob/main/lectures/l-17/src/app/lib/utils/response.ts
 
 import { Errors, type ErrorCode } from "@/app/types/errors";
 
-// Base headers for API responses
 const baseHeaders = {
   "Content-Type": "application/json",
   "Cache-Control": "public, max-age=300",

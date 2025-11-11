@@ -4,10 +4,10 @@ import EventCard from "../components/EventCard";
 import { useEventsContext } from "../context/EventsProvider";
 
 export const Home = () => {
-  const { events, loading } = useEventsContext();
+  /*const { events, loading } = useEventsContext();
   if (loading) {
     return <p>Loading events...</p>;
-  }
+  }*/
 
   return (
 

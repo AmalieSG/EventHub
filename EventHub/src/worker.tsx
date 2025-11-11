@@ -16,6 +16,7 @@ import { Contact } from "./app/components/Contactus";
 import { setupDb, type DB } from "./db";
 import { env } from "cloudflare:workers";
 import { eventRoutes } from "./app/api/events/eventsRoutes";
+import { AllEvents } from "./app/pages/AllEvents";
 
 export interface Env {
   DB: D1Database;
