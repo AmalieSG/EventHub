@@ -1,12 +1,14 @@
 import { layout, render, route } from "rwsdk/router";
 import { defineApp } from "rwsdk/worker";
+
+
 import { Document } from "@/app/Document";
 import { setCommonHeaders } from "@/app/headers";
-import { Home } from "@/app/pages/Home";
+import  Home  from "@/app/pages/Home";
 import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
-import { Search } from "./app/pages/Search";
+import  Search  from "./app/pages/Search";
 import { CreateEvent } from "./app/pages/CreateEvent";
 import { Login } from "./app/pages/Login";
 import { Registration } from "./app/pages/Registration";
@@ -16,6 +18,8 @@ import { Contact } from "./app/components/Contactus";
 import { db } from "./db";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
+import { ContactUs } from './app/pages/ContactUs'; 
+import AllEvents from "./app/pages/AllEvents";
 
 export type AppContext = {};
 
@@ -34,11 +38,11 @@ async function verifyPassword(password: string, hash: string): Promise<boolean> 
 }
 
 export default defineApp([
-  setCommonHeaders(),
-  ({ ctx }) => {
-    // setup ctx here
-    ctx;
-  },
+ setCommonHeaders(),
+ ({ ctx }) => {
+  // setup ctx here
+  ctx;
+ },
 
   route("/api/register", async ({ request }) => {
     if (request.method !== "POST") {

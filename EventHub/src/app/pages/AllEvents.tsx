@@ -6,7 +6,7 @@ import { EventList } from '../components/EventList';
 import { FilterBar, FilterState, defaultFilters, LayoutType } from '../components/FilterBar';
 import { useEventsContext } from "../context/EventsProvider";
 
-export default function Search() {
+export default function AllEvents() {
     const { events, loading } = useEventsContext();
     const [filters, setFilters] = useState<FilterState>(defaultFilters);
     const [layout, setLayout] = useState<LayoutType>('grid');
@@ -45,7 +45,7 @@ export default function Search() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
 
-    if (loading) return <p className="p-5">Loading events...</p>;
+    if (loading) return <p>Loading events...</p>;
 
     const availableCities = useMemo(() => {
         const unique = new Set<string>();
@@ -63,9 +63,8 @@ export default function Search() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h1 className="text-3xl font-extrabold text-black flex-shrink-0">
-                    Search
+                    All Events
                 </h1>
-                
                 <div className="flex w-full sm:w-auto gap-3">
                     <input
                         type="text"
@@ -74,7 +73,6 @@ export default function Search() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full sm:w-80 pl-3 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500"
                     />
-                  
                     <button
                         onClick={handleLayoutToggle}
                         className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
