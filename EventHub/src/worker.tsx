@@ -45,6 +45,7 @@ export default defineApp([
       route("/registration", Registration),
       route("/login", Login),
       route("/events/:id", Event),
+      route("/all-events", AllEvents)
     ]), 
   ],
   ),
