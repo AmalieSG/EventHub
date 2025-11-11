@@ -33,4 +33,4 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 
 export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
+export type CreateUser = typeof users.$inferInsert;

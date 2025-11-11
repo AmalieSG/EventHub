@@ -1,8 +1,9 @@
 import { EventCardList } from "./EventCardList"
 import { EventWithHost } from "../hooks/useEnrichedEvents"
+import type { EventWithAttendees } from "@/app/api/events/eventsRepository";
 
 interface EventListProps {
-  events: EventWithHost[]
+  events: EventWithAttendees[];
 }
 
 export function EventList({ events }: EventListProps) {

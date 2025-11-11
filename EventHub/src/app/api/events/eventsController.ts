@@ -1,5 +1,3 @@
-// src/app/api/events/eventsController.ts
-
 import {
   createSuccessResponse,
   createErrorResponse,
@@ -11,7 +9,7 @@ import { eventsService, type EventsService } from "./eventsService";
 
 export function createEventsController(service: EventsService) {
   return {
-    // GET: /api/v1/events => List all events
+    // GET: /api/v1/events (list all events)
     async listEvents(_ctx: RequestInfo) {
       try {
         const result = await service.list();
@@ -36,7 +34,7 @@ export function createEventsController(service: EventsService) {
       }
     },
 
-    // GET: /api/v1/events/:id => Get a specific event by ID
+    // GET: /api/v1/events/:id (get a specific event)
     async getEventById(ctx: RequestInfo) {
       try {
         const { id } = ctx.params as { id: string };
@@ -63,7 +61,7 @@ export function createEventsController(service: EventsService) {
       }
     },
 
-    // POST: /api/v1/events => Create a new event
+    // POST: /api/v1/events (create a new event)
     async createEvent(ctx: RequestInfo) {
       try {
         const payload = await ctx.request.json();
@@ -99,7 +97,7 @@ export function createEventsController(service: EventsService) {
       }
     },
 
-    // PUT/PATCH: /api/v1/events/:id => Update a specific event
+    // PUT/PATCH: /api/v1/events/:id (update a specific event)
     async updateEvent(ctx: RequestInfo) {
       try {
         const { id } = ctx.params as { id: string };
@@ -136,7 +134,7 @@ export function createEventsController(service: EventsService) {
       }
     },
 
-    // DELETE: /api/v1/events/:id => Delete a specific event
+    // DELETE: /api/v1/events/:id (delete a specific event)
     async deleteEvent(ctx: RequestInfo) {
       try {
         const { id } = ctx.params as { id: string };
@@ -152,7 +150,6 @@ export function createEventsController(service: EventsService) {
           );
         }
 
-        // 204 No Content
         return createSuccessResponse({ data: null, status: 204 });
       } catch (error) {
         console.error("Error in deleteEvent:", error);

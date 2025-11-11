@@ -32,4 +32,4 @@ export const eventAttendeesRelations = relations(eventAttendees, ({ one }) => ({
 }))
 
 export type EventAttendee = typeof eventAttendees.$inferSelect;
-export type NewEventAttendee = typeof eventAttendees.$inferInsert;
+export type CreateEventAttendee = typeof eventAttendees.$inferInsert;

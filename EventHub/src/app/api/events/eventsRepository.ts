@@ -9,114 +9,156 @@ export async function getEventById(id: number): Promise<Event | undefined> {
   return events.find((event) => event.id === id)
 }*/
 
-// src/app/api/events/eventsRepository.ts
-
 import { eq } from "drizzle-orm";
 import type { DB } from "@/db";
-import { events } from "@/db/schema";
-import { executeDbOperation } from "@/app/lib/db/operations"; // behold denne om du har den
+import { CreateEvent, eventAttendees, events, UpdateEvent, users } from "@/db/schema";
+import type { Event, EventAttendee, User } from "@/db/schema";
+import { executeDbOperation } from "@/app/lib/db/operations";
 import { getDb } from "@/db";
 import type { Result } from "@/app/types/result";
 
-// Typer basert på Drizzle-skjema
-export type EventEntity = typeof events.$inferSelect;
-export type EventCreateInput = Omit<typeof events.$inferInsert, "id" | "createdAt" | "updatedAt" | "deletedAt"> & {
-  // eventStart kan komme som Date i service – Drizzle konverterer til timestamp
-  eventStart: Date | string | number;
-};
-export type EventUpdateInput = Partial<Omit<typeof events.$inferInsert, "id" | "createdAt" | "deletedAt">> & {
-  eventStart?: Date | string | number;
-};
+export interface EventWithRelations extends Event {
+  attendees: EventAttendee[];
+  host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture"> | null;
+}
 
-// Offentlig kontrakt brukt av service
 export interface EventsRepository {
-  findMany(): Promise<Result<EventEntity[]>>;
-  findById(id: string): Promise<Result<EventEntity | null>>;
-  create(data: EventCreateInput): Promise<Result<EventEntity>>;
-  update(id: string, data: EventUpdateInput): Promise<Result<EventEntity | null>>;
+  findMany(): Promise<Result<EventWithRelations[]>>;
+  findById(id: string): Promise<Result<EventWithRelations | null>>;
+  create(data: CreateEvent): Promise<Result<Event>>;
+  update(id: string, data: UpdateEvent): Promise<Result<Event | null>>;
   remove(id: string): Promise<Result<void>>;
 }
 
 export function createEventsRepository(db: DB): EventsRepository {
   return {
-    // Hent alle events (uten pagination)
     async findMany() {
       return executeDbOperation(async () => {
-        const rows = await db.select().from(events).orderBy(events.eventStart);
-        return rows as EventEntity[];
+        const rows = await db
+        .select({
+          event: events, 
+          attendee: eventAttendees,
+          host: users,
+        })
+        .from(events)
+        .leftJoin(eventAttendees, eq(eventAttendees.eventId, events.id))
+        .leftJoin(users, eq(users.id, events.hostId))
+        .orderBy(events.eventStart);
+
+      const map = rows.reduce<Record<string, EventWithRelations>>((acc, row) => {
+        const ev = row.event as Event;
+        const attendee = row.attendee as EventAttendee | null;
+        const hostRow = row.host as User | null;
+
+        if (!acc[ev.id]) {
+          acc[ev.id] = { 
+            ...ev, 
+            attendees: [],
+            host: hostRow
+              ? {
+                  id: hostRow.id,
+                  firstName: hostRow.firstName,
+                  lastName: hostRow.lastName,
+                  email: hostRow.email,
+                  profilePicture: hostRow.profilePicture,
+                }
+              : null,
+          };
+        }
+        if (attendee) acc[ev.id].attendees.push(attendee);
+
+        if (!acc[ev.id].host && hostRow) {
+            acc[ev.id].host = {
+            id: hostRow.id,
+            firstName: hostRow.firstName,
+            lastName: hostRow.lastName,
+            email: hostRow.email,
+            profilePicture: hostRow.profilePicture,
+          };
+        }
+
+        return acc;
+
+      }, {})
+        return Object.values(map);
       });
     },
 
-    // Hent ett event
     async findById(id: string) {
       return executeDbOperation(async () => {
         const row = await db.query.events.findFirst({
           where: (e, { eq }) => eq(e.id, id),
+          with: { 
+            attendees: true,
+            host: true,
+          },
         });
-        return (row as EventEntity) ?? null;
+
+        if (!row) return null;
+
+        const full: EventWithRelations = {
+          ...(row as Event),
+          attendees: row.attendees as EventAttendee[],
+          host: row.host
+            ? {
+                id: row.host.id,
+                firstName: row.host.firstName,
+                lastName: row.host.lastName,
+                email: row.host.email,
+                profilePicture: row.host.profilePicture,
+              }
+            : null,
+        }
+        
+        return full ?? null;
       });
     },
 
-    // Opprett event
-    async create(data: EventCreateInput) {
+    async create(data: CreateEvent) {
       return executeDbOperation(async () => {
-        const insertData: typeof events.$inferInsert = {
-          // id genereres av events.$defaultFn(createId)
+        const [created] = await db
+        .insert(events)
+        .values({
           title: data.title,
           description: data.description,
           summary: data.summary,
-          // Drizzle (mode: "timestamp") tåler Date | number
-          eventStart:
-            data.eventStart instanceof Date
-              ? data.eventStart
-              : new Date(data.eventStart),
+          eventStart: data.eventStart,
           address: data.address,
           price: data.price,
           hostId: data.hostId,
           category: data.category,
           imageUrl: data.imageUrl,
           status: data.status ?? "upcoming",
-          createdAt: new Date(),
-          // updatedAt settes av $onUpdateFn i schema ved oppdatering
-        };
+        })
+        .returning();
 
-        const [created] = await db.insert(events).values(insertData).returning();
-        return created as EventEntity;
+        return created as Event;
       });
     },
 
-    // Oppdater event
-    async update(id: string, data: EventUpdateInput) {
+    async update(id: string, data: UpdateEvent) {
       return executeDbOperation(async () => {
-        const updateData: Partial<typeof events.$inferInsert> = {};
-
-        if (data.title !== undefined) updateData.title = data.title;
-        if (data.description !== undefined) updateData.description = data.description;
-        if (data.summary !== undefined) updateData.summary = data.summary;
-        if (data.eventStart !== undefined) {
-          updateData.eventStart =
-            data.eventStart instanceof Date
-              ? data.eventStart
-              : new Date(data.eventStart);
-        }
-        if (data.address !== undefined) updateData.address = data.address;
-        if (data.price !== undefined) updateData.price = data.price;
-        if (data.hostId !== undefined) updateData.hostId = data.hostId;
-        if (data.category !== undefined) updateData.category = data.category;
-        if (data.imageUrl !== undefined) updateData.imageUrl = data.imageUrl;
-        if (data.status !== undefined) updateData.status = data.status;
-
         const [updated] = await db
           .update(events)
-          .set(updateData)
+          .set({
+            ...(data.title !== undefined && { title: data.title }),
+            ...(data.description !== undefined && { description: data.description }),
+            ...(data.summary !== undefined && { summary: data.summary }),
+            ...(data.eventStart !== undefined && { eventStart: data.eventStart }),
+            ...(data.address !== undefined && { address: data.address }),
+            ...(data.price !== undefined && { price: data.price }),
+            ...(data.category !== undefined && { category: data.category }),
+            ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),
+            ...(data.status !== undefined && { status: data.status }),
+            ...(data.hostId !== undefined && { hostId: data.hostId }),
+          })
           .where(eq(events.id, id))
           .returning();
 
-        return (updated as EventEntity) ?? null;
+        return (updated as Event) ?? null;
       });
     },
 
-    // Slett event
     async remove(id: string) {
       return executeDbOperation(async () => {
         const [deleted] = await db
@@ -124,15 +166,11 @@ export function createEventsRepository(db: DB): EventsRepository {
           .where(eq(events.id, id))
           .returning({ id: events.id });
 
-        if (!deleted) {
-          throw new Error("Event not found");
-        }
-
+        if (!deleted) throw new Error("Event not found");
         return undefined;
       });
     },
   };
 }
 
-// Singleton for enkel bruk
 export const eventsRepository = createEventsRepository(await getDb());

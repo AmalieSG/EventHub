@@ -3,18 +3,14 @@ export interface Event {
   title: string;
   description: string;
   summary: string;
-  eventStart: string;
-  //date: Date;
-  //time: string;
-  //placeName?: string;
-  address: string;
-  price: number;
-  //attendeeIds: number[];
-  hostId: number;
-  category: string;
   imageUrl: string;
-  //createdAt: Date;
-  //updatedAt?: Date;
-  //deletedAt?: Date;
+  category: string;
+  address: string;
+  eventStart: string | number | Date;
+  price: number;
+  hostId: number;
   status: "upcoming" | "ongoing" | "ended" | "cancelled";
+  createdAt: string | number | Date;
+  updatedAt?: string | number | Date | null;
+  deletedAt?: string | number | Date | null;
 }

@@ -11,7 +11,7 @@ import { Errors } from "@/app/types/errors";
 import type { RequestInfo } from "rwsdk/worker";
 import { z } from "zod";
 
-// GET: /api/v1/events — list all events
+// GET: /api/v1/events (all events)
 export async function listEvents(_ctx: RequestInfo) {
   try {
     const result = await eventsRepository.findMany();
@@ -37,7 +37,7 @@ export async function listEvents(_ctx: RequestInfo) {
   }
 }
 
-// GET: /api/v1/events/:id — get one event
+// GET: /api/v1/events/:id (one event with attendees)
 export async function getEventById(ctx: RequestInfo) {
   try {
     const { id } = ctx.params as { id: string };
@@ -69,7 +69,7 @@ export async function getEventById(ctx: RequestInfo) {
   }
 }
 
-// POST: /api/v1/events — create event
+// POST: /api/v1/events (create event)
 export async function createEventHandler(ctx: RequestInfo) {
   try {
     const body = await ctx.request.json();
@@ -87,7 +87,16 @@ export async function createEventHandler(ctx: RequestInfo) {
       );
     }
 
-    return createSuccessResponse({ data: result.data, status: 201 });
+    const refreshed = await eventsRepository.findById(result.data.id);
+    if (!refreshed.success || !refreshed.data) {
+      return createErrorResponse(
+        Errors.INTERNAL_SERVER_ERROR,
+        "Failed to retrieve the created event.",
+        500
+      );
+    }
+
+    return createSuccessResponse({ data: refreshed.data, status: 201 });
   } catch (error) {
     console.error("Error in createEventHandler:", error);
     return createErrorResponse(
@@ -98,7 +107,7 @@ export async function createEventHandler(ctx: RequestInfo) {
   }
 }
 
-// PUT/PATCH: /api/v1/events/:id — update event
+// PUT/PATCH: /api/v1/events/:id (update event)
 export async function updateEventHandler(ctx: RequestInfo) {
   try {
     const { id } = ctx.params as { id: string };
@@ -120,7 +129,16 @@ export async function updateEventHandler(ctx: RequestInfo) {
       return createErrorResponse(Errors.NOT_FOUND, "Event not found", 404);
     }
 
-    return createSuccessResponse({ data: result.data });
+    const refreshed = await eventsRepository.findById(id);
+    if (!refreshed.success || !refreshed.data) {
+      return createErrorResponse(
+        Errors.INTERNAL_SERVER_ERROR,
+        "Failed to retrieve the updated event.",
+        500
+      );
+    }
+
+    return createSuccessResponse({ data: refreshed.data });
   } catch (error) {
     console.error("Error in updateEventHandler:", error);
     return createErrorResponse(
