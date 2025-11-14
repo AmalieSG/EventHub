@@ -12,7 +12,6 @@ import { Login } from "./app/pages/Login";
 import { Registration } from "./app/pages/Registration";
 import { Settings } from "./app/pages/Settings";
 import { Profile } from "./app/pages/Profile";
-import { Contact } from "./app/components/Contactus";
 import { db } from "./db";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
@@ -145,7 +144,7 @@ export default defineApp([
   render(Document, [
     layout(AppLayout, [
       route("/", Home),
-      route("/contact-us", Contact),
+      route("/contact-us", ContactUs),
       //midlertidig fiks
       route("/settings", Settings as any),
       route("/profile", Profile),
