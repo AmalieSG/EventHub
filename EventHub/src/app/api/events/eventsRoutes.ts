@@ -1,5 +1,3 @@
-// app/api/events/eventsRoutes.ts
-
 import { route } from "rwsdk/router";
 import { eventsController } from "./eventsController";
 import { methodNotAllowedResponse } from "@/app/lib/utils/response";

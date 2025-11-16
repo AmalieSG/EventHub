@@ -1,4 +1,4 @@
-/*"use client";
+"use client";
 
 import { createContext, useContext, ReactNode } from "react"
 import { useEnrichedEvents } from "../hooks/useEnrichedEvents"
@@ -27,4 +27,3 @@ export function useEventsContext() {
   }
   return context
 }
-*/

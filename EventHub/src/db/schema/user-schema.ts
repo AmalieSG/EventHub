@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { sqliteTable, text, int } from "drizzle-orm/sqlite-core";
 import { events } from "./event-schema";
 import { eventAttendees } from "./event-attendee-schema";
+import { savedEvents } from "./saved-event-schema";
 
 export const users = sqliteTable("users", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -14,7 +15,6 @@ export const users = sqliteTable("users", {
   city: text("city"),
   country: text("country"),
   profilePicture: text("profile_picture"),
-  passwordHash: text("password_hash").notNull(),
   role: text("role", { enum: ["user", "admin"] })
     .notNull()
     .default("user"),
@@ -30,6 +30,7 @@ export const users = sqliteTable("users", {
 export const usersRelations = relations(users, ({ many }) => ({
   eventsHosted: many(events),
   eventsAttending: many(eventAttendees),
+  savedEvents: many(savedEvents),
 }))
 
 

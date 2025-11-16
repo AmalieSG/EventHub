@@ -1,6 +1,94 @@
 "use client";
+import {
+  CalendarDaysIcon,
+  MapPinIcon,
+  TagIcon,
+  CurrencyDollarIcon,
+  FunnelIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
+import { type ReactNode } from "react";
 
-import React, { useMemo, useEffect } from 'react';
+export type FilterState = {
+  date?: string | null;
+  location?: string | null;
+  category?: string | null;
+  price?: string | null;
+};
+
+export const defaultFilters: FilterState = {
+  date: null,
+  location: null,
+  category: null,
+  price: null,
+};
+
+export type LayoutType = "grid" | "list";
+
+interface FilterBarProps {
+  filters?: FilterState;
+  onChangeFilters?: (next: FilterState) => void;
+  layout?: LayoutType;
+  setLayout?: (layout: LayoutType) => void;
+  className?: string;
+}
+
+type FilterButtonProps = {
+  icon: ReactNode;
+  label: string;
+};
+
+function FilterButton({ icon, label }: FilterButtonProps) {
+  return (
+    <button
+      type="button"
+      className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition"
+    >
+      <span className="w-4 h-4 flex items-center justify-center text-gray-400">
+        {icon}
+      </span>
+      <span className="whitespace-nowrap">{label}</span>
+      <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+    </button>
+  );
+}
+
+export function FilterBar({ className }: FilterBarProps) {
+  return (
+    <div
+      className={
+        "flex flex-wrap items-center gap-2 sm:gap-3 py-2 " +
+        (className ?? "")
+      }
+    >
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-600 mr-1">
+          <FunnelIcon className="w-4 h-4 text-gray-400" />
+          Filtre
+        </span>
+
+        <FilterButton
+          icon={<CalendarDaysIcon className="w-4 h-4" />}
+          label="Dato"
+        />
+        <FilterButton
+          icon={<MapPinIcon className="w-4 h-4" />}
+          label="Sted"
+        />
+        <FilterButton
+          icon={<TagIcon className="w-4 h-4" />}
+          label="Kategori"
+        />
+        <FilterButton
+          icon={<CurrencyDollarIcon className="w-4 h-4" />}
+          label="Pris"
+        />
+      </div>
+    </div>
+  );
+}
+
+/*import React, { useMemo, useEffect } from 'react';
 import { XMarkIcon, } from '@heroicons/react/24/outline';
 export type LayoutType = 'grid' | 'list';
 
@@ -189,4 +277,4 @@ export function FilterBar({
             </div>
         </div>
     );
-}
+}*/

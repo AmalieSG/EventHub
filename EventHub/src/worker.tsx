@@ -6,17 +6,17 @@ import  Home  from "@/app/pages/Home";
 import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
 import { About } from "./app/pages/About";
-import  Search  from "./app/pages/Search";
+import { Search } from "./app/pages/Search";
 import { CreateEvent } from "./app/pages/CreateEvent";
 import { Login } from "./app/pages/Login";
 import { Registration } from "./app/pages/Registration";
 import { Settings } from "./app/pages/Settings";
 import { Profile } from "./app/pages/Profile";
-import { Contact } from "./app/components/Contactus";
+//import { Contact } from "./app/pages/Contact";
 import { setupDb, type DB } from "./db";
 import { env } from "cloudflare:workers";
 import { eventRoutes } from "./app/api/events/eventsRoutes";
-import { db } from "./db";
+//import { db } from "./db";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { ContactUs } from './app/pages/ContactUs'; 
@@ -53,24 +53,27 @@ async function setup({ctx}) {
 
   prefix("/api/v1/events", eventRoutes),
 
-  route("/api/register", async ({ request }) => {
+  route("/api/register", async ({ request, ctx }) => {
     if (request.method !== "POST") {
       return new Response("Method Not Allowed", { status: 405 });
     }
 
     try {
-      const { name, email, password } = await request.json<{
-        name?: string;
+      const { firstName, lastName, email, password } = await request.json<{
+        firstName?: string;
+        lastName?: string;
         email?: string;
         password?: string;
       }>();
 
-      if (!name || !email || !password) {
+      if (!firstName || !lastName || !email || !password) {
         return Response.json(
           { success: false, error: "Missing name, email or password" },
           { status: 400 }
         );
       }
+
+      const db = ctx.db;
 
       const existingUser = await db.query.users.findFirst({
         where: eq(users.email, email),
@@ -86,7 +89,9 @@ async function setup({ctx}) {
       const passwordHash = await hashPassword(password);
 
       await db.insert(users).values({
-        name: name,
+        username: email,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         passwordHash: passwordHash,
       });
@@ -102,7 +107,7 @@ async function setup({ctx}) {
   }),
 
 
-  route("/api/login", async ({ request }) => {
+  route("/api/login", async ({ request, ctx }) => {
     if (request.method !== "POST") {
       return new Response("Method Not Allowed", { status: 405 });
     }
@@ -119,6 +124,8 @@ async function setup({ctx}) {
           { status: 400 }
         );
       }
+
+      const db = ctx.db;
 
       const user = await db.query.users.findFirst({
         where: eq(users.email, email),
@@ -142,7 +149,7 @@ async function setup({ctx}) {
 
       return Response.json({
         success: true,
-        message: `Welcome, ${user.name}!`,
+        message: `Welcome, ${user.firstName}!`,
       });
 
     } catch (e: any) {
@@ -156,7 +163,7 @@ async function setup({ctx}) {
   render(Document, [
     layout(AppLayout, [
       route("/", Home),
-      route("/contact-us", Contact),
+      //route("/contact-us", Contact),
       //midlertidig fiks
       route("/settings", Settings as any),
       route("/profile", Profile),

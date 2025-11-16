@@ -1,5 +1,3 @@
-// src/app/api/events/eventsHandler.ts
-
 import { CreateEventSchema, UpdateEventSchema } from "@/app/lib/schema/events";
 import { eventsRepository } from "./eventsRepository";
 import {

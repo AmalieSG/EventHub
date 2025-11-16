@@ -1,29 +1,16 @@
-/*import { getAllEvents, getEventById } from "./eventsRepository"
-import type { Event } from "@/app/types/event" 
-
-export async function fetchAllEvents(): Promise<Event[]> {
-  return getAllEvents()
-}
-
-export async function fetchEventById(id: number): Promise<Event | undefined> {
-  return getEventById(id);
-}*/
-
-// src/app/api/events/eventsService.ts
-
 import { z } from "zod";
 import { eventsRepository } from "./eventsRepository";
 import { ResultHandler } from "@/app/lib/utils/result";
 import { Errors } from "@/app/types/errors";
 import type { Result } from "@/app/types/result";
-import type { EventsRepository, EventWithAttendees } from "./eventsRepository";
+import type { EventsRepository, EventWithRelations } from "./eventsRepository";
 import { CreateEventSchema, UpdateEventSchema } from "@/app/lib/schema/events";
 
 export interface EventsService {
-  list(): Promise<Result<EventWithAttendees[]>>;
-  get(id: string): Promise<Result<EventWithAttendees>>;
-  create(input: unknown): Promise<Result<EventWithAttendees>>;
-  update(id: string, input: unknown): Promise<Result<EventWithAttendees>>;
+  list(): Promise<Result<EventWithRelations[]>>;
+  get(id: string): Promise<Result<EventWithRelations>>;
+  create(input: unknown): Promise<Result<EventWithRelations>>;
+  update(id: string, input: unknown): Promise<Result<EventWithRelations>>;
   remove(id: string): Promise<Result<void>>;
 }
 

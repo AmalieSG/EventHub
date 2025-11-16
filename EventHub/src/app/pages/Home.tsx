@@ -4,52 +4,81 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { EventList } from '../components/EventList'
 import { BriefcaseIcon, MusicalNoteIcon, GlobeAltIcon, CakeIcon, FaceSmileIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import { FilterBar, FilterState, defaultFilters, LayoutType } from '../components/FilterBar';
-import { useEventsContext } from "../context/EventsProvider";
-
+//import { useEventsContext } from "../context/EventsProvider";
+import type { EventWithRelations } from '../api/events/eventsRepository';
+import { ofetch } from 'ofetch';
 
 const categories= [
-    { name: 'BUSINESS', count: 23, icon: BriefcaseIcon },
-    { name: 'MUSIC', count: 26, icon: MusicalNoteIcon },
-    { name: 'TECHNOLOGY', count: 15, icon: GlobeAltIcon },
-    { name: 'FOOD & DRINK', count: 18, icon: CakeIcon }, 
-    { name: 'CULTURE', count: 12, icon: FaceSmileIcon }, 
-    { name: 'SPORT', count: 29, icon: TrophyIcon }, 
+    { name: 'BUSINESS', count: 23, icon: BriefcaseIcon },
+    { name: 'MUSIC', count: 26, icon: MusicalNoteIcon },
+    { name: 'TECHNOLOGY', count: 15, icon: GlobeAltIcon },
+    { name: 'FOOD & DRINK', count: 18, icon: CakeIcon }, 
+    { name: 'CULTURE', count: 12, icon: FaceSmileIcon }, 
+    { name: 'SPORT', count: 29, icon: TrophyIcon }, 
 ];
 
-export default function Home() {
-    const { events, loading } = useEventsContext();
-    const [filters, setFilters] = useState<FilterState>(defaultFilters);
-    const [layout, setLayout] = useState<LayoutType>('grid');
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
-   
-    const popularEvents = events.slice(0, 3);
-    
-    const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof events[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.isOnline : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.includes(event.city)
-                : true;
-            const matchesCategory = filters.categories.length > 0
-                ? filters.categories.includes(event.category)
-                : true;
-            const matchesSearch = searchQuery
-                ? event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                  (event.city && event.city.toLowerCase().includes(searchQuery.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
-        };
-        return events.filter(baseFilter);
-    }, [events, filters, searchQuery]);
+type ApiOk<T> = { success: true; data: T };
+type ApiErr = { success: false; error: { code: string; message: string } };
+type ApiResponse<T> = ApiOk<T> | ApiErr;
 
-    useEffect(() => {
-        if (!isFilterOpen) return;
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') setIsFilterOpen(false);
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+export default function Home() {
+    const [events, setEvents] = useState<EventWithRelations[]>([]);
+    const [loading, setLoading] = useState(true);
+    
+    const [filters, setFilters] = useState<FilterState>(defaultFilters);
+    const [layout, setLayout] = useState<LayoutType>('grid');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    // Hent fra API-laget
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+        try {
+            const res = await ofetch<ApiResponse<EventWithRelations[]>>(
+            "/api/v1/events"
+            );
+            if (!cancelled && "success" in res && res.success) {
+            setEvents(res.data);
+            }
+        } catch (e) {
+            console.error("Failed to load events:", e);
+        } finally {
+            if (!cancelled) setLoading(false);
+        }
+        })();
+        return () => {
+        cancelled = true;
+        };
+    }, []);
+
+    const popularEvents = events.slice(0, 3);
+
+    /*const filteredEvents = useMemo(() => {
+        const baseFilter = (event: typeof events[number]) => {
+            const matchesOnline = filters.onlineOnly ? event.isOnline : true;
+            const matchesCity = filters.cities.length > 0
+                ? filters.cities.includes(event.city)
+                : true;
+            const matchesCategory = filters.categories.length > 0
+                ? filters.categories.includes(event.category)
+                : true;
+            const matchesSearch = searchQuery
+                ? event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (event.city && event.city.toLowerCase().includes(searchQuery.toLowerCase()))
+                : true;
+            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
+        };
+        return events.filter(baseFilter);
+    }, [events, filters, searchQuery]);*/
+    
+    /*useEffect(() => {
+        if (!isFilterOpen) return;
+            const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setIsFilterOpen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
 
     if (loading) return <p>Loading events...</p>;
@@ -59,17 +88,14 @@ export default function Home() {
         events.forEach(e => { if (e.city) unique.add(e.city); });
         return Array.from(unique);
     }, [events]);
+    const availableCategories = useMemo(() => {
+        const unique = new Set<string>();
+        events.forEach(e => { if (e.category) unique.add(e.category); });
+    return Array.from(unique);
+    }, [events]);*/
 
-    const availableCategories = useMemo(() => {
-        const unique = new Set<string>();
-        events.forEach(e => { if (e.category) unique.add(e.category); });
-        return Array.from(unique);
-    }, [events]);
-
-    return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
-            
-        
+     return (
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
                     Discover events in your area

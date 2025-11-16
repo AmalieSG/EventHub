@@ -16,6 +16,11 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
         event.eventStart instanceof Date
             ? event.eventStart
             : new Date(event.eventStart);
+    const DateInfo = (
+        <time dateTime={date.toISOString()} className="text-sm font-medium text-red-400">
+            {date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
+        </time>
+    );
     const time = date.toLocaleTimeString("en-GB", {
         hour: "2-digit",
         minute: "2-digit",
@@ -30,7 +35,7 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
     const handleSave = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsSaved(prev => !prev);
+        setIsSaved(1);
     };
 
     const handleActionClick = (e: React.MouseEvent) => {
@@ -65,12 +70,6 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
         </button>
     );
 
-    const DateInfo = (
-        <time dateTime={event.date.toISOString()} className="text-sm font-medium text-red-400">
-            {event.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
-        </time>
-    );
-
     const PriceInfo = (
         <p className="font-extrabold text-xl text-red-500">{formattedPrice}</p>
     );
@@ -88,22 +87,22 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
                     <span className="text-xs bg-red-600 px-3 py-1 rounded-full font-bold text-white flex-shrink-0 mt-1">{event.category}</span>
                 </section>
 
-                <p className="text-gray-300 line-clamp-2 h-[3rem] overflow-hidden">{event.shortDescription}</p>
+                <p className="text-gray-300 line-clamp-2 h-[3rem] overflow-hidden">{event.summary}</p>
 
                 <section className="flex flex-col gap-2 text-sm text-gray-400 mt-2 ">
                     <div className="flex flex-wrap gap-x-6 gap-y-2">
                         <div className="flex items-center gap-1"><p className='text-red-400'>🗓️</p>{DateInfo}</div>
-                        <div className="flex items-center gap-1"><p className='text-red-400'>⏰</p><p className='font-medium'>{event.time}</p></div>
+                        <div className="flex items-center gap-1"><p className='text-red-400'>⏰</p><p className='font-medium'>{time}</p></div>
                     </div>
-                    <div className="flex items-center gap-1"><p className='text-red-400'>📍</p><address className="not-italic line-clamp-1">{event.location}</address></div>
+                    <div className="flex items-center gap-1"><p className='text-red-400'>📍</p><address className="not-italic line-clamp-1">{event.address}</address></div>
                 </section>
 
                 <section className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">
-                    <p className="text-sm text-gray-400 "><span className='font-bold text-white'>{event.attendeeCount}</span> attending</p>
+                    <p className="text-sm text-gray-400 "><span className='font-bold text-white'>{attendeeCount}</span> attending</p>
                     {PriceInfo}
                 </section>
 
-                <p className="text-xs text-gray-500 ">Hosted by <span className='font-medium text-gray-400'>{event.host ? `${event.host.firstName} ${event.host.lastName}` : "Unknown"}</span></p>
+                <p className="text-xs text-gray-500 ">Hosted by <span className='font-medium text-gray-400'>{hostName}</span></p>
 
                 <section className="flex gap-3 mt-4 items-center">
                     <button
@@ -142,13 +141,13 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
                 <h2 className="text-xl font-extrabold text-white line-clamp-1 mr-4">{event.title}</h2>
                 <span className="text-xs bg-gray-700 px-1 py-1 rounded-full px-10 py-2 bg-opacity-25  font-bold text-gray-200 flex-shrink-0">{event.category}</span>
             </section>
-            <p className="text-gray-400 line-clamp-1 text-sm mb-3">{event.shortDescription}</p>
+            <p className="text-gray-400 line-clamp-1 text-sm mb-3">{event.summary}</p>
             <section className="flex flex-col gap-y-1 text-xs text-gray-400">
                 <div className="flex flex-wrap gap-x-4">
-                    <div className="flex items-center font-medium"><span className="mr-1 text-red-400">⏰</span><p>{event.time}</p></div>
+                    <div className="flex items-center font-medium"><span className="mr-1 text-red-400">⏰</span><p>{time}</p></div>
                     <div className="flex items-center"><span className="mr-1 text-red-400">🗓️</span>{DateInfo}</div>
                 </div>
-                <div className="flex items-center mt-1"><span className="mr-1 text-red-400">📍</span><address className="not-italic line-clamp-1 text-sm">{event.location}</address></div>
+                <div className="flex items-center mt-1"><span className="mr-1 text-red-400">📍</span><address className="not-italic line-clamp-1 text-sm">{event.address}</address></div>
             </section>
 
             <section className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">

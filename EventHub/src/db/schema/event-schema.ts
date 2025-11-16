@@ -9,6 +9,7 @@ import { users } from "./user-schema";
 import { relations } from "drizzle-orm/relations";
 import { createId } from "@/app/lib/utils/id";
 import { eventAttendees } from "./event-attendee-schema";
+import { savedEvents } from "./saved-event-schema";
 
 export const events = sqliteTable("events", {
     id: text("id")
@@ -53,6 +54,7 @@ export const eventsRelations = relations(events, ({ one, many }) => ({
     references: [users.id],
   }),
   attendees: many(eventAttendees),
+  savedBy: many(savedEvents),
 }));
 
 export type Event = typeof events.$inferSelect;

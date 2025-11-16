@@ -1,4 +1,27 @@
 export interface Event {
+  readonly id: number;
+  title: string;
+  shortDescription: string;
+  longDescription: string;
+  date: Date;
+  time: string;
+  location: string;
+  price: number;
+  attendeeIds: number[];
+  hostId: number;
+  category: string;
+  imageUrl: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  isCreatedByMe: boolean; 
+  isJoinedByMe: boolean; 
+  isSavedByMe: boolean;
+  isPast: boolean;
+  city: string;
+  isOnline: boolean;
+}
+
+/*export interface Event {
   readonly id: string;
   title: string;
   description: string;
@@ -13,10 +36,10 @@ export interface Event {
   createdAt: string | number | Date;
   updatedAt?: string | number | Date | null;
   deletedAt?: string | number | Date | null;
- isCreatedByMe: boolean; 
+  isCreatedByMe: boolean; 
   isJoinedByMe: boolean; 
   isSavedByMe: boolean;
   isPast: boolean;
   city: string;
   isOnline: boolean;
-}
+}*/
