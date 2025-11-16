@@ -15,6 +15,7 @@ CREATE TABLE `events` (
 	`description` text NOT NULL,
 	`summary` text NOT NULL,
 	`eventStart` integer NOT NULL,
+	`address` text NOT NULL,
 	`price` integer NOT NULL,
 	`hostId` integer NOT NULL,
 	`category` text NOT NULL,
