@@ -163,7 +163,7 @@ async function setup({ctx}) {
   render(Document, [
     layout(AppLayout, [
       route("/", Home),
-      //route("/contact-us", Contact),
+      route("/contact-us", ContactUs),
       //midlertidig fiks
       route("/settings", Settings as any),
       route("/profile", Profile),
