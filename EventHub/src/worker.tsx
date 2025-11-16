@@ -19,14 +19,12 @@ import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { ContactUs } from './app/pages/ContactUs'; 
 import AllEvents from "./app/pages/AllEvents";
+import type { AuthContext } from "@/app/types/auth";
 
-export interface Env {
-  DB: D1Database;
-}
 
 export type AppContext = {
   db: DB;
-};
+} & AuthContext;
 
 async function hashPassword(password: string): Promise<string> {
   const enc = new TextEncoder();

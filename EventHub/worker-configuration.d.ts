@@ -6,6 +6,7 @@ declare namespace Cloudflare {
 		mainModule: typeof import("./src/worker");
 	}
 	interface Env {
+    DB: D1Database;
 		ASSETS: Fetcher;
 	}
 }
