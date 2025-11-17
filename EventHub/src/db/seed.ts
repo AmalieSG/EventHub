@@ -24,6 +24,8 @@ export default defineScript(async ({ env }) => {
         email: "admin@example.com",
         passwordHash: "hashed_password_here",
         role: "admin",
+        createdAt: new Date(),
+        isActive: true,
       })
       .returning();
 
@@ -37,6 +39,8 @@ export default defineScript(async ({ env }) => {
           email: "user1@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
+          createdAt: new Date(),
+          isActive: true,
         },
         {
           username: "user2",
@@ -45,6 +49,8 @@ export default defineScript(async ({ env }) => {
           email: "user2@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
+          createdAt: new Date(),
+          isActive: true,
         },
         {
           username: "user3",
@@ -53,6 +59,8 @@ export default defineScript(async ({ env }) => {
           email: "user3@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
+          createdAt: new Date(),
+          isActive: true,
         },
         {
           username: "user4",
@@ -61,6 +69,8 @@ export default defineScript(async ({ env }) => {
           email: "user4@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
+          createdAt: new Date(),
+          isActive: true,
         },
       ])
       .returning();
@@ -201,16 +211,8 @@ export default defineScript(async ({ env }) => {
     const insertedEvents = [...firstBatch, ...secondBatch];
 
     const [
-      event1,
-      event2,
-      event3,
-      event4,
-      event5,
-      event6,
-      event7,
-      event8,
-      event9,
-      event10,
+      event1, event2, event3, event4, event5,
+      event6, event7, event8, event9, event10
     ] = insertedEvents;
 
     // --- Attendees ---

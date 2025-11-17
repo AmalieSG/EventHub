@@ -15,6 +15,13 @@
       "when": 1763321023974,
       "tag": "0001_rare_metal_master",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1763337143869,
+      "tag": "0002_quick_queen_noir",
+      "breakpoints": true
     }
   ]
 }
