@@ -12,7 +12,10 @@
   "observability": {
     "enabled": true
   },
-  "vars": { },
+  "vars": {
+    "VITE_API_URL": "https://eventhub.iagresho.workers.dev",
+    "VITE_API_URL_DEV": "http://localhost:5173"
+  },
   "d1_databases": [
     {
       "binding": "DB",

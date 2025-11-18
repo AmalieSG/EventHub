@@ -48,7 +48,7 @@ CREATE TABLE `events` (
 );
 
 CREATE TABLE `event_attendees` (
-	`event_id` text NOT NULL,
+	`event_id` integer NOT NULL,
 	`user_id` integer NOT NULL,
 	`joined_at` integer NOT NULL,
 	FOREIGN KEY (`event_id`) REFERENCES `events`(`id`) ON UPDATE no action ON DELETE cascade,
@@ -56,7 +56,7 @@ CREATE TABLE `event_attendees` (
 );
 
 CREATE TABLE `saved_events` (
-	`event_id` text NOT NULL,
+	`event_id` integer NOT NULL,
 	`user_id` integer NOT NULL,
 	`saved_at` integer NOT NULL,
 	FOREIGN KEY (`event_id`) REFERENCES `events`(`id`) ON UPDATE no action ON DELETE cascade,
@@ -103,30 +103,30 @@ INSERT INTO "events" VALUES(8,'Frontend Workshop','Hands-on React and TypeScript
 INSERT INTO "events" VALUES(9,'Wine & Cheese Evening','Tasting of selected wines and local cheeses.','Guided tasting with sommelier.',1745002800,'Tasting Room, Bergen',650,5,'Food & Drink','https://example.com/images/wine-cheese.jpg',1763377533,NULL,NULL,'upcoming');
 INSERT INTO "events" VALUES(10,'eSports Tournament','Local eSports teams compete in popular games.','Full-day gaming event with finals on stage.',1755856800,'Arena, Oslo',150,3,'Sport','https://example.com/images/esports.jpg',1763377533,NULL,NULL,'upcoming');
 
-INSERT INTO "event_attendees" VALUES('event1',3,1763377533);
-INSERT INTO "event_attendees" VALUES('event1',4,1763377533);
-INSERT INTO "event_attendees" VALUES('event2',2,1763377533);
-INSERT INTO "event_attendees" VALUES('event2',5,1763377533);
-INSERT INTO "event_attendees" VALUES('event3',2,1763377533);
-INSERT INTO "event_attendees" VALUES('event3',3,1763377533);
-INSERT INTO "event_attendees" VALUES('event3',5,1763377533);
-INSERT INTO "event_attendees" VALUES('event4',1,1763377533);
-INSERT INTO "event_attendees" VALUES('event4',4,1763377533);
-INSERT INTO "event_attendees" VALUES('event5',3,1763377533);
-INSERT INTO "event_attendees" VALUES('event6',2,1763377533);
-INSERT INTO "event_attendees" VALUES('event6',4,1763377533);
-INSERT INTO "event_attendees" VALUES('event7',5,1763377533);
-INSERT INTO "event_attendees" VALUES('event8',2,1763377533);
-INSERT INTO "event_attendees" VALUES('event9',4,1763377533);
-INSERT INTO "event_attendees" VALUES('event10',3,1763377533);
-INSERT INTO "event_attendees" VALUES('event10',5,1763377533);
+INSERT INTO "event_attendees" VALUES(1,3,1763377533);
+INSERT INTO "event_attendees" VALUES(1,4,1763377533);
+INSERT INTO "event_attendees" VALUES(2,2,1763377533);
+INSERT INTO "event_attendees" VALUES(2,5,1763377533);
+INSERT INTO "event_attendees" VALUES(3,2,1763377533);
+INSERT INTO "event_attendees" VALUES(3,3,1763377533);
+INSERT INTO "event_attendees" VALUES(3,5,1763377533);
+INSERT INTO "event_attendees" VALUES(4,1,1763377533);
+INSERT INTO "event_attendees" VALUES(4,4,1763377533);
+INSERT INTO "event_attendees" VALUES(5,3,1763377533);
+INSERT INTO "event_attendees" VALUES(6,2,1763377533);
+INSERT INTO "event_attendees" VALUES(6,4,1763377533);
+INSERT INTO "event_attendees" VALUES(7,5,1763377533);
+INSERT INTO "event_attendees" VALUES(8,2,1763377533);
+INSERT INTO "event_attendees" VALUES(9,4,1763377533);
+INSERT INTO "event_attendees" VALUES(10,3,1763377533);
+INSERT INTO "event_attendees" VALUES(10,5,1763377533);
 
-INSERT INTO "saved_events" VALUES('event1',2,1763377533);
-INSERT INTO "saved_events" VALUES('event3',2,1763377533);
-INSERT INTO "saved_events" VALUES('event8',2,1763377533);
-INSERT INTO "saved_events" VALUES('event2',3,1763377533);
-INSERT INTO "saved_events" VALUES('event6',3,1763377533);
-INSERT INTO "saved_events" VALUES('event3',4,1763377533);
-INSERT INTO "saved_events" VALUES('event7',4,1763377533);
-INSERT INTO "saved_events" VALUES('event5',5,1763377533);
-INSERT INTO "saved_events" VALUES('event9',5,1763377533);
+INSERT INTO "saved_events" VALUES(1,2,1763377533);
+INSERT INTO "saved_events" VALUES(3,2,1763377533);
+INSERT INTO "saved_events" VALUES(8,2,1763377533);
+INSERT INTO "saved_events" VALUES(2,3,1763377533);
+INSERT INTO "saved_events" VALUES(6,3,1763377533);
+INSERT INTO "saved_events" VALUES(3,4,1763377533);
+INSERT INTO "saved_events" VALUES(7,4,1763377533);
+INSERT INTO "saved_events" VALUES(5,5,1763377533);
+INSERT INTO "saved_events" VALUES(9,5,1763377533);

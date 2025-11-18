@@ -24,8 +24,10 @@ export function EventDetail({ id }: EventProps) {
                 setLoading(true)
                 setError(null)
 
-                const response = await fetch(`http://localhost:5173/api/v1/events/${id}`)
-
+                // bytt den under til VITE_API_URL_DEV for at den skal fungere i lokalhost
+                const apiUrl = import.meta.env.VITE_API_URL;
+                const response = await fetch(`${apiUrl}/api/v1/events/${id}`);
+            
                 if (!response.ok) {
                     throw new Error('Failed to fetch event')
                 }
