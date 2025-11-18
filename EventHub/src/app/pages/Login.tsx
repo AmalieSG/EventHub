@@ -1,6 +1,47 @@
-import React from 'react';
+"use client";
 
-export const Login = () => {
+import { useActionState, useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
+
+import { login } from "@/app/api/auth/authServerActions";
+
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    >
+      {pending ? "Logger inn..." : "Logg inn"}
+    </button>
+  );
+}
+
+export const Login = () => { 
+
+  const [state, formAction] = useActionState(
+		// Uses any for simplicity here
+    async (prevState: any, formData: FormData) => {
+      const result = await login(prevState, formData);
+      console.log(result);
+
+      if (result.success) {
+        window.location.href = "/";
+      }
+      return result;
+    },
+    {
+      success: false,
+      error: "",
+      state: {
+        user: null,
+        session: null,
+      },
+    }
+  );
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
       <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
@@ -37,21 +78,21 @@ export const Login = () => {
           </p>
         </section>
 
-        <form className="space-y-6">
+        <form action={formAction} className="space-y-4">
           <fieldset className="space-y-4">
             <legend className="sr-only">Login details</legend>
             
             <p>
-              <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                Username
               </label>
               <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
                 required
-                placeholder="Enter your email"
+                placeholder="Username"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </p>
@@ -92,12 +133,9 @@ export const Login = () => {
             </p>
           </footer>
 
-          <button
-            type="button"
-            className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Sign In →
-          </button>
+          <SubmitButton />
+
+     
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">

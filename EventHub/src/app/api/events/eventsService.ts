@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { eventsRepository } from "./eventsRepository";
 import { ResultHandler } from "@/app/lib/utils/result";
 import { Errors } from "@/app/types/errors";
 import type { Result } from "@/app/types/result";
@@ -166,6 +165,3 @@ export function createEventsService(repo: EventsRepository): EventsService {
     },
   };
 }
-
-// Singleton instans – samme mønster som i eksemplet
-export const eventsService = createEventsService(eventsRepository);

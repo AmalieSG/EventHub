@@ -19,35 +19,26 @@ import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { ContactUs } from './app/pages/ContactUs'; 
 import AllEvents from "./app/pages/AllEvents";
-
-export interface Env {
-  DB: D1Database;
-}
+import type { AuthContext } from "@/app/types/auth";
+import {
+    hashPassword,
+    verifyPassword,
+} from "@/app/lib/auth/password";
 
 export type AppContext = {
   db: DB;
-};
+} & AuthContext;
 
-async function hashPassword(password: string): Promise<string> {
-  const enc = new TextEncoder();
-  const data = enc.encode(password);
-  const hash = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
 
-async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  const passwordHash = await hashPassword(password);
-  return passwordHash === hash;
-}
+
+
 
 export default defineApp([
  setCommonHeaders(),
  
-async function setup({ctx}) {
-  ctx.db = await setupDb(env.DB)
- },
+ function setup({ ctx }) {
+    ctx.db = setupDb(env.DB); 
+  },
 
   prefix("/api/v1/events", eventRoutes),
 
