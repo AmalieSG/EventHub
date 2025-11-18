@@ -40,7 +40,7 @@ export function PriceBox({ price, description, features }: PriceBoxProps) {
             </div>
             
             <button 
-                className="w-full bg-black text-white font-bold py-3 rounded-lg text-lg 
+                className="w-full bg-red-600 text-white font-bold py-3 rounded-lg text-lg 
                         hover:bg-white hover:text-black transition duration-150 shadow-md hover:shadow-none hover:border hover:border-gray-300 cursor-pointer"
             >
                 Join Now
