@@ -18,7 +18,7 @@
       "binding": "DB",
       "database_name": "eventhub-db",
       "database_id": "969efaae-cf82-495b-8e65-d5d4cdd90c3d",
-      "migrations_dir": "drizzle"
+      "migrations_dir": "drizzle",
     }
   ],
   "r2_buckets": [
