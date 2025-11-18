@@ -24,14 +24,24 @@ function SubmitButton() {
 
 export const Registration = () => {
 
-  const [state, formAction] = useActionState(register, {
+const [state, formAction] = useActionState(
+  async (prevState: any, formData: FormData) => {
+    const result = await register(prevState, formData);
+    console.log('Registration result:', result);
+    if (result.success) {
+      window.location.href = "/";
+    }
+    return result;
+  },
+  {
     success: false,
     error: "",
     state: {
       user: null,
       session: null,
     },
-  });
+  }
+);
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
