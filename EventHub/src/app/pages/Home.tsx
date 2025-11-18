@@ -114,7 +114,7 @@ export default function Home() {
                         />
                         <button 
                             type="button" 
-                            className="absolute right-0 top-0 h-full px-5 bg-gray-800 text-gray-200 rounded-r-lg hover:bg-black hover:cursor-pointer transition duration-150"
+                            className="absolute right-0 top-0 h-full px-5 bg-red-600 text-white rounded-r-lg hover:bg-black hover:cursor-pointer transition duration-150"
                         >
                             Search
                         </button>

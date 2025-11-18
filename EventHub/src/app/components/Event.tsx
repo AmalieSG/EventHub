@@ -24,10 +24,9 @@ export function EventDetail({ id }: EventProps) {
                 setLoading(true)
                 setError(null)
 
-                // bytt den under til VITE_API_URL_DEV for at den skal fungere i lokalhost
                 const apiUrl = import.meta.env.VITE_API_URL;
                 const response = await fetch(`${apiUrl}/api/v1/events/${id}`);
-            
+                
                 if (!response.ok) {
                     throw new Error('Failed to fetch event')
                 }
@@ -93,14 +92,18 @@ export function EventDetail({ id }: EventProps) {
         organizerDetails: `Hosted by ${hostName}`,
     }
 
-    const priceData = {
-        price: event.price ? `$${event.price}` : 'Free',
-        description: 'Event ticket',
+     const priceData = {
+        price: '$189',
+        description: 'Full day pass (incl. lunch and coffee)',
         features: [
-            'Entry to the event',
-            'Access to main venue',
+            'Entry to the "Global Rhythms Night', 
+            'Access to main performance hall', 
+            'Complimentary drink upon arrival',
+            "Free Appetizers Included",
+            "Exclusive digital program guide",
+            "Post-show artist meet & greet (limited availability)"
         ]
-    }
+    };
 
     const descriptionData = [
         event.description
