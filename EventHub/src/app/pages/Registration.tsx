@@ -1,53 +1,37 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useActionState, useState } from 'react';
+import { register } from "@/app/api/auth/authServerActions";
+import { useFormStatus } from "react-dom";
 
 type ApiResponse = {
   message?: string;
   error?: string; 
 };
 
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    >
+      {pending ? "Registering..." : "Register"}
+    </button>
+  );
+}
+
 export const Registration = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); 
-    setError('');
-    setMessage('');
-
-    if (password !== confirmPassword) {
-      setError("The passwords are not the same");
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      const data = (await response.json()) as ApiResponse;
-
-      if (response.ok) {
-        setMessage(data.message || "User registered"); 
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-      } else {
-        setError(data.error || "An error occurred"); 
-      }
-    } catch (err) {
-      setError("Network error");
-    }
-  };
+  const [state, formAction] = useActionState(register, {
+    success: false,
+    error: "",
+    state: {
+      user: null,
+      session: null,
+    },
+  });
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -85,21 +69,51 @@ export const Registration = () => {
           </p>
         </section>
 
-        <form className="space-y-6">
+        <form action={formAction} className="space-y-4">
           <fieldset className="space-y-4">
             <legend className="sr-only">Registration details</legend>
 
             <p>
-              <label htmlFor="full-name" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
+              <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 mb-1">
+                First name
               </label>
               <input
-                id="full-name"
-                name="name"
+                id="first-name"
+                name="firstName"
                 type="text"
-                autoComplete="name"
+                autoComplete="given-name"
                 required
-                placeholder="Enter your full name"
+                placeholder="Enter your first name"
+                className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </p>
+
+              <p>
+              <label htmlFor="last-name" className="block text-sm font-medium text-gray-700 mb-1">
+                Last name
+              </label>
+              <input
+                id="last-name"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                placeholder="Enter your last name"
+                className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </p>
+
+              <p>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
+                required
+                placeholder="Enter your username"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </p>
@@ -177,12 +191,7 @@ export const Registration = () => {
              </p>
           </fieldset>
 
-          <button
-            type="button"
-            className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Create account →
-          </button>
+      <SubmitButton />
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">

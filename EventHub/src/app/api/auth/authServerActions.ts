@@ -23,6 +23,8 @@ export async function register(
       username: formData.get("username") as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
+      lastName: formData.get("lastName") as string,
+      firstName: formData.get("firstName") as string,
     };
 
     const result = await authService.register(credentials);
