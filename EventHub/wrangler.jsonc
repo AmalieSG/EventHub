@@ -12,13 +12,16 @@
   "observability": {
     "enabled": true
   },
-  "vars": { },
+  "vars": {
+    "VITE_API_URL": "https://eventhub.iagresho.workers.dev",
+    "VITE_API_URL_DEV": "http://localhost:5173"
+  },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "eventhub-db",
       "database_id": "969efaae-cf82-495b-8e65-d5d4cdd90c3d",
-      "migrations_dir": "drizzle"
+      "migrations_dir": "drizzle",
     }
   ],
   "r2_buckets": [

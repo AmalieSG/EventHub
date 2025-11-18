@@ -8,30 +8,26 @@ export default defineScript(async ({ env }) => {
     await setupDb(env.DB);
     const db = await getDb();
 
-    // Slett i riktig rekkefølge
+    // Delete in correct order
     await db.delete(savedEvents);
     await db.delete(eventAttendees);
     await db.delete(events);
     await db.delete(users);
 
     // --- Users ---
-    const [admin] = await db
-      .insert(users)
-      .values({
-        username: "admin",
-        firstName: "Admin",
-        lastName: "User",
-        email: "admin@example.com",
-        passwordHash: "hashed_password_here",
-        role: "admin",
-        createdAt: new Date(),
-        isActive: true,
-      })
-      .returning();
-
-    const [user1, user2, user3, user4] = await db
+    const [admin, user1, user2, user3, user4] = await db
       .insert(users)
       .values([
+        {
+          username: "admin",
+          firstName: "Admin",
+          lastName: "User",
+          email: "admin@example.com",
+          passwordHash: "hashed_password_here",
+          role: "admin",
+          createdAt: new Date(1763377533000),
+          isActive: true,
+        },
         {
           username: "user1",
           firstName: "Anna",
@@ -39,7 +35,7 @@ export default defineScript(async ({ env }) => {
           email: "user1@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(),
+          createdAt: new Date(1763377533000),
           isActive: true,
         },
         {
@@ -49,7 +45,7 @@ export default defineScript(async ({ env }) => {
           email: "user2@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(),
+          createdAt: new Date(1763377533000),
           isActive: true,
         },
         {
@@ -59,7 +55,7 @@ export default defineScript(async ({ env }) => {
           email: "user3@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(),
+          createdAt: new Date(1763377533000),
           isActive: true,
         },
         {
@@ -69,13 +65,13 @@ export default defineScript(async ({ env }) => {
           email: "user4@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(),
+          createdAt: new Date(1763377533000),
           isActive: true,
         },
       ])
       .returning();
 
-    // --- Events: splitt i to batcher (5 + 5) for å unngå "too many sql variables" ---
+    // --- Events: Don't specify id, let it auto-increment ---
     const firstBatch = await db
       .insert(events)
       .values([
@@ -83,60 +79,65 @@ export default defineScript(async ({ env }) => {
           title: "Tech Conference 2025",
           description: "A conference about the latest in software and AI.",
           summary: "Full-day tech event with talks and networking.",
-          eventStart: new Date("2025-03-10T09:00:00Z"),
+          eventStart: new Date(1741597200000),
           address: "Tech Hub, Oslo",
           price: 199,
           hostId: user1.id,
           category: "Technology",
           imageUrl: "https://example.com/images/tech-conf.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Art Expo Spring",
           description: "Exhibition of modern Scandinavian art.",
           summary: "Explore new works from emerging artists.",
-          eventStart: new Date("2025-04-05T11:00:00Z"),
+          eventStart: new Date(1743850800000),
           address: "Art Gallery, Bergen",
           price: 120,
           hostId: user2.id,
           category: "Art",
           imageUrl: "https://example.com/images/art-expo.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Summer Music Festival",
           description: "Outdoor music festival with multiple stages.",
           summary: "Live bands, DJs and food trucks all weekend.",
-          eventStart: new Date("2025-06-20T14:00:00Z"),
+          eventStart: new Date(1750428000000),
           address: "City Park, Trondheim",
           price: 850,
           hostId: user3.id,
           category: "Music",
           imageUrl: "https://example.com/images/music-festival.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Startup Pitch Night",
           description: "Local startups pitch to investors and the community.",
           summary: "Short pitches, Q&A and mingling.",
-          eventStart: new Date("2025-02-15T17:30:00Z"),
+          eventStart: new Date(1739640600000),
           address: "Innovation House, Oslo",
           price: 0,
           hostId: user1.id,
           category: "Business",
           imageUrl: "https://example.com/images/pitch-night.jpg",
+          createdAt: new Date(1763377533000),
           status: "ended",
         },
         {
           title: "Street Food Festival",
           description: "Tasting from food trucks and local restaurants.",
           summary: "Family-friendly food festival with live music.",
-          eventStart: new Date("2025-05-10T12:00:00Z"),
+          eventStart: new Date(1746878400000),
           address: "Harbour Area, Stavanger",
           price: 50,
           hostId: user4.id,
           category: "Food & Drink",
           imageUrl: "https://example.com/images/food-festival.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
       ])
@@ -149,60 +150,65 @@ export default defineScript(async ({ env }) => {
           title: "Marathon 10K Run",
           description: "Annual 10K run for all levels.",
           summary: "Timed race with medals and afterparty.",
-          eventStart: new Date("2025-09-01T08:00:00Z"),
+          eventStart: new Date(1756713600000),
           address: "City Center, Oslo",
           price: 400,
           hostId: user2.id,
           category: "Sport",
           imageUrl: "https://example.com/images/run.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Cultural Night Market",
           description: "Stands, performances and food from around the world.",
           summary: "Evening market celebrating diversity.",
-          eventStart: new Date("2025-07-12T18:00:00Z"),
+          eventStart: new Date(1752343200000),
           address: "Old Town Square, Fredrikstad",
           price: 100,
           hostId: user3.id,
           category: "Culture",
           imageUrl: "https://example.com/images/culture-night.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Frontend Workshop",
           description: "Hands-on React and TypeScript workshop.",
           summary: "Bring your laptop and build a small app.",
-          eventStart: new Date("2025-03-25T10:00:00Z"),
+          eventStart: new Date(1742896800000),
           address: "Cowork Space, Oslo",
           price: 900,
           hostId: user1.id,
           category: "Technology",
           imageUrl: "https://example.com/images/frontend-workshop.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "Wine & Cheese Evening",
           description: "Tasting of selected wines and local cheeses.",
           summary: "Guided tasting with sommelier.",
-          eventStart: new Date("2025-04-18T19:00:00Z"),
+          eventStart: new Date(1745002800000),
           address: "Tasting Room, Bergen",
           price: 650,
           hostId: user4.id,
           category: "Food & Drink",
           imageUrl: "https://example.com/images/wine-cheese.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
         {
           title: "eSports Tournament",
           description: "Local eSports teams compete in popular games.",
           summary: "Full-day gaming event with finals on stage.",
-          eventStart: new Date("2025-08-22T10:00:00Z"),
+          eventStart: new Date(1755856800000),
           address: "Arena, Oslo",
           price: 150,
           hostId: user2.id,
           category: "Sport",
           imageUrl: "https://example.com/images/esports.jpg",
+          createdAt: new Date(1763377533000),
           status: "upcoming",
         },
       ])
@@ -217,48 +223,48 @@ export default defineScript(async ({ env }) => {
 
     // --- Attendees ---
     await db.insert(eventAttendees).values([
-      { eventId: event1.id, userId: user2.id },
-      { eventId: event1.id, userId: user3.id },
+      { eventId: event1.id, userId: user2.id, joinedAt: new Date(1763377533000) },
+      { eventId: event1.id, userId: user3.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event2.id, userId: user1.id },
-      { eventId: event2.id, userId: user4.id },
+      { eventId: event2.id, userId: user1.id, joinedAt: new Date(1763377533000) },
+      { eventId: event2.id, userId: user4.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event3.id, userId: user1.id },
-      { eventId: event3.id, userId: user2.id },
-      { eventId: event3.id, userId: user4.id },
+      { eventId: event3.id, userId: user1.id, joinedAt: new Date(1763377533000) },
+      { eventId: event3.id, userId: user2.id, joinedAt: new Date(1763377533000) },
+      { eventId: event3.id, userId: user4.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event4.id, userId: admin.id },
-      { eventId: event4.id, userId: user3.id },
+      { eventId: event4.id, userId: admin.id, joinedAt: new Date(1763377533000) },
+      { eventId: event4.id, userId: user3.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event5.id, userId: user2.id },
+      { eventId: event5.id, userId: user2.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event6.id, userId: user1.id },
-      { eventId: event6.id, userId: user3.id },
+      { eventId: event6.id, userId: user1.id, joinedAt: new Date(1763377533000) },
+      { eventId: event6.id, userId: user3.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event7.id, userId: user4.id },
+      { eventId: event7.id, userId: user4.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event8.id, userId: user1.id },
+      { eventId: event8.id, userId: user1.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event9.id, userId: user3.id },
+      { eventId: event9.id, userId: user3.id, joinedAt: new Date(1763377533000) },
 
-      { eventId: event10.id, userId: user2.id },
-      { eventId: event10.id, userId: user4.id },
+      { eventId: event10.id, userId: user2.id, joinedAt: new Date(1763377533000) },
+      { eventId: event10.id, userId: user4.id, joinedAt: new Date(1763377533000) },
     ]);
 
     // --- Saved events ---
     await db.insert(savedEvents).values([
-      { eventId: event1.id, userId: user1.id },
-      { eventId: event3.id, userId: user1.id },
-      { eventId: event8.id, userId: user1.id },
+      { eventId: event1.id, userId: user1.id, savedAt: new Date(1763377533000) },
+      { eventId: event3.id, userId: user1.id, savedAt: new Date(1763377533000) },
+      { eventId: event8.id, userId: user1.id, savedAt: new Date(1763377533000) },
 
-      { eventId: event2.id, userId: user2.id },
-      { eventId: event6.id, userId: user2.id },
+      { eventId: event2.id, userId: user2.id, savedAt: new Date(1763377533000) },
+      { eventId: event6.id, userId: user2.id, savedAt: new Date(1763377533000) },
 
-      { eventId: event3.id, userId: user3.id },
-      { eventId: event7.id, userId: user3.id },
+      { eventId: event3.id, userId: user3.id, savedAt: new Date(1763377533000) },
+      { eventId: event7.id, userId: user3.id, savedAt: new Date(1763377533000) },
 
-      { eventId: event5.id, userId: user4.id },
-      { eventId: event9.id, userId: user4.id },
+      { eventId: event5.id, userId: user4.id, savedAt: new Date(1763377533000) },
+      { eventId: event9.id, userId: user4.id, savedAt: new Date(1763377533000) },
     ]);
 
     console.log("🌱 Finished seeding");

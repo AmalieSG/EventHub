@@ -1,37 +1,11 @@
-import {PriceBox} from '../components/PriceBox';
-import {EventDetailBox} from '../components/EventDetailBox';
-import EventDescription from '../components/EventDescription';
+"use server"
+
 import ArtistLineup, { Artist } from '../components/ArtistLineup';
-import { useEventsContext } from '../context/EventsProvider';
-import { useEffect, useState } from 'react';
-//import { Event } from '../types/event';
-//import { fetchEventById } from '../api/events/eventsService';
+import { EventDetail } from '../components/Event';
+import type { RequestInfo } from "rwsdk/worker";
 
-export async function Event() {
-    //const { id } = useParams();
-    const [event, setEvent] = useState<Event | null>(null)
-    const [loading, setLoading] = useState(true)
+export async function Event({ params }: RequestInfo) {
 
-    useEffect(() => {
-        //if (!id) return
-
-        async function loadEvent() {
-            //const eventData = await fetchEventById(Number(id))
-            //setEvent(eventData ?? null)
-            setLoading(false)
-        }
-        loadEvent()
-    }, [])
-
-    if (loading) {
-        return <p>Loading event details...</p>
-    }
-
-    if (!event) {
-        return <p>Event not found.</p>
-    }
-
-    
     const eventData = {
         date: 'FRI, OCT 25',
         time: '7:00 PM - 8:00 PM',
@@ -86,65 +60,6 @@ export async function Event() {
     ];
 
    return (
-        <div className="font-sans">
-
-            <div className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
-                {/*<img
-                    className="absolute inset-0 w-full h-full object-cover"
-                    src={event.imageUrl}
-                    alt={`Image of ${event.title}`} 
-                />*/}
-
-                <div className="absolute mt-8 ml-5">
-                    <span className="rounded-lg  bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
-                        {category}
-                    </span>
-                </div>
-
-                {/*<div className="absolute inset-x-0 bottom-5 flex justify-center">
-                    <div className="bg-black/30 py-6 px-12 w-full">
-                        <h1 className="text-white text-5xl sm:text-6xl font-bold text-center">
-                            {event.title}
-                        </h1>
-                    </div>
-                </div>*/}
-            </div>
-            
-            <div className="max-w-7xl mx-auto px-4 mt-8"> 
-                <>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
-                        <div className="lg:col-span-2">
-                            <EventDetailBox
-                                date={eventData.date}
-                                time={eventData.time}
-                                locationName={eventData.locationName}
-                                address={eventData.address}
-                                organizerName={eventData.organizerDetails}
-                                organizerDetails={eventData.organizerDetails}
-                            />
-
-                            <EventDescription
-                                title="About the Event"
-                                content={descriptionData}
-                            />
-
-                            <ArtistLineup artists={JazzLineup} />
-                        </div>
-
-                        
-                        
-                        <div className="lg:col-span-1">
-                            <PriceBox 
-                                price={priceData.price}
-                                description={priceData.description}
-                                features={priceData.features}
-                            />
-                        </div>
-                    </div>
-                </>
-            </div>
-            
-        </div>
+       <EventDetail id={params.id} />
     );
 };

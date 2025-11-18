@@ -12,9 +12,7 @@ import { eventAttendees } from "./event-attendee-schema";
 import { savedEvents } from "./saved-event-schema";
 
 export const events = sqliteTable("events", {
-    id: text("id")
-        .primaryKey()
-        .$defaultFn(() => createId()),
+    id: integer('id').primaryKey({ autoIncrement: true }),
     title: text("title").notNull(),
     description: text("description").notNull(),
     summary: text("summary").notNull(),
