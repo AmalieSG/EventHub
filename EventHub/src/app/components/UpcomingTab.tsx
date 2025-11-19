@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+/* import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
 import { EventList } from './EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
@@ -132,4 +132,4 @@ export function UpcomingTab() {
             />
         </main>
     );
-}
+} */

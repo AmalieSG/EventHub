@@ -8,7 +8,7 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 interface SecuritySetting {
-    id: string;
+    id: number;
     title: string;
     description: string;
     enabled: boolean;
@@ -17,7 +17,7 @@ interface SecuritySetting {
 
 interface SecurityToggleProps {
     setting: SecuritySetting;
-    onToggle: (id: string, enabled: boolean) => void;
+    onToggle: (id: number, enabled: boolean) => void;
 }
 
 const SecurityToggle: React.FC<SecurityToggleProps> = ({ setting, onToggle }) => {
@@ -74,7 +74,7 @@ export function PrivacyTab() {
     ]);
 
  
-    const handleToggle = (categoryId: 'privacy' | 'security', id: string, enabled: boolean) => {
+    const handleToggle = (categoryId: 'privacy' | 'security', id: number, enabled: boolean) => {
         const setter = categoryId === 'privacy' ? setPrivacySettings : setSecuritySettings;
         
         setter(prevSettings => 

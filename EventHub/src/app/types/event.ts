@@ -22,7 +22,7 @@ export interface Event {
 }
 
 /*export interface Event {
-  readonly id: string;
+  readonly id: number;
   title: string;
   description: string;
   summary: string;

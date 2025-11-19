@@ -4,7 +4,7 @@ import { InformationCircleIcon, LifebuoyIcon, DocumentTextIcon, BugAntIcon } fro
 
 
 interface InfoLink {
-    id: string;
+    id: number;
     title: string;
     description: string;
     icon: React.ElementType; 
