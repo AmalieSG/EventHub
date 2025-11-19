@@ -23,14 +23,12 @@ import {
     verifyPassword,
 } from "@/app/lib/auth/password";
 import { authenticationMiddleware } from "@/app/middleware/authentication";
+import { Logout } from "./app/pages/Logout";
+import { requireAuth } from "@/app/middleware/authorization";
 
 export type AppContext = {
   db: DB;
 } & AuthContext;
-
-
-
-
 
 export default defineApp([
  setCommonHeaders(),
@@ -148,16 +146,16 @@ export default defineApp([
   prefix("/api/v1/events", eventRoutes),
   render(Document, [
     layout(AppLayout, [
-      route("/", Home),
+    route("/", Home),
       route("/contact-us", ContactUs),
-      //midlertidig fiks
-      route("/settings", Settings as any),
-      route("/profile", Profile),
       route("/search", Search),
-      route("/create-event", CreateEvent),
       route("/registration", Registration),
       route("/login", Login),
+      route("/logout", Logout),
       route("/events/:id", Event),
+      route("/settings", [requireAuth(), Settings as any]),
+      route("/profile", [requireAuth(), Profile]),
+      route("/create-event", [requireAuth(), CreateEvent]),   
     ]), 
   ],
   ),

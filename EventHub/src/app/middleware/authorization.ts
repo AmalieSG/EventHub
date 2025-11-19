@@ -20,7 +20,7 @@ export function requireAuth() {
         }),
         {
           status: 302,
-          headers: { Location: "/auth/login" },
+          headers: { Location: "/login" },
         }
       );
     }
@@ -48,7 +48,7 @@ export function requireRole(role: UserRole) {
     if (!ctx.user) {
       return new Response(null, {
         status: 302,
-        headers: { Location: "/auth/login" },
+        headers: { Location: "/login" },
       });
     }
 

@@ -1,6 +1,6 @@
+// src/app/context/AuthProvider.tsx
 "use client";
-
-import { createContext, useState, useCallback, type ReactNode, useEffect } from "react";
+import { createContext, useState, useCallback, type ReactNode } from "react";
 import type { SafeUser } from "@/db/schema";
 
 export interface AuthContextType {
@@ -23,23 +23,16 @@ export function AuthProvider({
   initialUser = null,
 }: AuthProviderProps) {
   const [user, setUser] = useState<SafeUser | null>(initialUser);
-  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const cookies = document.cookie.split('; ');
-    const sessionCookie = cookies.find(row => row.startsWith('sessionId='));
-    const id = sessionCookie ? sessionCookie.split('=')[1] : null;
-    setSessionId(id);
-  }, []);
-  // Login handler oppdaterer user state
+  // Login handler updates user state
   const login = useCallback((newUser: SafeUser) => {
     setUser(newUser);
   }, []);
 
-  // Logout handler nullstiller state og redirecter
+  // Logout handler clears state and redirects
   const logout = useCallback(() => {
     setUser(null);
-    // Redirect til login page etter logout
+    // Redirect to login page after logout
     if (typeof window !== "undefined") {
       window.location.href = "/login";
     }

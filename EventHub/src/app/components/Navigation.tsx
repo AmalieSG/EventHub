@@ -6,6 +6,7 @@ import { Bars3Icon, BellIcon, XMarkIcon, UserIcon } from '@heroicons/react/24/ou
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/app/hooks/useAuth';
 
+
 const navigationItems = [
   { name: 'Home', href: '/' },
   { name: 'All events', href: '/search' },
@@ -30,7 +31,7 @@ function classNames(...classes: any) {
 
 export function Navigation() {
   const [currentPath, setCurrentPath] = useState<string>('')
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const menu = isAuthenticated
     ? [...navigationItems, { name: 'Create event', href: '/create-event' }]
@@ -42,6 +43,7 @@ export function Navigation() {
     window.addEventListener('popstate', updatePath)
     return () => window.removeEventListener('popstate', updatePath)
   }, [])
+
 
   return (
     <header className="bg-white font-sans">

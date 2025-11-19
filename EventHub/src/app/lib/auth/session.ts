@@ -11,7 +11,7 @@ import { Errors } from "@/app/types/errors";
 
 // TODO: Could also be a system variables .env
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 dager
-export const SESSION_COOKIE_NAME = "hiof_webapp";
+export const SESSION_COOKIE_NAME = "eventhub";
 
 // Create a new session
 export async function createSession(userId: number): Promise<Result<Session>> {
