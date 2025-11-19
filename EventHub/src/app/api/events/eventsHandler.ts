@@ -38,7 +38,7 @@ export async function listEvents(_ctx: RequestInfo) {
 // GET: /api/v1/events/:id (one event with attendees)
 export async function getEventById(ctx: RequestInfo) {
   try {
-    const { id } = ctx.params as { id: string };
+    const { id } = ctx.params as { id: number };
 
     const result = await eventsRepository.findById(id);
 
@@ -108,7 +108,7 @@ export async function createEventHandler(ctx: RequestInfo) {
 // PUT/PATCH: /api/v1/events/:id (update event)
 export async function updateEventHandler(ctx: RequestInfo) {
   try {
-    const { id } = ctx.params as { id: string };
+    const { id } = ctx.params as { id: number };
     const body = await ctx.request.json();
     const validated = UpdateEventSchema.parse(body);
 
@@ -150,7 +150,7 @@ export async function updateEventHandler(ctx: RequestInfo) {
 // DELETE: /api/v1/events/:id — delete event
 export async function deleteEventHandler(ctx: RequestInfo) {
   try {
-    const { id } = ctx.params as { id: string };
+    const { id } = ctx.params as { id: number };
 
     const result = await eventsRepository.remove(id);
 

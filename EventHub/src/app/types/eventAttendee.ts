@@ -1,5 +1,5 @@
 export interface EventAttendee {
-    readonly eventId: string;
+    readonly eventId: number;
     readonly userId: number;
     readonly joinedAt: string | number | Date;
 }

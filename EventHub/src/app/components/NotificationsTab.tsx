@@ -4,7 +4,7 @@ import { Switch } from '@headlessui/react';
 import { EnvelopeIcon, BellAlertIcon } from '@heroicons/react/24/outline';
 
 interface NotificationSetting {
-    id: string;
+    id: number;
     title: string;
     description: string;
     enabled: boolean;
@@ -16,7 +16,7 @@ function classNames(...classes: (string | boolean)[]) {
 
 interface NotificationToggleProps {
     setting: NotificationSetting;
-    onToggle: (id: string, enabled: boolean) => void;
+    onToggle: (id: number, enabled: boolean) => void;
 }
 
 const NotificationToggle: React.FC<NotificationToggleProps> = ({ setting, onToggle }) => { 
@@ -61,7 +61,7 @@ export function NotificationsTab() {
         { id: 'rsvp_status_push', title: 'RSVP Status Changes', description: 'Updates on your reservation status for booked events.', enabled: true },
         { id: 'recommendations_push', title: 'Personalized Recommendations', description: 'Alerts for recommended events based on your activity.', enabled: false },
     ]);
-    const handleToggle = (categoryId: 'email' | 'push', id: string, enabled: boolean) => {
+    const handleToggle = (categoryId: 'email' | 'push', id: number, enabled: boolean) => {
         const setter = categoryId === 'email' ? setEmailSettings : setPushSettings;
         
         setter(prevSettings => 

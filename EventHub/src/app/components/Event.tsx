@@ -8,7 +8,7 @@ import ArtistLineup, { Artist } from '../components/ArtistLineup';
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
 
 interface EventProps {
-    id: string;
+    id: number;
 }
 
 export function EventDetail({ id }: EventProps) {

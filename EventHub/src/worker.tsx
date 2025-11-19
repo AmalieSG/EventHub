@@ -5,7 +5,6 @@ import { setCommonHeaders } from "@/app/headers";
 import  Home  from "@/app/pages/Home";
 import {Event} from "@/app/pages/Event";
 import { AppLayout } from './app/layouts/AppLayout' 
-import { About } from "./app/pages/About";
 import { Search } from "./app/pages/Search";
 import { CreateEvent } from "./app/pages/CreateEvent";
 import { Login } from "./app/pages/Login";
@@ -18,12 +17,12 @@ import { eventRoutes } from "./app/api/events/eventsRoutes";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { ContactUs } from './app/pages/ContactUs'; 
-import AllEvents from "./app/pages/AllEvents";
 import type { AuthContext } from "@/app/types/auth";
 import {
     hashPassword,
     verifyPassword,
 } from "@/app/lib/auth/password";
+import { authenticationMiddleware } from "@/app/middleware/authentication";
 
 export type AppContext = {
   db: DB;
@@ -39,9 +38,7 @@ export default defineApp([
  function setup({ ctx }) {
     ctx.db = setupDb(env.DB); 
   },
-
-  prefix("/api/v1/events", eventRoutes),
-
+  authenticationMiddleware,
   route("/api/register", async ({ request, ctx }) => {
     if (request.method !== "POST") {
       return new Response("Method Not Allowed", { status: 405 });
@@ -148,7 +145,7 @@ export default defineApp([
       );
     }
   }),
-
+  prefix("/api/v1/events", eventRoutes),
   render(Document, [
     layout(AppLayout, [
       route("/", Home),
