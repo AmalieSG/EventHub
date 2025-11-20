@@ -1,6 +1,8 @@
 import { MapPinIcon, CalendarIcon, PencilIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { useAuth } from '@/app/hooks/useAuth';
 
 export function ProfileHeader() {
+  const {user} = useAuth();
   return(
     <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10 font-sans">
       <section className="bg-gray-800 p-4 sm:p-6 rounded-xl shadow-2xl mb-6 border border-gray-700">
@@ -13,7 +15,7 @@ export function ProfileHeader() {
               alt="Aaron Warner profile"
             />
             <div>
-              <h2 className="mb-2 text-lg sm:text-xl font-semibold text-white">Aaron Warner</h2>
+              <h2 className="mb-2 text-lg sm:text-xl font-semibold text-white">{user?.firstName} {user?.lastName} </h2>
               <p className="mb-2 text-gray-400 text-sm sm:text-base ml-4 ">Full-stack developer passionate about creating amazing experiences</p>
               
               <section className="ml-4 flex flex-col gap-2 md:flex-row md:gap-10 items-start md:items-center text-gray-400 text-sm sm:text-base">

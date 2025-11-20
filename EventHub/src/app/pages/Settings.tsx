@@ -8,13 +8,14 @@ import { PrivacyTab } from '../components/PrivacyTab';
 import {AppPreferencesTab } from '../components/AppPreferencesTab';
 import { PaymentTab } from '../components/PaymentTab';
 import {SupportTab} from '../components//SupportTab';
+import { useAuth } from '../hooks/useAuth';
 
 
 
 
 export const Settings = () => {
   const [activeTabName, setActiveTab] = useState<string>('Account');
-
+  const {user} = useAuth();
   const renderTabContent = () => {
         if (activeTabName === 'Account') {
             return <AccountTab />;

@@ -1,5 +1,5 @@
 "use client";
-import {
+/* import {
   CalendarDaysIcon,
   MapPinIcon,
   TagIcon,
@@ -86,9 +86,9 @@ export function FilterBar({ className }: FilterBarProps) {
       </div>
     </div>
   );
-}
+} */
 
-/*import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { XMarkIcon, } from '@heroicons/react/24/outline';
 export type LayoutType = 'grid' | 'list';
 
@@ -277,4 +277,4 @@ export function FilterBar({
             </div>
         </div>
     );
-}*/
+}

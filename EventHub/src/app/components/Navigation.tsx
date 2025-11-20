@@ -31,7 +31,7 @@ function classNames(...classes: any) {
 
 export function Navigation() {
   const [currentPath, setCurrentPath] = useState<string>('')
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   const menu = isAuthenticated
     ? [...navigationItems, { name: 'Create event', href: '/create-event' }]
@@ -58,8 +58,8 @@ export function Navigation() {
 
               <a href="/" className="flex shrink-0 items-center">
                 <img
-                  alt="Your Company Logo"
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                  alt="EventHub Logo"
+                  src="/images/EventHub.png"
                   className="h-8 w-auto"
                 />
               </a>
@@ -240,8 +240,8 @@ export function Navigation() {
                 />
 
                 <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">Tom Cook</div>
-                  <div className="text-sm font-medium text-gray-500">tom@example.com</div>
+                  <div className="text-base font-medium text-gray-800">{user?.firstName} {user?.lastName} </div>
+                  <div className="text-sm font-medium text-gray-500">{user?.email}</div>
                 </div>
 
 

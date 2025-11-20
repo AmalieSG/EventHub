@@ -1,11 +1,10 @@
 "use client";
-
 import { createContext, useContext, ReactNode } from "react"
 import { useEnrichedEvents } from "../hooks/useEnrichedEvents"
-import { EventWithHost } from "../hooks/useEnrichedEvents"
+import { EventWithRelations } from "@/app/api/events/eventsRepository"
 
 interface EventContextType {
-  events: EventWithHost[]
+  events: EventWithRelations[]
   loading: boolean
 }
 
@@ -13,6 +12,7 @@ const EventContext = createContext<EventContextType | undefined>(undefined)
 
 export function EventsProvider({ children }: { children: ReactNode }) {
   const { events, loading } = useEnrichedEvents()
+  
   return (
     <EventContext.Provider value={{ events, loading }}>
       {children}
