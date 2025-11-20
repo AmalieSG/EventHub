@@ -5,6 +5,7 @@ import { ofetch } from "ofetch";
 import { FilterBar, FilterState, defaultFilters } from "../components/FilterBar";
 import { EventList } from "../components/EventList";
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
+import { FunnelIcon } from "lucide-react";
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -87,6 +88,12 @@ export function Search() {
     );
   }
 
+      function handleClear(event: React.MouseEvent): void {
+          setSearchTerm("");
+          setFilters(defaultFilters);
+      }
+  
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
       <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -100,7 +107,9 @@ export function Search() {
               <span className="font-semibold">"{searchTerm}"</span>
             </p>
           )}
+             
         </div>
+        
 
         <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 p-1">
           <button
@@ -129,14 +138,23 @@ export function Search() {
         </div>
       </header>
 
-      <section className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
-        <button
-          onClick={() => setIsFilterOpen(true)}
-          className="text-sm text-gray-700 hover:text-gray-900"
-        >
-          Open Filters
-        </button>
+      <section className="flex row gap-5">
+        <button 
+                        onClick={() => setIsFilterOpen(true)} 
+                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
+                    >
+                        <FunnelIcon className="h-4 w-4" />
+                      Open Filter
+                    </button>
+                     <button 
+                            type="button" 
+                            onClick={handleClear}
+                            className="flex items-center gap-1.5 px-4 py-2 bg-red-600 border border-gray-200 text-white rounded-full text-sm shadow-sm transition duration-150 flex-shrink-0 cursor-pointer"
+                        >
+                            Nullstill filter
+                        </button> 
       </section>
+      
 
       <section className="space-y-4">
         {filteredEvents.length === 0 ? (

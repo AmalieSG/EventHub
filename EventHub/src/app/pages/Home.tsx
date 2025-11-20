@@ -7,6 +7,7 @@ import { FilterBar, FilterState, defaultFilters, LayoutType } from '../component
 //import { useEventsContext } from "../context/EventsProvider";
 import type { EventWithRelations } from '../api/events/eventsRepository';
 import { ofetch } from 'ofetch';
+import { navigate } from "rwsdk/client";
 
 const categories= [
     { name: 'BUSINESS', count: 23, icon: BriefcaseIcon },
@@ -53,6 +54,12 @@ export default function Home() {
     }, []);
 
     const popularEvents = events.slice(0, 3);
+
+    function handleSearch(event: React.MouseEvent): void {
+        if (searchQuery.trim()) {
+        navigate(`/search?search=${encodeURIComponent(searchQuery)}`);
+    }
+    }
 
     /*const filteredEvents = useMemo(() => {
         const baseFilter = (event: typeof events[number]) => {
@@ -114,6 +121,7 @@ export default function Home() {
                         />
                         <button 
                             type="button" 
+                            onClick={handleSearch}
                             className="absolute right-0 top-0 h-full px-5 bg-red-600 text-white rounded-r-lg hover:bg-black hover:cursor-pointer transition duration-150"
                         >
                             Search
