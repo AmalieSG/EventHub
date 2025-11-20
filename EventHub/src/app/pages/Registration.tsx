@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 
 type ApiResponse = {
   message?: string;
-  error?: string; 
+  error?: string;
 };
 
 function SubmitButton() {
@@ -24,24 +24,24 @@ function SubmitButton() {
 
 export const Registration = () => {
 
-const [state, formAction] = useActionState(
-  async (prevState: any, formData: FormData) => {
-    const result = await register(prevState, formData);
-    console.log('Registration result:', result);
-    if (result.success) {
-      window.location.href = "/";
-    }
-    return result;
-  },
-  {
-    success: false,
-    error: "",
-    state: {
-      user: null,
-      session: null,
+  const [state, formAction] = useActionState(
+    async (prevState: any, formData: FormData) => {
+      const result = await register(prevState, formData);
+      console.log('Registration result:', result);
+      if (result.success) {
+        window.location.href = "/";
+      }
+      return result;
     },
-  }
-);
+    {
+      success: false,
+      error: "",
+      state: {
+        user: null,
+        session: null,
+      },
+    }
+  );
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -98,7 +98,7 @@ const [state, formAction] = useActionState(
               />
             </p>
 
-              <p>
+            <p>
               <label htmlFor="last-name" className="block text-sm font-medium text-gray-700 mb-1">
                 Last name
               </label>
@@ -109,21 +109,6 @@ const [state, formAction] = useActionState(
                 autoComplete="family-name"
                 required
                 placeholder="Enter your last name"
-                className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </p>
-
-              <p>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-                required
-                placeholder="Enter your username"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </p>
@@ -175,34 +160,41 @@ const [state, formAction] = useActionState(
           </fieldset>
 
           <fieldset className="space-y-3">
-             <legend className="sr-only">Agreements</legend>
-             <p className="flex items-start">
-               <input
-                 id="terms"
-                 name="terms"
-                 type="checkbox"
-                 required
-                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-               />
-               <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-                 I agree to <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
-               </label>
-             </p>
-             <p className="flex items-start">
-               <input
-                 id="updates"
-                 name="updates"
-                 type="checkbox"
-                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-               />
-               <label htmlFor="updates" className="ml-2 block text-sm text-gray-900">
-                 Send me updates about new events and features (optional)
-               </label>
-             </p>
+            <legend className="sr-only">Agreements</legend>
+            <p className="flex items-start">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                required
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+                I agree to <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+              </label>
+            </p>
+            <p className="flex items-start">
+              <input
+                id="updates"
+                name="updates"
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <label htmlFor="updates" className="ml-2 block text-sm text-gray-900">
+                Send me updates about new events and features (optional)
+              </label>
+            </p>
           </fieldset>
 
-      <SubmitButton />
+          <SubmitButton />
+
         </form>
+        {!state.success && "error" in state && state.error && (
+          <div className='px-5 py-5 rounded bg-red-600 text-white text-center'>
+            {state.error}
+          </div>
+        )}
+
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{' '}

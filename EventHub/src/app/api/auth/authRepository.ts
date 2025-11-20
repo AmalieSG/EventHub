@@ -76,7 +76,7 @@ export function createAuthRepository(db: DB): AuthRepository {
             try {
                 const [newUser] = await db.insert(users).values(data).returning({
                     id: users.id,
-                    username: users.username,
+                    username: users.email,
                     firstName: users.firstName,
                     lastName: users.lastName,
                     email: users.email,

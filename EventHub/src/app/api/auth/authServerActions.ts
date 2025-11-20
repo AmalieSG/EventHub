@@ -20,7 +20,7 @@ export async function register(
 > {
   try {
     const credentials = {
-      username: formData.get("username") as string,
+      username: formData.get("email") as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
       lastName: formData.get("lastName") as string,
@@ -35,7 +35,7 @@ export async function register(
         success: false,
         error: result.error.message,
         code: result.error.code,
-        state: { username: credentials.username, email: credentials.email },
+        state: { username: credentials.email, email: credentials.email },
       };
     }
 
@@ -75,7 +75,7 @@ export async function login(
 > {
   try {
     const credentials = {
-      username: formData.get("username") as string,
+      username: formData.get("email") as string,
       password: formData.get("password") as string,
     };
 

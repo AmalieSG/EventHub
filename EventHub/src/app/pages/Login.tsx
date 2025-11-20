@@ -84,15 +84,15 @@ export const Login = () => {
             
             <p>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-                Username
+                Email
               </label>
               <input
                 id="username"
-                name="username"
+                name="email"
                 type="text"
-                autoComplete="username"
+                autoComplete="email"
                 required
-                placeholder="Username"
+                placeholder="Email"
                 className="block w-full rounded-md border-gray-300 bg-gray-50 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </p>
@@ -137,6 +137,12 @@ export const Login = () => {
 
      
         </form>
+
+               {!state.success && "error" in state && state.error && (
+          <div className='px-5 py-5 rounded bg-red-600 text-white text-center'>
+            {state.error}
+          </div>
+        )}
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{' '}
