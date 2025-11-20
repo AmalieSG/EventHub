@@ -40,7 +40,7 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
     const handleSave = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsSaved(1);
+        setIsSaved(!isSaved);
     };
 
     const handleActionClick = (e: React.MouseEvent) => {
