@@ -37,59 +37,6 @@ export default defineApp([
     ctx.db = setupDb(env.DB); 
   },
   authenticationMiddleware,
-  route("/api/register", async ({ request, ctx }) => {
-    if (request.method !== "POST") {
-      return new Response("Method Not Allowed", { status: 405 });
-    }
-
-    try {
-      const { firstName, lastName, email, password } = await request.json<{
-        firstName?: string;
-        lastName?: string;
-        email?: string;
-        password?: string;
-      }>();
-
-      if (!firstName || !lastName || !email || !password) {
-        return Response.json(
-          { success: false, error: "Missing name, email or password" },
-          { status: 400 }
-        );
-      }
-
-      const db = ctx.db;
-
-      const existingUser = await db.query.users.findFirst({
-        where: eq(users.email, email),
-      });
-
-      if (existingUser) {
-        return Response.json(
-          { success: false, error: "The email is already registered" },
-          { status: 409 }
-        );
-      }
-
-      const passwordHash = await hashPassword(password);
-
-      await db.insert(users).values({
-        username: email,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        passwordHash: passwordHash,
-      });
-
-      return Response.json({ success: true, message: "User registered" });
-
-    } catch (e: any) {
-      return Response.json(
-        { success: false, error: e.message },
-        { status: 500 }
-      );
-    }
-  }),
-
 
   route("/api/login", async ({ request, ctx }) => {
     if (request.method !== "POST") {
