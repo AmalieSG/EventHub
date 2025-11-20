@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-// import { UpcomingTab } from '../components/UpcomingTab';
+import { UpcomingTab } from '../components/UpcomingTab';
 import { ProfileNav } from '../components/ProfileNav';
 import {ProfileHeader} from '../components/ProfileHeader';
 import {CreatedEventsTab} from '../components/CreatedEventsTab';
@@ -11,13 +11,14 @@ import {AchievementsTab} from '../components/AchievementsTab';
 
 import { useEventsContext } from "../context/EventsProvider";
 
+
 export const Profile = () => {
     const [activeTabName, setActiveTab] = useState<string>('Upcoming');
     const {loading } = useEventsContext();
     const renderTabContent = () => {
-/*             if (activeTabName === 'Upcoming') {
+            if (activeTabName === 'Upcoming') {
                 return <UpcomingTab />;
-            } */
+            }
             if (activeTabName === 'Created Events') {
                 return <CreatedEventsTab />;
             }

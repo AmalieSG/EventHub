@@ -94,8 +94,8 @@ export function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <img
-              alt="Company name"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                alt="EventHub"
+                  src="/images/EventHub.png"
               className="h-9"
             />
             <p className="text-sm/6 text-balance text-gray-600">

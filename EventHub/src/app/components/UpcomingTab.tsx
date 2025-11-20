@@ -1,4 +1,4 @@
-/* import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
 import { EventList } from './EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
@@ -6,7 +6,7 @@ import{FilterBar, FilterState, defaultFilters} from './FilterBar';
 
 export function UpcomingTab() {
     const { events: allEvents, loading } = useEventsContext(); 
-    
+
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [activeFilters, setActiveFilters] = useState<FilterState>(defaultFilters); 
@@ -39,27 +39,30 @@ export function UpcomingTab() {
     if (allEvents.length === 0) return [];
 
     return allEvents.filter(event => {
-       
-        if (event.isPast) return false;
+        // Compute derived properties from EventWithRelations
+        const isPast = new Date(event.eventStart) < new Date();
+        const isOnline = event.address?.toLowerCase().includes('online') || false;
+        const city = event.address?.split(',')[0]?.trim() || '';
 
-        const isOnlineEvent = event.isOnline; 
-        const matchesOnline = activeFilters.onlineOnly ? isOnlineEvent : true;
+        if (isPast) return false;
+
+        const matchesOnline = activeFilters.onlineOnly ? isOnline : true;
 
         const matchesCity = activeFilters.cities.length > 0
-            ? activeFilters.cities.some(selectedCity => {
-                return event.city?.toLowerCase() === selectedCity.toLowerCase(); 
+            ? activeFilters.cities.some((selectedCity: string) => {
+                return city.toLowerCase() === selectedCity.toLowerCase(); 
             })
             : true;
 
         const matchesCategory = activeFilters.categories.length > 0
-            ? activeFilters.categories.some(selectedCategory => {
+            ? activeFilters.categories.some((selectedCategory: string) => {
                 return event.category?.toLowerCase() === selectedCategory.toLowerCase();
             })
             : true;
 
         const matchesSearch = searchQuery 
             ? event.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              event.location?.toLowerCase().includes(searchQuery.toLowerCase())
+              event.address?.toLowerCase().includes(searchQuery.toLowerCase())
             : true;
 
         return matchesOnline && matchesCity && matchesCategory && matchesSearch;
@@ -132,4 +135,4 @@ export function UpcomingTab() {
             />
         </main>
     );
-} */
+}

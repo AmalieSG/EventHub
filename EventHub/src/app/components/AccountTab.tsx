@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { CameraIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { useAuth } from '../hooks/useAuth';
 
 interface InterestModalProps {
   isOpen: boolean;
@@ -101,7 +102,7 @@ export function InterestModal({
 export function AccountTab() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const {user} = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [interests, setInterests] = useState(['Music', 'Sport', 'Art', 'Food']);
   
@@ -184,7 +185,7 @@ export function AccountTab() {
                 <input
                   type="text"
                   id="first-name"
-                  defaultValue="Aaron"
+                  defaultValue={user?.firstName}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
@@ -195,7 +196,7 @@ export function AccountTab() {
                 <input
                   type="text"
                   id="last-name"
-                  defaultValue="Warner"
+                  defaultValue={user?.lastName}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
@@ -206,7 +207,7 @@ export function AccountTab() {
                 <input
                   type="email"
                   id="email"
-                  defaultValue="aaronwarner@outlook.com"
+                  defaultValue={user?.email}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>

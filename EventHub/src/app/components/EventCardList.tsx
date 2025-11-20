@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
-import { EventWithHost } from "../hooks/useEnrichedEvents";
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
 import { da } from 'zod/v4/locales';
 
@@ -12,19 +11,25 @@ interface EventCardListProps {
 }
 
 export function EventCardList({ event, layout = 'grid', action = 'join' }: EventCardListProps) {
-    const date =
-        event.eventStart instanceof Date
-            ? event.eventStart
-            : new Date(event.eventStart);
-    const DateInfo = (
+    const date = event.eventStart 
+        ? (event.eventStart instanceof Date 
+            ? event.eventStart 
+            : new Date(event.eventStart))
+        : new Date(); 
+    
+    const isValidDate = !isNaN(date.getTime());
+    
+    const DateInfo = isValidDate ? (
         <time dateTime={date.toISOString()} className="text-sm font-medium text-red-400">
             {date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
         </time>
+    ) : (
+        <span className="text-sm font-medium text-red-400">Date TBA</span>
     );
-    const time = date.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+    
+    const time = isValidDate 
+        ? date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
+        : "Time TBA";
     const attendeeCount = event.attendees?.length ?? 0;
     const hostName = event.host
         ? `${event.host.firstName} ${event.host.lastName}`
@@ -35,7 +40,7 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
     const handleSave = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsSaved(1);
+        setIsSaved(!isSaved);
     };
 
     const handleActionClick = (e: React.MouseEvent) => {

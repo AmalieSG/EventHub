@@ -1,5 +1,5 @@
 "use client";
-import {
+/* import {
   CalendarDaysIcon,
   MapPinIcon,
   TagIcon,
@@ -86,10 +86,11 @@ export function FilterBar({ className }: FilterBarProps) {
       </div>
     </div>
   );
-}
+} */
 
-/*import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { XMarkIcon, } from '@heroicons/react/24/outline';
+import { EventWithRelations } from '../api/events/eventsRepository';
 export type LayoutType = 'grid' | 'list';
 
 export interface FilterState {
@@ -101,7 +102,7 @@ export interface FilterState {
 export const defaultFilters: FilterState = { onlineOnly: false, cities: [], categories: [] };
 
 export interface FilterBarProps {
-    events: any[]; 
+    events: EventWithRelations[]; 
     currentFilters: FilterState;
     onApplyFilters: (filters: FilterState) => void;
     isFilterOpen: boolean;
@@ -277,4 +278,4 @@ export function FilterBar({
             </div>
         </div>
     );
-}*/
+}
