@@ -2,6 +2,7 @@
 import React, { useActionState, useState } from 'react';
 import { register } from "@/app/api/auth/authServerActions";
 import { useFormStatus } from "react-dom";
+import { set } from 'zod';
 
 type ApiResponse = {
   message?: string;
@@ -23,13 +24,15 @@ function SubmitButton() {
 }
 
 export const Registration = () => {
-
+ const [modalError, setModalError] = useState<string | null>(null);
   const [state, formAction] = useActionState(
     async (prevState: any, formData: FormData) => {
       const result = await register(prevState, formData);
       console.log('Registration result:', result);
       if (result.success) {
         window.location.href = "/";
+      }else{
+        setModalError(result.error);
       }
       return result;
     },
@@ -189,9 +192,23 @@ export const Registration = () => {
           <SubmitButton />
 
         </form>
-        {!state.success && "error" in state && state.error && (
-          <div className='px-5 py-5 rounded bg-red-600 text-white text-center'>
-            {state.error}
+                {modalError && !state.success && "error" in state && state.error && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded shadow-lg w-80">
+              <h2 className="text-lg font-semibold text-red-600 mb-2">
+                {state.error}
+              </h2>
+              <p className="text-sm text-gray-700">
+                Prøv igjen
+              </p>
+
+              <button
+                className="mt-4 w-full bg-red-600 text-white py-2 rounded"
+                onClick={() => setModalError(null)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
 

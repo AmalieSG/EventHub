@@ -20,16 +20,18 @@ function SubmitButton() {
   );
 }
 
-export const Login = () => { 
-
+export const Login = () => {
+  const [modalError, setModalError] = useState<string | null>(null);
   const [state, formAction] = useActionState(
-		// Uses any for simplicity here
+    // Uses any for simplicity here
     async (prevState: any, formData: FormData) => {
       const result = await login(prevState, formData);
       console.log(result);
 
       if (result.success) {
         window.location.href = "/";
+      } else {
+        setModalError(result.error);
       }
       return result;
     },
@@ -81,7 +83,7 @@ export const Login = () => {
         <form action={formAction} className="space-y-4">
           <fieldset className="space-y-4">
             <legend className="sr-only">Login details</legend>
-            
+
             <p>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -135,14 +137,29 @@ export const Login = () => {
 
           <SubmitButton />
 
-     
+
         </form>
 
-               {!state.success && "error" in state && state.error && (
-          <div className='px-5 py-5 rounded bg-red-600 text-white text-center'>
-            {state.error}
+        {modalError && !state.success && "error" in state && state.error && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded shadow-lg w-80">
+              <h2 className="text-lg font-semibold text-red-600 mb-2">
+                {state.error}
+              </h2>
+              <p className="text-sm text-gray-700">
+                Prøv igjen
+              </p>
+
+              <button
+                className="mt-4 w-full bg-red-600 text-white py-2 rounded"
+                onClick={() => setModalError(null)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
+
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{' '}
@@ -152,7 +169,7 @@ export const Login = () => {
         </p>
       </section>
 
-       <footer className="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-500">
+      <footer className="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-500">
         <a href="#" className="hover:underline px-2">Privacy policy</a>
         <a href="#" className="hover:underline px-2">Term of Service</a>
         <a href="#" className="hover:underline px-2">Help</a>
