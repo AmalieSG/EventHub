@@ -22,7 +22,7 @@ export default function Home() {
         business: BriefcaseIcon,
         music: MusicalNoteIcon,
         technology: GlobeAltIcon,
-        "food-and-drink": CakeIcon,
+        "food and drink": CakeIcon,
         food: CakeIcon,
         culture: GlobeEuropeAfricaIcon,
         sport: TrophyIcon,
@@ -89,7 +89,7 @@ export default function Home() {
             categoryIcons[name.toLowerCase()] ??
             BriefcaseIcon; 
 
-            return { name, count, icon: Icon };
+            return { name, count, Icon };
         });
     }, [events]);
 
@@ -158,7 +158,7 @@ export default function Home() {
             <hr className="my-10 border-gray-200" /> 
             
            
-            <section className="mb-16 bg-gray-100 w-full p-8 rounded-xl">
+            <article className="mb-16 bg-gray-100 w-full p-8 rounded-xl">
                 <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
                     Explore categories
                 </h2>
@@ -168,27 +168,28 @@ export default function Home() {
                         No categories available yet.
                     </p>
                 ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-                        {categories.map((category) => (
+                    <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                        {categories.map(({ name, Icon, count }) => (
                             <button
-                                key={category.name}
+                                key={name}
                                 type="button"
                                 className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
                             >
-                            <div className="p-3 mb-2 bg-gray-100 text-gray-800 rounded-xl">
-                                <category.icon className="w-8 h-8" />
-                            </div>
-                            <p className="text-sm font-semibold text-gray-900 pb-1 uppercase text-center">
-                                {category.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                                {category.count} {category.count === 1 ? "Event" : "Events"}
-                            </p>
+                                <Icon
+                                    className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform"
+                                    aria-hidden="true"
+                                />
+                                <p className="text-sm font-semibold text-gray-900 pb-1 uppercase text-center">
+                                    {name}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                    {count} {count === 1 ? "Event" : "Events"}
+                                </p>
                             </button>
                         ))}
-                    </div>
+                    </section>
                 )}
-            </section>
+            </article>
 
 
             <hr className="my-10 border-gray-200" />
