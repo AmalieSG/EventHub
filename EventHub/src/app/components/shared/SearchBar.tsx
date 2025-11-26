@@ -1,51 +1,33 @@
-// src/app/components/SearchBar.tsx
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import type { FormEvent, KeyboardEvent } from "react";
+import type { FormEvent } from "react";
+import { navigate } from "rwsdk/client";
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
-  onSubmit?: (value: string) => void;
+  onSubmit?: () => void;
   placeholder?: string;
   label?: string;
-  className?: string;
-  id?: string;
 }
 
-export function SearchBar({
-  value,
-  onChange,
-  onSubmit,
-  placeholder = "Search for events...",
-  label = "Search events",
-  className = "",
-  id = "home-search",
-}: SearchBarProps) {
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+export function SearchBar({ value, onChange, onSubmit }: SearchBarProps) {
+  function handleFormSubmit(e: FormEvent) {
     e.preventDefault();
-    onSubmit?.(value);
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onSubmit?.(value);
-    }
-  };
+    onSubmit?.();
+  }
 
   return (
     <form
       role="search"
-      aria-label={label}
+      aria-label="Search events"
       onSubmit={handleFormSubmit}
-      className={`flex w-full max-w-3xl items-center gap-3 ${className}`}
+      className={`flex w-full max-w-3xl items-center gap-3`}
     >
-      {/* Selve søkefeltet (den lyse, brede baren) */}
-      <div className="relative flex-1">
-        <label htmlFor={id} className="sr-only">
-          {label}
+      <section className="relative flex-1">
+        <label className="sr-only">
+          {"Search events"}
         </label>
 
         <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
@@ -53,21 +35,20 @@ export function SearchBar({
         </span>
 
         <input
-          id={id}
+          id="global-search"
           name="q"
           type="search"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="w-full rounded-full bg-gray-100 py-3 pl-11 pr-4 text-sm text-gray-900 outline-none border border-gray-200 focus:border-gray-400 focus:bg-white focus:ring-1 focus:ring-gray-400"
+          placeholder="Search for events..."
+          className="w-full rounded-md bg-gray-100 py-3 pl-11 pr-4 text-sm text-gray-900 outline-none border border-gray-200 focus:border-gray-400 focus:bg-white focus:ring-1 focus:ring-gray-400"
         />
-      </div>
+      </section>
 
-      {/* Sort “Search”-knapp til høyre */}
       <button
         type="submit"
         className="inline-flex items-center justify-center rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 transition"
+        onClick={()=>navigate(`/search?query=${encodeURIComponent(value)}`)}
       >
         Search
       </button>
