@@ -17,11 +17,12 @@ export default function Home() {
     const [events, setEvents] = useState<EventWithRelations[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
+    
     const categoryIcons: Record<string, typeof BriefcaseIcon> = {
         business: BriefcaseIcon,
         music: MusicalNoteIcon,
         technology: GlobeAltIcon,
-        "food & drink": CakeIcon,
+        "food-and-drink": CakeIcon,
         food: CakeIcon,
         culture: GlobeEuropeAfricaIcon,
         sport: TrophyIcon,
@@ -60,13 +61,23 @@ export default function Home() {
         );
 
         return sorted.slice(0, 3);
-    }, [events]);
+    }, [events])
+
+    function normalizeCategory(name: string): string {
+        return name
+            .trim()
+            .toLowerCase()
+            .replace(/&/g, "and")
+            .replace(/\s+/g, " ").trim()
+            .replace(/[-_]/g, " ")
+            .replace(/[^a-z0-9 ]/g, "")
+    }
 
     const categories = useMemo(() => {
         const counts = new Map<string, number>();
         for (const ev of events) {
             if (!ev.category) continue;
-            const raw = ev.category.trim();
+            const raw = normalizeCategory(ev.category);
             if (!raw) continue;
 
             const current = counts.get(raw) ?? 0;
@@ -134,10 +145,10 @@ export default function Home() {
                     <SkeletonEventList />
                 ) : popularEvents.length > 0 ? (
                     <EventList 
-                    events={popularEvents} 
-                    layout="grid" 
-                    action="join"
-                    className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        events={popularEvents} 
+                        layout="grid" 
+                        action="join"
+                        className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                     />
                 ) : (
                     <p className="text-gray-500">No events found.</p>
@@ -154,27 +165,27 @@ export default function Home() {
 
                 {categories.length === 0 ? (
                     <p className="text-center text-sm text-gray-500">
-                    No categories available yet.
+                        No categories available yet.
                     </p>
                 ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-                    {categories.map((cat) => (
-                        <button
-                        key={cat.name}
-                        type="button"
-                        className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
-                        >
-                        <div className="p-3 mb-2 bg-gray-100 text-gray-800 rounded-xl">
-                            <cat.icon className="w-8 h-8" />
-                        </div>
-                        <p className="text-sm font-semibold text-gray-900 pb-1 uppercase text-center">
-                            {cat.name}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                            {cat.count} {cat.count === 1 ? "Event" : "Events"}
-                        </p>
-                        </button>
-                    ))}
+                        {categories.map((category) => (
+                            <button
+                                key={category.name}
+                                type="button"
+                                className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
+                            >
+                            <div className="p-3 mb-2 bg-gray-100 text-gray-800 rounded-xl">
+                                <category.icon className="w-8 h-8" />
+                            </div>
+                            <p className="text-sm font-semibold text-gray-900 pb-1 uppercase text-center">
+                                {category.name}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                                {category.count} {category.count === 1 ? "Event" : "Events"}
+                            </p>
+                            </button>
+                        ))}
                     </div>
                 )}
             </section>
