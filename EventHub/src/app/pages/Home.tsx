@@ -104,11 +104,6 @@ export default function Home() {
         );
     }
 
-    const handleSearchSubmit = (query: string) => {
-        if (!query.trim()) return;
-        window.location.href = `/search?q=${encodeURIComponent(query)}`;
-    }
-
 
      return (
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
@@ -124,7 +119,6 @@ export default function Home() {
                     <SearchBar
                         value={searchQuery}
                         onChange={setSearchQuery}
-                        onSubmit={handleSearchSubmit}
                     />
                 </div>
                 
