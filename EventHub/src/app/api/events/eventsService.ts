@@ -7,10 +7,10 @@ import { CreateEventSchema, UpdateEventSchema } from "@/app/lib/schema/events";
 
 export interface EventsService {
   list(): Promise<Result<EventWithRelations[]>>;
-  get(id: number): Promise<Result<EventWithRelations>>;
+  get(id: string): Promise<Result<EventWithRelations>>;
   create(input: unknown): Promise<Result<EventWithRelations>>;
-  update(id: number, input: unknown): Promise<Result<EventWithRelations>>;
-  remove(id: number): Promise<Result<void>>;
+  update(id: string, input: unknown): Promise<Result<EventWithRelations>>;
+  remove(id: string): Promise<Result<void>>;
 }
 
 export function createEventsService(repo: EventsRepository): EventsService {
@@ -23,7 +23,7 @@ export function createEventsService(repo: EventsRepository): EventsService {
       return ResultHandler.success(result.data);
     },
 
-    async get(id: number) {
+    async get(id: string) {
       if (!id || typeof id !== "string") {
         return ResultHandler.failure("Invalid event ID", Errors.VALIDATION_ERROR);
       }
@@ -82,7 +82,7 @@ export function createEventsService(repo: EventsRepository): EventsService {
       }
     },
 
-    async update(id: number, input: unknown) {
+    async update(id: string, input: unknown) {
       try {
         if (!id || typeof id !== "string") {
           return ResultHandler.failure("Invalid event ID", Errors.VALIDATION_ERROR);
@@ -139,12 +139,11 @@ export function createEventsService(repo: EventsRepository): EventsService {
       }
     },
 
-    async remove(id: number) {
+    async remove(id: string) {
       if (!id || typeof id !== "string") {
         return ResultHandler.failure("Invalid event ID", Errors.VALIDATION_ERROR);
       }
 
-      // Valgfritt: sjekk eksisterer
       const existing = await repo.findById(id);
       if (!existing.success) {
         return ResultHandler.failure(
