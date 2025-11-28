@@ -105,7 +105,7 @@ export default function Home() {
     }
 
 
-     return (
+    return (
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">

@@ -2,10 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ofetch } from "ofetch";
-import { FilterBar, FilterState, defaultFilters } from "../components/FilterBar";
 import { EventList } from "../components/EventList";
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
-import { FunnelIcon } from "lucide-react";
+import { FaceFrownIcon } from "@heroicons/react/24/outline";
+import { defaultFilters, filterAndSortEvents, FilterState, getAvailableCategories, getAvailableCities } from "@/app/lib/utils/filtering";
+import { FilterBar } from "../components/filter/FilterBar";
+import { ActiveFilters } from "../components/filter/ActiveFilters";
+import { SkeletonEventCard } from "../components/shared/SkeletonEventCard";
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -19,15 +22,13 @@ export function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [filters, setFilters] = useState<FilterState>(defaultFilters);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
+  
   useEffect(() => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     const q =
       url.searchParams.get("q") ??
-      url.searchParams.get("search") ??
-      url.searchParams.get("query") ??
+      url.searchParams.get("events") ??
       "";
     setSearchTerm(q);
   }, []);
@@ -44,7 +45,7 @@ export function Search() {
           setEvents(res.data);
         }
       } catch (e) {
-        console.error("Failed to load events:", e);
+        console.error("Failed to load events.", e);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -55,43 +56,30 @@ export function Search() {
     };
   }, []);
 
-  const filteredEvents = useMemo(() => {
-    const q = searchTerm.trim().toLowerCase();
-    
-    return events.filter((e) => {
-      // Search filter
-      const matchesSearch = !q || 
-        [e.title, e.summary ?? "", e.description ?? "", e.category ?? "", e.address ?? ""]
-          .some((field) => field.toLowerCase().includes(q));
-      
-      // Apply FilterBar filters
-      const isOnline = e.address?.toLowerCase().includes('online') || false;
-      const city = e.address?.split(',')[0]?.trim() || '';
-      
-      const matchesOnline = filters.onlineOnly ? isOnline : true;
-      const matchesCity = filters.cities.length > 0
-        ? filters.cities.some(selectedCity => city.toLowerCase() === selectedCity.toLowerCase())
-        : true;
-      const matchesCategory = filters.categories.length > 0
-        ? filters.categories.includes(e.category)
-        : true;
-      
-      return matchesSearch && matchesOnline && matchesCity && matchesCategory;
-    });
-  }, [events, searchTerm, filters]);
+  const availableCities = useMemo(
+    () => getAvailableCities(events),
+    [events]
+  )
 
-  if (loading) {
+  const availableCategories = useMemo(
+    () => getAvailableCategories(events),
+    [events]
+  )
+
+  const filteredEvents = useMemo(
+    () => filterAndSortEvents(events, searchTerm, filters),
+    [events, searchTerm, filters]
+  )
+    
+  function SkeletonEventList() {
     return (
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <p>Loading events…</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3].map(n => (
+          <SkeletonEventCard key={n} />
+        ))}
       </div>
     );
   }
-
-      function handleClear(event: React.MouseEvent): void {
-          setSearchTerm("");
-          setFilters(defaultFilters);
-      }
   
 
   return (
@@ -99,82 +87,68 @@ export function Search() {
       <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm text-gray-500">
-            {filteredEvents.length} Event(er) funnet
+            {filteredEvents.length} Event(s) found
           </p>
           {searchTerm && (
             <p className="text-sm text-gray-600">
-              Søkeresultater for{" "}
+              Searched{" "}
               <span className="font-semibold">"{searchTerm}"</span>
             </p>
           )}
-             
-        </div>
-        
-
-        <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 p-1">
-          <button
-            type="button"
-            onClick={() => setViewMode("list")}
-            className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
-              viewMode === "list"
-                ? "bg-gray-900 text-white"
-                : "text-gray-600 hover:bg-white"
-            }`}
-          >
-            Liste
-          </button>
-          <button
-            type="button"
-            onClick={() => setViewMode("map")}
-            className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
-              viewMode === "map"
-                ? "bg-gray-900 text-white"
-                : "text-gray-600 hover:bg-white"
-            }`}
-            disabled
-          >
-            Kart
-          </button>
         </div>
       </header>
 
-      <section className="flex row gap-5">
-        <button 
-                        onClick={() => setIsFilterOpen(true)} 
-                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
-                    >
-                        <FunnelIcon className="h-4 w-4" />
-                      Open Filter
-                    </button>
-                     <button 
-                            type="button" 
-                            onClick={handleClear}
-                            className="flex items-center gap-1.5 px-4 py-2 bg-red-600 border border-gray-200 text-white rounded-full text-sm shadow-sm transition duration-150 flex-shrink-0 cursor-pointer"
-                        >
-                            Nullstill filter
-                        </button> 
+      <section className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <FilterBar
+            filters={filters}
+            onChangeFilters={setFilters}
+            availableCities={availableCities}
+            availableCategories={availableCategories}
+          />
+
+          <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1 self-end md:self-auto mt-1 md:mt-0">
+            <button
+              type="button"
+              onClick={() => setViewMode("list")}
+              className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
+                viewMode === "list"
+                  ? "bg-gray-900 text-white"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              List
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("map")}
+              className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
+                viewMode === "map"
+                  ? "bg-gray-900 text-white"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+              disabled
+            >
+              Map
+            </button>
+          </div>
+        </div>
+
+        <ActiveFilters filters={filters} onChangeFilters={setFilters} />
       </section>
-      
 
       <section className="space-y-4">
-        {filteredEvents.length === 0 ? (
+        {loading ? (
+          <SkeletonEventList />
+        ) : filteredEvents.length === 0 ? (
           <p className="text-sm text-gray-500">
-            Fant ingen eventer som matcher søket ditt.
+            No events found matching your criteria{" "}
+            <FaceFrownIcon className="inline w-5 h-5" />
           </p>
         ) : (
           <EventList events={filteredEvents} />
         )}
       </section>
-
-      <FilterBar
-        events={events}
-        currentFilters={filters}
-        onApplyFilters={setFilters}
-        isFilterOpen={isFilterOpen}
-        setIsFilterOpen={setIsFilterOpen}
-      />
     </div>
   );
 }
-
-export default Search;
