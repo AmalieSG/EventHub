@@ -9,6 +9,7 @@ import { defaultFilters, filterAndSortEvents, FilterState, getAvailableCategorie
 import { FilterBar } from "../components/filter/FilterBar";
 import { ActiveFilters } from "../components/filter/ActiveFilters";
 import { SkeletonEventCard } from "../components/shared/SkeletonEventCard";
+import { filtersToSearchParams, parseFiltersFromSearchParams } from "../lib/utils/filterParams";
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -26,11 +27,9 @@ export function Search() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
-    const q =
-      url.searchParams.get("q") ??
-      url.searchParams.get("events") ??
-      "";
-    setSearchTerm(q);
+    const parsed = parseFiltersFromSearchParams(url.searchParams);
+    setSearchTerm(parsed.search);
+    setFilters(parsed.filters);
   }, []);
 
   useEffect(() => {
@@ -55,6 +54,16 @@ export function Search() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    const params = filtersToSearchParams(filters, searchTerm);
+    url.search = params.toString();
+    window.history.replaceState(null, "", url.toString());
+  }, [filters, searchTerm]);
+
 
   const availableCities = useMemo(
     () => getAvailableCities(events),

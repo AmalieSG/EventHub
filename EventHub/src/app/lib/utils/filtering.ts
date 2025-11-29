@@ -1,6 +1,5 @@
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
 
-export type SortBy =  | "popularAsc" | "popularDesc" | "priceAsc" | "priceDesc";
 export type PopularSort = "popularAsc" | "popularDesc" | null;
 export type PriceSort = "priceAsc" | "priceDesc" | null;
 
@@ -65,7 +64,12 @@ export function filterAndSortEvents(
     if (eventDate && filters.dateTo) {
       const toDate = new Date(filters.dateTo);
       toDate.setHours(23, 59, 59, 999);
+      if (eventDate > toDate) {
+        matchesDate = false;
+      }
     }
+
+
 
     const city = e.address?.split(",")[0]?.trim().toLowerCase() ?? "";
     const matchesLocation =
