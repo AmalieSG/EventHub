@@ -7,7 +7,19 @@ import { ofetch } from 'ofetch';
 import { navigate } from "rwsdk/client";
 import { SkeletonEventCard } from '../components/shared/SkeletonEventCard';
 import { SearchBar } from '../components/shared/SearchBar';
-import { BriefcaseIcon, MusicalNoteIcon, GlobeAltIcon, CakeIcon, TrophyIcon, FilmIcon, GlobeEuropeAfricaIcon, LightBulbIcon, PaintBrushIcon, PuzzlePieceIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon, 
+        MusicalNoteIcon, 
+        GlobeAltIcon, 
+        CakeIcon, 
+        TrophyIcon, 
+        FilmIcon, 
+        GlobeEuropeAfricaIcon, 
+        LightBulbIcon, 
+        PaintBrushIcon, 
+        PuzzlePieceIcon 
+    } from '@heroicons/react/24/outline';
+import { defaultFilters, FilterState, labelFromSlug, slugify } from '../lib/utils/filtering';
+import { filtersToSearchParams } from '../lib/utils/filterParams';
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -63,33 +75,25 @@ export default function Home() {
         return sorted.slice(0, 3);
     }, [events])
 
-    function normalizeCategory(name: string): string {
-        return name
-            .trim()
-            .toLowerCase()
-            .replace(/&/g, "and")
-            .replace(/\s+/g, " ").trim()
-            .replace(/[-_]/g, " ")
-            .replace(/[^a-z0-9 ]/g, "")
-    }
-
+    
     const categories = useMemo(() => {
         const counts = new Map<string, number>();
         for (const ev of events) {
             if (!ev.category) continue;
-            const raw = normalizeCategory(ev.category);
-            if (!raw) continue;
+            const slug = slugify(ev.category);
+            if (!slug) continue;
 
-            const current = counts.get(raw) ?? 0;
-            counts.set(raw, current + 1);
+            counts.set(slug, (counts.get(slug) ?? 0) + 1);
         }
 
-        return Array.from(counts.entries()).map(([name, count]) => {
-            const Icon =
-            categoryIcons[name.toLowerCase()] ??
-            BriefcaseIcon; 
-
-            return { name, count, Icon };
+        return Array.from(counts.entries()).map(([slug, count]) => {
+            const Icon = categoryIcons[slug] ?? BriefcaseIcon;
+            return {
+                slug,
+                label: labelFromSlug(slug),
+                count,
+                Icon,
+            };
         });
     }, [events]);
 
@@ -104,7 +108,6 @@ export default function Home() {
         );
     }
 
-
     return (
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
@@ -112,7 +115,8 @@ export default function Home() {
                     Discover events in your area
                 </h1>
                 <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                    From concerts and workshops to networking events and food festivals - find perfect experiences that match your interests
+                    From concerts and workshops to networking events and food festivals 
+                    - find perfect experiences that match your interests
                 </p>
 
                 <div className='flex justify-center'>
@@ -145,7 +149,7 @@ export default function Home() {
                         className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                     />
                 ) : (
-                    <p className="text-gray-500">No events found.</p>
+                    <p className="text-gray-500">No events found {":("}</p>
                 )}
             </section>
 
@@ -163,10 +167,26 @@ export default function Home() {
                     </p>
                 ) : (
                     <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-                        {categories.map(({ name, Icon, count }) => (
+                        {categories.map(({ slug, label, Icon, count }) => (
                             <button
-                                key={name}
+                                key={slug}
                                 type="button"
+                                onClick={() => {
+
+                                    const nextFilters: FilterState = {
+                                        ...defaultFilters,
+                                        category: [slug],
+                                        location: null,
+                                        popularSort: null,
+                                        priceSort: null,
+                                        dateFrom: null,
+                                        dateTo: null,
+                                        };
+
+                                    const params = filtersToSearchParams(nextFilters, "");
+                                    
+                                    navigate(`/events?${params.toString()}`);
+                                }}
                                 className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
                             >
                                 <Icon
@@ -174,7 +194,7 @@ export default function Home() {
                                     aria-hidden="true"
                                 />
                                 <p className="text-sm font-semibold text-gray-900 pb-1 uppercase text-center">
-                                    {name}
+                                    {label}
                                 </p>
                                 <p className="text-xs text-gray-500">
                                     {count} {count === 1 ? "Event" : "Events"}

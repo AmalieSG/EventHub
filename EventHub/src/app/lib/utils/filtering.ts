@@ -21,11 +21,27 @@ export const defaultFilters: FilterState = {
   dateTo: null
 };
 
+export function slugify(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and") 
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function labelFromSlug(slug: string): string {
+  if (!slug) return "";
+  return slug.replace(/-/g, " ");
+}
+
 export function getAvailableCities(events: EventWithRelations[]): string[] {
   const set = new Set<string>();
   events.forEach((e) => {
     const city = e.address?.split(",")[0]?.trim();
-    if (city) set.add(city);
+    if (!city) return;
+    const slug = slugify(city);
+    if (slug) set.add(slug);
   });
   return Array.from(set).sort();
 }
@@ -33,9 +49,13 @@ export function getAvailableCities(events: EventWithRelations[]): string[] {
 export function getAvailableCategories(
   events: EventWithRelations[]
 ): string[] {
-  return Array.from(
-    new Set(events.map((e) => e.category).filter(Boolean) as string[])
-  ).sort();
+  const set = new Set<string>();
+  events.forEach((e) => {
+    if (!e.category) return;
+    const slug = slugify(e.category);
+    if (slug) set.add(slug);
+  });
+  return Array.from(set).sort();
 }
 
 export function filterAndSortEvents(
@@ -69,16 +89,16 @@ export function filterAndSortEvents(
       }
     }
 
-
-
     const city = e.address?.split(",")[0]?.trim().toLowerCase() ?? "";
+    const citySlug = slugify(city);
     const matchesLocation =
-      !filters.location || city === filters.location.toLowerCase();
+      !filters.location || citySlug === filters.location;
 
+    const categorySlug = slugify(e.category ?? "");
     const matchesCategory =
       filters.category.length === 0 || 
-      filters.category.includes(e.category)  ;
-
+      filters.category.includes(categorySlug)  ;
+    
     return (
       matchesSearch &&
       matchesDate &&

@@ -1,7 +1,6 @@
 "use client";
 
 import type { FilterState } from "@/app/lib/utils/filtering";
-//import { DateFilter } from "./DateFilter";
 import { LocationFilter } from "./LocationFilter";
 import { CategoryFilter } from "./CategoryFilter";
 import { PriceFilter } from "./PriceFilter";

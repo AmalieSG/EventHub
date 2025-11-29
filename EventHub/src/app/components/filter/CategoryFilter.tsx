@@ -3,43 +3,44 @@
 import { MenuItem } from "@headlessui/react";
 import { TagIcon } from "@heroicons/react/24/outline";
 import { FilterChip } from "./FilterChip";
-import type { FilterState } from "@/app/lib/utils/filtering";
+import { labelFromSlug } from "@/app/lib/utils/filtering";
 
 type Props = {
-  value: FilterState["category"];    // nå: string[]
+  value: string[];
   categories: string[];
-  onChange: (value: FilterState["category"]) => void;
+  onChange: (value: string[]) => void;
 };
 
 export function CategoryFilter({ value, categories, onChange }: Props) {
-  const selected = value ?? [];
+  const selected = new Set(value);
 
-  const toggleCategory = (cat: string) => {
-    if (selected.includes(cat)) {
-      onChange(selected.filter((c) => c !== cat));
+  const toggleCategory = (slug: string) => {
+    if (selected.has(slug)) {
+      onChange(value.filter((c) => c !== slug));
     } else {
-      onChange([...selected, cat]);
+      onChange([...value, slug]);
     }
   };
 
   return (
-    <FilterChip icon={<TagIcon className="w-4 h-4" />} label="Kategori">
-      {categories.map((cat) => {
-        const isActive = selected.includes(cat);
+    <FilterChip icon={<TagIcon className="w-4 h-4" />} label="Category">
+      {categories.map((slug) => {
+        const isActive = selected.has(slug);
+        const label = labelFromSlug(slug);
+
         return (
-          <MenuItem key={cat}>
+          <MenuItem key={slug}>
             {({ active }) => (
               <button
                 type="button"
-                onClick={() => toggleCategory(cat)}
+                onClick={() => toggleCategory(slug)}
                 className={`block w-full px-3 py-1.5 text-left text-xs sm:text-sm ${
                   active || isActive
                     ? "bg-gray-100 text-gray-900"
                     : "text-gray-700"
                 }`}
               >
-                {/* Du kan evt. legge til en liten "✔" foran valgte */}
-                {isActive ? "• " : ""}{cat}
+                {label}
               </button>
             )}
           </MenuItem>

@@ -19,13 +19,11 @@ export function parseFiltersFromSearchParams(
     .map((t) => t.trim())
     .filter(Boolean);
 
-  let location = searchParams.get("location") ?? null;
+  const location = searchParams.get("location") ?? null;
   const category: string[] = [];
   let popularSort: FilterState["popularSort"] = null;
   let priceSort: FilterState["priceSort"] = null;
-  let dateFrom: string | null = null;
-  let dateTo: string | null = null;
-
+  
   for (const token of tokens) {
     if (token === "most-popular") {
       popularSort = "popularDesc";
@@ -45,7 +43,7 @@ export function parseFiltersFromSearchParams(
       continue;
     }
 
-    category.push(token);
+    category.push(token.toLowerCase());
   }
 
   return {
@@ -54,8 +52,6 @@ export function parseFiltersFromSearchParams(
       ...defaultFilters,
       location,
       category,
-      dateFrom,
-      dateTo,
       popularSort,
       priceSort,
     },
@@ -75,7 +71,11 @@ export function filtersToSearchParams(
   const parts: string[] = [];
 
   for (const cat of filters.category) {
-    if (cat.trim()) parts.push(cat.trim());
+    if (cat.trim()) parts.push(cat.trim().toLowerCase());
+  }
+
+  for (const loc of [filters.location]) {
+    if (loc?.trim()) parts.push(loc.trim().toLowerCase());
   }
 
   if (filters.popularSort === "popularDesc") {
@@ -93,10 +93,11 @@ export function filtersToSearchParams(
   if (parts.length > 0) {
     params.set("filters", parts.join(" "));
   }
+  
 
-  if (filters.location) {
+  /*if (filters.location) {
     params.set("location", filters.location);
-  }
+  }*/
 
   return params;
 }

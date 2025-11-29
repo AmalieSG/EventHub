@@ -1,4 +1,3 @@
-// src/app/components/filters/LocationFilter.tsx
 "use client";
 
 import { MenuItem } from "@headlessui/react";

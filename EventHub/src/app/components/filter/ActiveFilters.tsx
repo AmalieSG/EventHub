@@ -1,6 +1,7 @@
 "use client";
 
 import type { FilterState } from "@/app/lib/utils/filtering";
+import { labelFromSlug } from "@/app/lib/utils/filtering";
 
 type Props = {
   filters: FilterState;
@@ -29,10 +30,18 @@ export function ActiveFilters({ filters, onChangeFilters }: Props) {
   if (!hasAny) return null;
 
   const clearField = (field: keyof FilterState) => {
+    if (field === "category") {
+      onChangeFilters({
+        ...filters,
+        category: [],
+      });
+      return;
+    }
+
     onChangeFilters({
       ...filters,
       [field]: null,
-    });
+    } as FilterState);
   };
 
   const clearDateRange = () => {
@@ -60,7 +69,7 @@ export function ActiveFilters({ filters, onChangeFilters }: Props) {
           onClick={() => clearField("location")}
           className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs text-gray-700 hover:bg-gray-50"
         >
-          <span>{filters.location}</span>
+          <span>{labelFromSlug(filters.location)}</span>
           <span aria-hidden="true" className="text-gray-400">
             ×
           </span>
@@ -76,7 +85,7 @@ export function ActiveFilters({ filters, onChangeFilters }: Props) {
             onClick={() => clearSingleCategory(cat)}
             className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs text-gray-700 hover:bg-gray-50"
           >
-            <span>{cat}</span>
+            <span>{labelFromSlug(cat)}</span>
             <span aria-hidden="true" className="text-gray-400">
               ×
             </span>

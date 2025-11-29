@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuItems, MenuItem } from "@headlessui/react";
+import { MenuItems } from "@headlessui/react";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { FilterChip } from "./FilterChip";
 
@@ -15,8 +15,8 @@ export function DateRangeFilter({ dateFrom, dateTo, onChange }: Props) {
     <FilterChip icon={<CalendarDaysIcon className="w-4 h-4" />} label="Date">
         <MenuItems className="absolute z-20 mt-2 w-64 origin-top-left rounded-md bg-white p-3 shadow-lg ring-1 ring-black/5 text-sm space-y-3">
 
-        <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Fra</label>
+        <section className="flex flex-col gap-1">
+          <label className="text-xs text-gray-500">From</label>
           <input
             type="date"
             value={dateFrom ?? ""}
@@ -25,10 +25,10 @@ export function DateRangeFilter({ dateFrom, dateTo, onChange }: Props) {
             }
             className="border border-gray-300 rounded-md px-2 py-1 text-sm"
           />
-        </div>
+        </section>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Til</label>
+        <section className="flex flex-col gap-1">
+          <label className="text-xs text-gray-500">To</label>
           <input
             type="date"
             value={dateTo ?? ""}
@@ -37,21 +37,7 @@ export function DateRangeFilter({ dateFrom, dateTo, onChange }: Props) {
             }
             className="border border-gray-300 rounded-md px-2 py-1 text-sm"
           />
-        </div>
-
-        <MenuItem>
-          {({ active }) => (
-            <button
-              type="button"
-              onClick={() => onChange({ dateFrom: null, dateTo: null })}
-              className={`w-full mt-2 px-3 py-1.5 rounded-md ${
-                active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-              }`}
-            >
-              Nullstill dato
-            </button>
-          )}
-        </MenuItem>
+        </section>
       </MenuItems>
     </FilterChip>
   );

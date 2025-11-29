@@ -1,4 +1,3 @@
-// src/app/components/search/PopularFilter.tsx
 "use client";
 
 import { MenuItem } from "@headlessui/react";
