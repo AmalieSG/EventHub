@@ -94,8 +94,8 @@ export function ActiveFilters({ filters, onChangeFilters }: Props) {
             {filters.dateFrom && filters.dateTo
               ? `${filters.dateFrom} – ${filters.dateTo}`
               : filters.dateFrom
-              ? `fra ${filters.dateFrom}`
-              : `til ${filters.dateTo}`}
+              ? `from ${filters.dateFrom}`
+              : `to ${filters.dateTo}`}
           </span>
           <span aria-hidden="true" className="text-gray-400">
             ×
