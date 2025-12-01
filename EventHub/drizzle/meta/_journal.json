@@ -15,6 +15,13 @@
       "when": 1764594014719,
       "tag": "0001_sudden_grim_reaper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1764608508612,
+      "tag": "0002_lovely_toad_men",
+      "breakpoints": true
     }
   ]
 }

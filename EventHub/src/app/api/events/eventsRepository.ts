@@ -8,7 +8,7 @@ import type { Result } from "@/app/types/result";
 
 export interface EventWithRelations extends Event {
   attendees: EventAttendee[];
-  host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture"> | null;
+  host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture" | "bio"> | null;
   address?: Address | null;
 }
 
@@ -29,6 +29,7 @@ export function createEventsRepository(db: DB): EventsRepository {
           event: events, 
           attendee: eventAttendees,
           host: users,
+          address: addresses,
         })
         .from(events)
         .leftJoin(eventAttendees, eq(eventAttendees.eventId, events.id))
@@ -40,6 +41,7 @@ export function createEventsRepository(db: DB): EventsRepository {
         const ev = row.event as Event;
         const attendee = row.attendee as EventAttendee | null;
         const hostRow = row.host as User | null;
+        const addressRow = row.address as Address | null;
 
         if (!acc[ev.id]) {
           acc[ev.id] = { 
@@ -52,8 +54,10 @@ export function createEventsRepository(db: DB): EventsRepository {
                   lastName: hostRow.lastName,
                   email: hostRow.email,
                   profilePicture: hostRow.profilePicture,
+                  bio: hostRow.bio,
                 }
               : null,
+            address: addressRow ?? null,
           };
         }
         if (attendee) acc[ev.id].attendees.push(attendee);
@@ -65,7 +69,12 @@ export function createEventsRepository(db: DB): EventsRepository {
             lastName: hostRow.lastName,
             email: hostRow.email,
             profilePicture: hostRow.profilePicture,
+            bio: hostRow.bio,
           };
+        }
+
+        if (!acc[ev.id].address && addressRow) {
+          acc[ev.id].address = addressRow;
         }
 
         return acc;
@@ -82,6 +91,7 @@ export function createEventsRepository(db: DB): EventsRepository {
           with: { 
             attendees: true,
             host: true,
+            address: true,
           },
         });
 
@@ -97,8 +107,10 @@ export function createEventsRepository(db: DB): EventsRepository {
                 lastName: row.host.lastName,
                 email: row.host.email,
                 profilePicture: row.host.profilePicture,
+                bio: row.host.bio,
               }
             : null,
+          address: row.address ?? null,
         }
         
         return full ?? null;
@@ -120,6 +132,7 @@ export function createEventsRepository(db: DB): EventsRepository {
           hostId: data.hostId,
           category: data.category,
           imageUrl: data.imageUrl,
+          includedFeatures: data.includedFeatures,
           status: data.status ?? "upcoming",
         })
         .returning();
@@ -142,6 +155,7 @@ export function createEventsRepository(db: DB): EventsRepository {
             ...(data.price !== undefined && { price: data.price }),
             ...(data.category !== undefined && { category: data.category }),
             ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),
+            ...(data.includedFeatures !== undefined && { includedFeatures: data.includedFeatures }),
             ...(data.status !== undefined && { status: data.status }),
             ...(data.hostId !== undefined && { hostId: data.hostId }),
           })

@@ -38,6 +38,7 @@ export const events = sqliteTable("events", {
         .notNull(),
     imageUrl: text("imageUrl")
         .notNull(),
+    includedFeatures: text("included_features"),
     createdAt: integer("created_at", { mode: "timestamp" })
         .notNull()
         .$defaultFn(() => new Date()),

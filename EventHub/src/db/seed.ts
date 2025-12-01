@@ -1,3 +1,4 @@
+// src/db/seed.ts
 import { defineScript } from "rwsdk/worker";
 import { getDb, setupDb } from ".";
 import {
@@ -20,7 +21,7 @@ export default defineScript(async ({ env }) => {
     await db.delete(addresses);
     await db.delete(users);
 
-    const fixedCreatedAt = new Date(1763377533000); // bare en fast dato for demo
+    const fixedCreatedAt = new Date(1763377533000); // vilkårlig fast dato
 
     // ---- Users ----
     const [admin, user1, user2, user3, user4] = await db
@@ -35,6 +36,7 @@ export default defineScript(async ({ env }) => {
           role: "admin",
           createdAt: fixedCreatedAt,
           isActive: true,
+          bio: "System administrator for EventHub.",
         },
         {
           username: "user1",
@@ -45,6 +47,7 @@ export default defineScript(async ({ env }) => {
           role: "user",
           createdAt: fixedCreatedAt,
           isActive: true,
+          bio: "Tech enthusiast and community organizer focusing on developer meetups.",
         },
         {
           username: "user2",
@@ -55,6 +58,7 @@ export default defineScript(async ({ env }) => {
           role: "user",
           createdAt: fixedCreatedAt,
           isActive: true,
+          bio: "Event planner with a passion for sports and outdoor activities.",
         },
         {
           username: "user3",
@@ -65,6 +69,7 @@ export default defineScript(async ({ env }) => {
           role: "user",
           createdAt: fixedCreatedAt,
           isActive: true,
+          bio: "Cultural events curator focusing on art, music and local festivals.",
         },
         {
           username: "user4",
@@ -75,6 +80,7 @@ export default defineScript(async ({ env }) => {
           role: "user",
           createdAt: fixedCreatedAt,
           isActive: true,
+          bio: "Food and wine lover hosting tastings and culinary experiences.",
         },
       ])
       .returning();
@@ -114,7 +120,8 @@ export default defineScript(async ({ env }) => {
         },
         {
           label: "Innovation House, Oslo",
-          formattedAddress: "Forskningsparken, Gaustadalléen 21, 0349 Oslo, Norway",
+          formattedAddress:
+            "Forskningsparken, Gaustadalléen 21, 0349 Oslo, Norway",
           city: "Oslo",
           country: "Norway",
         },
@@ -132,29 +139,33 @@ export default defineScript(async ({ env }) => {
         },
         {
           label: "Old Town Square, Fredrikstad",
-          formattedAddress: "Voldportgaten 73, 1632 Gamle Fredrikstad, Norway",
+          formattedAddress:
+            "Voldportgaten 73, 1632 Gamle Fredrikstad, Norway",
           city: "Fredrikstad",
           country: "Norway",
         },
         {
           label: "Cowork Space, Oslo",
-          formattedAddress: "MESH Youngstorget, Møllergata 6, 0179 Oslo, Norway",
+          formattedAddress:
+            "MESH Youngstorget, Møllergata 6, 0179 Oslo, Norway",
           city: "Oslo",
           country: "Norway",
         },
         {
           label: "Tasting Room, Bergen",
-          formattedAddress: "Vinbaren på Grand, Nedre Ole Bulls plass 1, 5012 Bergen, Norway",
+          formattedAddress:
+            "Vinbaren på Grand, Nedre Ole Bulls plass 1, 5012 Bergen, Norway",
           city: "Bergen",
           country: "Norway",
         },
         {
           label: "Arena, Oslo",
-          formattedAddress: "Oslo Spektrum, Sonja Henies plass 2, 0185 Oslo, Norway",
+          formattedAddress:
+            "Oslo Spektrum, Sonja Henies plass 2, 0185 Oslo, Norway",
           city: "Oslo",
           country: "Norway",
         },
-    ])
+      ])
       .returning();
 
     // ---- Events ----
@@ -165,7 +176,7 @@ export default defineScript(async ({ env }) => {
           title: "Tech Conference 2025",
           description: "A conference about the latest in software and AI.",
           summary: "Full-day tech event with talks and networking.",
-          eventStart: new Date(1741597200000), // 9 Mar 2025 etc
+          eventStart: new Date(1741597200000),
           addressId: techHub.id,
           price: 199,
           hostId: user1.id,
@@ -173,6 +184,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/tech-conf.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Access to all sessions,Networking lunch,Event swag",
         },
         {
           title: "Art Expo Spring",
@@ -186,6 +198,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/art-expo.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Entry to exhibition,Catalogue of artworks,Meet the artists session",
         },
         {
           title: "Summer Music Festival",
@@ -199,6 +212,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/music-festival.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Access to all stages,Camping area,Free merchandise",
         },
         {
           title: "Startup Pitch Night",
@@ -212,6 +226,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/pitch-night.jpg",
           createdAt: fixedCreatedAt,
           status: "ended",
+          includedFeatures: "Pitch sessions,Networking opportunities,Refreshments",
         },
         {
           title: "Street Food Festival",
@@ -225,6 +240,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/food-festival.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Food tasting,Live entertainment,Kids activities",
         },
       ])
       .returning();
@@ -244,10 +260,12 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/run.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Race entry,Finisher medal,Afterparty access",
         },
         {
           title: "Cultural Night Market",
-          description: "Stands, performances and food from around the world.",
+          description:
+            "Stands, performances and food from around the world.",
           summary: "Evening market celebrating diversity.",
           eventStart: new Date(1752343200000),
           addressId: oldTownFredrikstad.id,
@@ -257,6 +275,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/culture-night.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Market access,Live performances,Cultural workshops",
         },
         {
           title: "Frontend Workshop",
@@ -270,10 +289,12 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/frontend-workshop.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Workshop materials,Coffee and snacks,Certificate of completion",
         },
         {
           title: "Wine & Cheese Evening",
-          description: "Tasting of selected wines and local cheeses.",
+          description:
+            "Tasting of selected wines and local cheeses.",
           summary: "Guided tasting with sommelier.",
           eventStart: new Date(1745002800000),
           addressId: tastingRoomBergen.id,
@@ -283,10 +304,12 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/wine-cheese.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Wine tasting,Cheese pairing,Sommelier guidance",
         },
         {
           title: "eSports Tournament",
-          description: "Local eSports teams compete in popular games.",
+          description:
+            "Local eSports teams compete in popular games.",
           summary: "Full-day gaming event with finals on stage.",
           eventStart: new Date(1755856800000),
           addressId: arenaOslo.id,
@@ -296,6 +319,7 @@ export default defineScript(async ({ env }) => {
           imageUrl: "https://example.com/images/esports.jpg",
           createdAt: fixedCreatedAt,
           status: "upcoming",
+          includedFeatures: "Tournament access,Meet the players,Gaming merchandise",
         },
       ])
       .returning();

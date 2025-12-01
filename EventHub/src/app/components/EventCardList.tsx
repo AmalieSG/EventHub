@@ -87,12 +87,12 @@ export function EventCardList({ event }: EventCardListProps) {
                         <span className="font-semibold">{timeLabel}</span>
                     </p>
 
-                    <p className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                         <MapPinIcon className="h-4 text-gray-500" aria-hidden="true" />
                         <address className="not-italic text-xs text-gray-700 line-clamp-1">
                             {displayAddress}
                         </address>
-                    </p>
+                    </div>
                 </section>
 
                 <section aria-label="Host and participants" className="mt-1 text-xs text-gray-600">
