@@ -38,9 +38,14 @@ export function labelFromSlug(slug: string): string {
 export function getAvailableCities(events: EventWithRelations[]): string[] {
   const set = new Set<string>();
   events.forEach((e) => {
-    const city = e.address?.split(",")[0]?.trim();
+    const city = e.address?.city?.trim();
+    const country = e.address?.country?.trim();
+
     if (!city) return;
-    const slug = slugify(city);
+
+    const raw = country ? `${city}, ${country}` : city;
+    
+    const slug = slugify(raw);
     if (slug) set.add(slug);
   });
   return Array.from(set).sort();
@@ -66,11 +71,23 @@ export function filterAndSortEvents(
   const q = searchTerm.trim().toLowerCase();
 
   let list = events.filter((e) => {
+    const addressText =
+      e.address?.formattedAddress ??
+      e.address?.label ??
+      [e.address?.city, e.address?.country].filter(Boolean).join(", ") ??
+      "";
+
     const matchesSearch =
       !q ||
-      [e.title, e.summary ?? "", e.description ?? "", e.category ?? "", e.address ?? ""]
-        .some((field) => field.toLowerCase().includes(q));
-
+      [
+        e.title, 
+        e.summary ?? "", 
+        e.description ?? "", 
+        e.category ?? "", 
+        addressText
+      ]
+        .map((field) => field.toLowerCase())
+        .some((field) => field.includes(q));
 
     const eventDate = e.eventStart ? new Date(e.eventStart) : null;
     let matchesDate = true;
@@ -89,10 +106,14 @@ export function filterAndSortEvents(
       }
     }
 
-    const city = e.address?.split(",")[0]?.trim().toLowerCase() ?? "";
-    const citySlug = slugify(city);
+    const city = e.address?.city?.trim().toLowerCase() ?? ""
+    const country = e.address?.country?.trim().toLowerCase() ?? ""
+
+    const fullLocationRaw = country ? `${city}, ${country}` : city;
+    const locationSlug = slugify(fullLocationRaw);
+
     const matchesLocation =
-      !filters.location || citySlug === filters.location;
+      !filters.location || locationSlug === filters.location;
 
     const categorySlug = slugify(e.category ?? "");
     const matchesCategory =
