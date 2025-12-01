@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
-import { EventList } from '../components/EventList'
 import type { EventWithRelations } from '../api/events/eventsRepository';
 import { ofetch } from 'ofetch';
 import { navigate } from "rwsdk/client";
@@ -20,6 +19,7 @@ import { BriefcaseIcon,
     } from '@heroicons/react/24/outline';
 import { defaultFilters, FilterState, labelFromSlug, slugify } from '../lib/utils/filtering';
 import { filtersToSearchParams } from '../lib/utils/filterParams';
+import { EventCard } from '../components/cards/EventCard';
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -142,9 +142,12 @@ export default function Home() {
                 {loading ? (
                     <SkeletonEventList />
                 ) : popularEvents.length > 0 ? (
-                    <EventList 
-                        events={popularEvents} 
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {popularEvents.map(ev => (
+                            <EventCard key={ev.id} event={ev} />
+                        ))}
+                    </div>
+
                 ) : (
                     <p className="text-gray-500">No events found {":("}</p>
                 )}
