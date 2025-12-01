@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { DB } from "@/db";
-import { CreateEvent, eventAttendees, events, UpdateEvent, users } from "@/db/schema";
-import type { Event, EventAttendee, User } from "@/db/schema";
+import { addresses, CreateEvent, eventAttendees, events, UpdateEvent, users } from "@/db/schema";
+import type { Address, Event, EventAttendee, User } from "@/db/schema";
 import { executeDbOperation } from "@/app/lib/db/operations";
 import { getDb } from "@/db";
 import type { Result } from "@/app/types/result";
@@ -9,6 +9,7 @@ import type { Result } from "@/app/types/result";
 export interface EventWithRelations extends Event {
   attendees: EventAttendee[];
   host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture"> | null;
+  address?: Address | null;
 }
 
 export interface EventsRepository {
@@ -32,6 +33,7 @@ export function createEventsRepository(db: DB): EventsRepository {
         .from(events)
         .leftJoin(eventAttendees, eq(eventAttendees.eventId, events.id))
         .leftJoin(users, eq(users.id, events.hostId))
+        .leftJoin(addresses, eq(addresses.id, events.addressId))
         .orderBy(events.eventStart);
 
       const map = rows.reduce<Record<string, EventWithRelations>>((acc, row) => {
@@ -112,7 +114,8 @@ export function createEventsRepository(db: DB): EventsRepository {
           description: data.description,
           summary: data.summary,
           eventStart: data.eventStart,
-          address: data.address,
+          //address: data.address,
+          addressId: data.addressId,
           price: data.price,
           hostId: data.hostId,
           category: data.category,
@@ -134,7 +137,8 @@ export function createEventsRepository(db: DB): EventsRepository {
             ...(data.description !== undefined && { description: data.description }),
             ...(data.summary !== undefined && { summary: data.summary }),
             ...(data.eventStart !== undefined && { eventStart: data.eventStart }),
-            ...(data.address !== undefined && { address: data.address }),
+            //...(data.address !== undefined && { address: data.address }),
+            ...(data.addressId !== undefined && { addressId: data.addressId }),
             ...(data.price !== undefined && { price: data.price }),
             ...(data.category !== undefined && { category: data.category }),
             ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),

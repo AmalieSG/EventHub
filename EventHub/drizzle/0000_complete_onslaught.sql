@@ -1,3 +1,13 @@
+CREATE TABLE `addresses` (
+	`id` text PRIMARY KEY NOT NULL,
+	`label` text,
+	`formatted_address` text NOT NULL,
+	`google_place_id` text,
+	`lat` real,
+	`lng` real,
+	`created_at` integer NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE `event_attendees` (
 	`event_id` text NOT NULL,
 	`user_id` integer NOT NULL,
@@ -15,7 +25,7 @@ CREATE TABLE `events` (
 	`description` text NOT NULL,
 	`summary` text NOT NULL,
 	`eventStart` integer NOT NULL,
-	`address` text NOT NULL,
+	`address_id` text,
 	`price` integer NOT NULL,
 	`hostId` integer NOT NULL,
 	`category` text NOT NULL,
@@ -24,12 +34,14 @@ CREATE TABLE `events` (
 	`updated_at` integer,
 	`deleted_at` integer,
 	`status` text DEFAULT 'upcoming' NOT NULL,
+	FOREIGN KEY (`address_id`) REFERENCES `addresses`(`id`) ON UPDATE no action ON DELETE set null,
 	FOREIGN KEY (`hostId`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE INDEX `events_host_idx` ON `events` (`hostId`);--> statement-breakpoint
 CREATE INDEX `events_start_idx` ON `events` (`eventStart`);--> statement-breakpoint
 CREATE INDEX `events_status_idx` ON `events` (`status`);--> statement-breakpoint
+CREATE INDEX `events_address_idx` ON `events` (`address_id`);--> statement-breakpoint
 CREATE TABLE `sessions` (
 	`id` text PRIMARY KEY NOT NULL,
 	`user_id` integer NOT NULL,

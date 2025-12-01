@@ -144,9 +144,9 @@ export default function Home() {
                 ) : popularEvents.length > 0 ? (
                     <EventList 
                         events={popularEvents} 
-                        layout="grid" 
-                        action="join"
-                        className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        //layout="grid" 
+                        //action="join"
+                        //className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                     />
                 ) : (
                     <p className="text-gray-500">No events found {":("}</p>

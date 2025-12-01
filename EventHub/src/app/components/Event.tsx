@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PriceBox } from '../components/PriceBox';
 import { EventDetailBox } from '../components/EventDetailBox';
 import EventDescription from '../components/EventDescription';
@@ -8,10 +8,10 @@ import ArtistLineup, { Artist } from '../components/ArtistLineup';
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
 
 interface EventProps {
-    id: number;
+    id: string;
 }
 
-export function EventDetail({ id }: EventProps) {
+export function Event({ id }: EventProps) {
     const [event, setEvent] = useState<EventWithRelations | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)

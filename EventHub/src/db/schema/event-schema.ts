@@ -10,41 +10,53 @@ import { relations } from "drizzle-orm/relations";
 import { createId } from "@/app/lib/utils/id";
 import { eventAttendees } from "./event-attendee-schema";
 import { savedEvents } from "./saved-event-schema";
+import { addresses } from "./adress-schema";
 
 export const events = sqliteTable("events", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => createId()),
-    title: text("title").notNull(),
-    description: text("description").notNull(),
-    summary: text("summary").notNull(),
-    eventStart: integer("eventStart", { mode: "timestamp" }).notNull(),
-    address: text("address").notNull(),
-    price: integer("price").notNull(),
+    title: text("title")
+        .notNull(),
+    description: text("description")
+        .notNull(),
+    summary: text("summary")
+        .notNull(),
+    eventStart: integer("eventStart", { mode: "timestamp" })
+        .notNull(),
+    addressId: text("address_id")
+        .references(() => addresses.id, { onDelete: "set null"}),
+    //address: text("address").notNull(),
+    price: integer("price")
+        .notNull(),
     hostId: int("hostId")
         .notNull()
         .references(() => users.id, {
             onDelete: "cascade",
         }),
-    category: text("category").notNull(),
-    imageUrl: text("imageUrl").notNull(),
+    category: text("category")
+        .notNull(),
+    imageUrl: text("imageUrl")
+        .notNull(),
     createdAt: integer("created_at", { mode: "timestamp" })
         .notNull()
         .$defaultFn(() => new Date()),
-    updatedAt: integer("updated_at", { mode: "timestamp" }).$onUpdateFn(
+    updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$onUpdateFn(
         () => new Date()
     ),
     deletedAt: integer("deleted_at", { mode: "timestamp" }),
     status: text("status", {
         enum: ["upcoming", "ongoing", "ended", "cancelled"],
     })
-    .notNull()
-    .default("upcoming")
+        .notNull()
+        .default("upcoming")
     },
     (table) => [
         index("events_host_idx").on(table.hostId),
         index("events_start_idx").on(table.eventStart),
         index("events_status_idx").on(table.status),
+        index("events_address_idx").on(table.addressId),
     ]
 );
 
@@ -52,6 +64,10 @@ export const eventsRelations = relations(events, ({ one, many }) => ({
   host: one(users, {
     fields: [events.hostId],
     references: [users.id],
+  }),
+  address: one(addresses, {
+    fields: [events.addressId],
+    references: [addresses.id],
   }),
   attendees: many(eventAttendees),
   savedBy: many(savedEvents),

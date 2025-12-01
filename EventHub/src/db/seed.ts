@@ -1,20 +1,30 @@
 // src/db/seed.ts
-import { eventAttendees, events, users, savedEvents } from "./schema";
 import { defineScript } from "rwsdk/worker";
 import { getDb, setupDb } from ".";
+import {
+  users,
+  events,
+  eventAttendees,
+  savedEvents,
+  addresses,
+} from "./schema";
 
 export default defineScript(async ({ env }) => {
   try {
+    console.log("🌱 Seeding database...");
     await setupDb(env.DB);
     const db = await getDb();
 
-    // Delete in correct order
+    // ---- Tøm tabeller i riktig rekkefølge ----
     await db.delete(savedEvents);
     await db.delete(eventAttendees);
     await db.delete(events);
+    await db.delete(addresses);
     await db.delete(users);
 
-    // --- Users ---
+    const fixedCreatedAt = new Date(1763377533000); // bare en fast dato for demo
+
+    // ---- Users ----
     const [admin, user1, user2, user3, user4] = await db
       .insert(users)
       .values([
@@ -25,7 +35,7 @@ export default defineScript(async ({ env }) => {
           email: "admin@example.com",
           passwordHash: "hashed_password_here",
           role: "admin",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           isActive: true,
         },
         {
@@ -35,7 +45,7 @@ export default defineScript(async ({ env }) => {
           email: "user1@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           isActive: true,
         },
         {
@@ -45,7 +55,7 @@ export default defineScript(async ({ env }) => {
           email: "user2@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           isActive: true,
         },
         {
@@ -55,7 +65,7 @@ export default defineScript(async ({ env }) => {
           email: "user3@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           isActive: true,
         },
         {
@@ -65,13 +75,91 @@ export default defineScript(async ({ env }) => {
           email: "user4@example.com",
           passwordHash: "hashed_password_here",
           role: "user",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           isActive: true,
         },
       ])
       .returning();
 
-    // --- Events: Don't specify id, let it auto-increment ---
+    // ---- Addresses ----
+    const [
+      techHub,
+      artGallery,
+      cityPark,
+      innovationHouse,
+      harbourStavanger,
+      cityCenterOslo,
+      oldTownFredrikstad,
+      coworkOslo,
+      tastingRoomBergen,
+      arenaOslo,
+    ] = await db
+      .insert(addresses)
+      .values([
+        {
+          label: "Tech Hub, Oslo",
+          formattedAddress: "Rebel, Universitetsgata 2, 0164 Oslo, Norway",
+          city: "Oslo",
+          country: "Norway",
+        },
+        {
+          label: "Art Gallery, Bergen",
+          formattedAddress: "KODE 2, Rasmus Meyers allé 3, 5015 Bergen, Norway",
+          city: "Bergen",
+          country: "Norway",
+        },
+        {
+          label: "City Park, Trondheim",
+          formattedAddress: "Marinen Park, Marinen, 7013 Trondheim, Norway",
+          city: "Trondheim",
+          country: "Norway",
+        },
+        {
+          label: "Innovation House, Oslo",
+          formattedAddress: "Forskningsparken, Gaustadalléen 21, 0349 Oslo, Norway",
+          city: "Oslo",
+          country: "Norway",
+        },
+        {
+          label: "Harbour Area, Stavanger",
+          formattedAddress: "Skansekaien 30, 4006 Stavanger, Norway",
+          city: "Stavanger",
+          country: "Norway",
+        },
+        {
+          label: "City Center, Oslo",
+          formattedAddress: "Jernbanetorget 1, 0154 Oslo, Norway",
+          city: "Oslo",
+          country: "Norway",
+        },
+        {
+          label: "Old Town Square, Fredrikstad",
+          formattedAddress: "Voldportgaten 73, 1632 Gamle Fredrikstad, Norway",
+          city: "Fredrikstad",
+          country: "Norway",
+        },
+        {
+          label: "Cowork Space, Oslo",
+          formattedAddress: "MESH Youngstorget, Møllergata 6, 0179 Oslo, Norway",
+          city: "Oslo",
+          country: "Norway",
+        },
+        {
+          label: "Tasting Room, Bergen",
+          formattedAddress: "Vinbaren på Grand, Nedre Ole Bulls plass 1, 5012 Bergen, Norway",
+          city: "Bergen",
+          country: "Norway",
+        },
+        {
+          label: "Arena, Oslo",
+          formattedAddress: "Oslo Spektrum, Sonja Henies plass 2, 0185 Oslo, Norway",
+          city: "Oslo",
+          country: "Norway",
+        },
+    ])
+      .returning();
+
+    // ---- Events ----
     const firstBatch = await db
       .insert(events)
       .values([
@@ -79,13 +167,13 @@ export default defineScript(async ({ env }) => {
           title: "Tech Conference 2025",
           description: "A conference about the latest in software and AI.",
           summary: "Full-day tech event with talks and networking.",
-          eventStart: new Date(1741597200000),
-          address: "Tech Hub, Oslo",
+          eventStart: new Date(1741597200000), // 9 Mar 2025 etc
+          addressId: techHub.id,
           price: 199,
           hostId: user1.id,
           category: "Technology",
           imageUrl: "https://example.com/images/tech-conf.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -93,12 +181,12 @@ export default defineScript(async ({ env }) => {
           description: "Exhibition of modern Scandinavian art.",
           summary: "Explore new works from emerging artists.",
           eventStart: new Date(1743850800000),
-          address: "Art Gallery, Bergen",
+          addressId: artGallery.id,
           price: 120,
           hostId: user2.id,
           category: "Art",
           imageUrl: "https://example.com/images/art-expo.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -106,12 +194,12 @@ export default defineScript(async ({ env }) => {
           description: "Outdoor music festival with multiple stages.",
           summary: "Live bands, DJs and food trucks all weekend.",
           eventStart: new Date(1750428000000),
-          address: "City Park, Trondheim",
+          addressId: cityPark.id,
           price: 850,
           hostId: user3.id,
           category: "Music",
           imageUrl: "https://example.com/images/music-festival.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -119,12 +207,12 @@ export default defineScript(async ({ env }) => {
           description: "Local startups pitch to investors and the community.",
           summary: "Short pitches, Q&A and mingling.",
           eventStart: new Date(1739640600000),
-          address: "Innovation House, Oslo",
+          addressId: innovationHouse.id,
           price: 0,
           hostId: user1.id,
           category: "Business",
           imageUrl: "https://example.com/images/pitch-night.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "ended",
         },
         {
@@ -132,12 +220,12 @@ export default defineScript(async ({ env }) => {
           description: "Tasting from food trucks and local restaurants.",
           summary: "Family-friendly food festival with live music.",
           eventStart: new Date(1746878400000),
-          address: "Harbour Area, Stavanger",
+          addressId: harbourStavanger.id,
           price: 50,
           hostId: user4.id,
           category: "Food & Drink",
           imageUrl: "https://example.com/images/food-festival.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
       ])
@@ -151,12 +239,12 @@ export default defineScript(async ({ env }) => {
           description: "Annual 10K run for all levels.",
           summary: "Timed race with medals and afterparty.",
           eventStart: new Date(1756713600000),
-          address: "City Center, Oslo",
+          addressId: cityCenterOslo.id,
           price: 400,
           hostId: user2.id,
           category: "Sport",
           imageUrl: "https://example.com/images/run.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -164,12 +252,12 @@ export default defineScript(async ({ env }) => {
           description: "Stands, performances and food from around the world.",
           summary: "Evening market celebrating diversity.",
           eventStart: new Date(1752343200000),
-          address: "Old Town Square, Fredrikstad",
+          addressId: oldTownFredrikstad.id,
           price: 100,
           hostId: user3.id,
           category: "Culture",
           imageUrl: "https://example.com/images/culture-night.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -177,12 +265,12 @@ export default defineScript(async ({ env }) => {
           description: "Hands-on React and TypeScript workshop.",
           summary: "Bring your laptop and build a small app.",
           eventStart: new Date(1742896800000),
-          address: "Cowork Space, Oslo",
+          addressId: coworkOslo.id,
           price: 900,
           hostId: user1.id,
           category: "Technology",
           imageUrl: "https://example.com/images/frontend-workshop.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -190,12 +278,12 @@ export default defineScript(async ({ env }) => {
           description: "Tasting of selected wines and local cheeses.",
           summary: "Guided tasting with sommelier.",
           eventStart: new Date(1745002800000),
-          address: "Tasting Room, Bergen",
+          addressId: tastingRoomBergen.id,
           price: 650,
           hostId: user4.id,
           category: "Food & Drink",
           imageUrl: "https://example.com/images/wine-cheese.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
         {
@@ -203,12 +291,12 @@ export default defineScript(async ({ env }) => {
           description: "Local eSports teams compete in popular games.",
           summary: "Full-day gaming event with finals on stage.",
           eventStart: new Date(1755856800000),
-          address: "Arena, Oslo",
+          addressId: arenaOslo.id,
           price: 150,
           hostId: user2.id,
           category: "Sport",
           imageUrl: "https://example.com/images/esports.jpg",
-          createdAt: new Date(1763377533000),
+          createdAt: fixedCreatedAt,
           status: "upcoming",
         },
       ])
@@ -217,58 +305,65 @@ export default defineScript(async ({ env }) => {
     const insertedEvents = [...firstBatch, ...secondBatch];
 
     const [
-      event1, event2, event3, event4, event5,
-      event6, event7, event8, event9, event10
+      event1,
+      event2,
+      event3,
+      event4,
+      event5,
+      event6,
+      event7,
+      event8,
+      event9,
+      event10,
     ] = insertedEvents;
 
-    // --- Attendees ---
+    // ---- Attendees ----
     await db.insert(eventAttendees).values([
-      { eventId: event1.id, userId: user2.id, joinedAt: new Date(1763377533000) },
-      { eventId: event1.id, userId: user3.id, joinedAt: new Date(1763377533000) },
+      { eventId: event1.id, userId: user2.id, joinedAt: fixedCreatedAt },
+      { eventId: event1.id, userId: user3.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event2.id, userId: user1.id, joinedAt: new Date(1763377533000) },
-      { eventId: event2.id, userId: user4.id, joinedAt: new Date(1763377533000) },
+      { eventId: event2.id, userId: user1.id, joinedAt: fixedCreatedAt },
+      { eventId: event2.id, userId: user4.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event3.id, userId: user1.id, joinedAt: new Date(1763377533000) },
-      { eventId: event3.id, userId: user2.id, joinedAt: new Date(1763377533000) },
-      { eventId: event3.id, userId: user4.id, joinedAt: new Date(1763377533000) },
+      { eventId: event3.id, userId: user1.id, joinedAt: fixedCreatedAt },
+      { eventId: event3.id, userId: user2.id, joinedAt: fixedCreatedAt },
+      { eventId: event3.id, userId: user4.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event4.id, userId: admin.id, joinedAt: new Date(1763377533000) },
-      { eventId: event4.id, userId: user3.id, joinedAt: new Date(1763377533000) },
+      { eventId: event4.id, userId: admin.id, joinedAt: fixedCreatedAt },
+      { eventId: event4.id, userId: user3.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event5.id, userId: user2.id, joinedAt: new Date(1763377533000) },
+      { eventId: event5.id, userId: user2.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event6.id, userId: user1.id, joinedAt: new Date(1763377533000) },
-      { eventId: event6.id, userId: user3.id, joinedAt: new Date(1763377533000) },
+      { eventId: event6.id, userId: user1.id, joinedAt: fixedCreatedAt },
+      { eventId: event6.id, userId: user3.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event7.id, userId: user4.id, joinedAt: new Date(1763377533000) },
+      { eventId: event7.id, userId: user4.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event8.id, userId: user1.id, joinedAt: new Date(1763377533000) },
+      { eventId: event8.id, userId: user1.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event9.id, userId: user3.id, joinedAt: new Date(1763377533000) },
+      { eventId: event9.id, userId: user3.id, joinedAt: fixedCreatedAt },
 
-      { eventId: event10.id, userId: user2.id, joinedAt: new Date(1763377533000) },
-      { eventId: event10.id, userId: user4.id, joinedAt: new Date(1763377533000) },
+      { eventId: event10.id, userId: user2.id, joinedAt: fixedCreatedAt },
+      { eventId: event10.id, userId: user4.id, joinedAt: fixedCreatedAt },
     ]);
 
-    // --- Saved events ---
+    // ---- Saved events ----
     await db.insert(savedEvents).values([
-      { eventId: event1.id, userId: user1.id, savedAt: new Date(1763377533000) },
-      { eventId: event3.id, userId: user1.id, savedAt: new Date(1763377533000) },
-      { eventId: event8.id, userId: user1.id, savedAt: new Date(1763377533000) },
+      { eventId: event1.id, userId: user1.id, savedAt: fixedCreatedAt },
+      { eventId: event3.id, userId: user1.id, savedAt: fixedCreatedAt },
+      { eventId: event8.id, userId: user1.id, savedAt: fixedCreatedAt },
 
-      { eventId: event2.id, userId: user2.id, savedAt: new Date(1763377533000) },
-      { eventId: event6.id, userId: user2.id, savedAt: new Date(1763377533000) },
+      { eventId: event2.id, userId: user2.id, savedAt: fixedCreatedAt },
+      { eventId: event6.id, userId: user2.id, savedAt: fixedCreatedAt },
 
-      { eventId: event3.id, userId: user3.id, savedAt: new Date(1763377533000) },
-      { eventId: event7.id, userId: user3.id, savedAt: new Date(1763377533000) },
+      { eventId: event3.id, userId: user3.id, savedAt: fixedCreatedAt },
+      { eventId: event7.id, userId: user3.id, savedAt: fixedCreatedAt },
 
-      { eventId: event5.id, userId: user4.id, savedAt: new Date(1763377533000) },
-      { eventId: event9.id, userId: user4.id, savedAt: new Date(1763377533000) },
+      { eventId: event5.id, userId: user4.id, savedAt: fixedCreatedAt },
+      { eventId: event9.id, userId: user4.id, savedAt: fixedCreatedAt },
     ]);
 
-    console.log("🌱 Finished seeding");
-
+    console.log("✅ Finished seeding");
     return Response.json({ success: true });
   } catch (error: any) {
     console.error("Error seeding database:", error);

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1eacf249-8bf9-40c8-8883-e2b70539a127",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "8f5eb1cc-2946-428c-9384-619a47bfc12b",
+  "prevId": "1eacf249-8bf9-40c8-8883-e2b70539a127",
   "tables": {
     "addresses": {
       "name": "addresses",
@@ -28,8 +28,22 @@
           "notNull": true,
           "autoincrement": false
         },
-        "google_place_id": {
-          "name": "google_place_id",
+        "city": {
+          "name": "city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "area": {
+          "name": "area",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "country": {
+          "name": "country",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -54,6 +68,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -594,7 +615,9 @@
   "_meta": {
     "schemas": {},
     "tables": {},
-    "columns": {}
+    "columns": {
+      "\"addresses\".\"google_place_id\"": "\"addresses\".\"city\""
+    }
   },
   "internal": {
     "indexes": {}
