@@ -9,7 +9,7 @@ import { useAuth } from '@/app/hooks/useAuth';
 
 const navigationItems = [
   { name: 'Home', href: '/' },
-  { name: 'All events', href: '/search' },
+  { name: 'All events', href: '/events' },
   { name: 'Contact us', href: '/contact-us' },
 ];
 
