@@ -95,7 +95,7 @@ export default defineApp([
     layout(AppLayout, [
     route("/", Home),
       route("/contact-us", ContactUs),
-      route("/search", Search),
+      route("/events", Search),
       route("/registration", Registration),
       route("/login", Login),
       route("/logout", Logout),

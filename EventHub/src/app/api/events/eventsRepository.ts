@@ -13,10 +13,10 @@ export interface EventWithRelations extends Event {
 
 export interface EventsRepository {
   findMany(): Promise<Result<EventWithRelations[]>>;
-  findById(id: number): Promise<Result<EventWithRelations | null>>;
+  findById(id: string): Promise<Result<EventWithRelations | null>>;
   create(data: CreateEvent): Promise<Result<Event>>;
-  update(id: number, data: UpdateEvent): Promise<Result<Event | null>>;
-  remove(id: number): Promise<Result<void>>;
+  update(id: string, data: UpdateEvent): Promise<Result<Event | null>>;
+  remove(id: string): Promise<Result<void>>;
 }
 
 export function createEventsRepository(db: DB): EventsRepository {
@@ -73,7 +73,7 @@ export function createEventsRepository(db: DB): EventsRepository {
       });
     },
 
-    async findById(id: number) {
+    async findById(id: string) {
       return executeDbOperation(async () => {
         const row = await db.query.events.findFirst({
           where: (e, { eq }) => eq(e.id, id),
@@ -125,7 +125,7 @@ export function createEventsRepository(db: DB): EventsRepository {
       });
     },
 
-    async update(id: number, data: UpdateEvent) {
+    async update(id: string, data: UpdateEvent) {
       return executeDbOperation(async () => {
         const [updated] = await db
           .update(events)
@@ -148,7 +148,7 @@ export function createEventsRepository(db: DB): EventsRepository {
       });
     },
 
-    async remove(id: number) {
+    async remove(id: string) {
       return executeDbOperation(async () => {
         const [deleted] = await db
           .delete(events)
