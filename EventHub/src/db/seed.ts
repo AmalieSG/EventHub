@@ -1,4 +1,3 @@
-// src/db/seed.ts
 import { defineScript } from "rwsdk/worker";
 import { getDb, setupDb } from ".";
 import {
@@ -15,7 +14,6 @@ export default defineScript(async ({ env }) => {
     await setupDb(env.DB);
     const db = await getDb();
 
-    // ---- Tøm tabeller i riktig rekkefølge ----
     await db.delete(savedEvents);
     await db.delete(eventAttendees);
     await db.delete(events);
