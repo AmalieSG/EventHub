@@ -92,9 +92,11 @@ export function Search() {
   
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-      <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+    <section className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    
+      <article className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      
+        <section>
           <p className="text-sm text-gray-500">
             {filteredEvents.length} Event(s) found
           </p>
@@ -104,8 +106,8 @@ export function Search() {
               <span className="font-semibold">"{searchTerm}"</span>
             </p>
           )}
-        </div>
-      </header>
+        </section>
+      </article>
 
       <section className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -158,6 +160,6 @@ export function Search() {
           <EventList events={filteredEvents} />
         )}
       </section>
-    </div>
+    </section>
   );
 }

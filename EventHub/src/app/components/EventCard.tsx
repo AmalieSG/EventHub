@@ -26,7 +26,7 @@ export default function EventCard({ event }: EventCardProps) {
     };
 
     return (
-       <section className="rounded-xl bg-gray-700 border border-gray-600 overflow-hidden transition duration-300 ease-in-out hover:shadow-2xl hover:border-red-600">
+       <article className="rounded-xl bg-gray-700 border border-gray-600 overflow-hidden transition duration-300 ease-in-out hover:shadow-2xl hover:border-red-600">
             <figure className="relative h-48 w-full">
                 <img
                     src={event.imageUrl}
@@ -85,15 +85,19 @@ export default function EventCard({ event }: EventCardProps) {
                 </ul>
 
                 <hr className="my-5 border-t border-gray-700 "/>
+              
 
+                
                 <p className="flex justify-between items-center mb-5">
                     <span className="text-sm font-medium text-gray-400">
                         Price:
                     </span>
                     <span className="text-2xl font-extrabold text-red-500 ">
+                   
                         {displayPrice ? `${price} $` : 'Free'}
                     </span>
                 </p>
+               
 
                 <a
                     href="/events/1"
@@ -103,6 +107,6 @@ export default function EventCard({ event }: EventCardProps) {
                 </a>
 
             </section>
-        </section>
+        </article>
     );
 }

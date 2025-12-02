@@ -16,13 +16,12 @@ interface PriceBoxProps {
 const PriceBox: React.FC<PriceBoxProps> = ({ price, description, features }) => {
     return (
         <aside className="bg-white p-6 rounded-xl shadow-lg border border-indigo-100 sticky top-4">
-            
             <h3 className="text-4xl font-extrabold text-indigo-600 mb-2">{price}</h3>
             <p className="text-sm text-gray-500 mb-4">{description}</p>
 
-            <button className="w-full block text-center bg-indigo-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition duration-150 shadow-md transform hover:scale-[1.01] mb-6">
+            <a href="#buy" role="button" className="w-full block text-center bg-indigo-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition duration-150 shadow-md transform hover:scale-[1.01] mb-6">
                 Buy Tickets Now
-            </button>
+            </a>
 
             <section aria-label="Features Included">
                 <ul className="space-y-3 text-gray-700">
@@ -116,9 +115,9 @@ interface EventDescriptionProps {
 const EventDescription: React.FC<EventDescriptionProps> = ({ title, content }) => {
     return (
         <article className="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <header>
+            <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">{title}</h2>
-            </header>
+            </section>
             
             <section className="space-y-4 text-gray-700 text-lg">
                 {content.map((paragraph, index) => (
