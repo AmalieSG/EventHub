@@ -1,76 +1,119 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { useState, useMemo, useEffect, use } from 'react';
+import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline'; 
+import { EventList } from '../../cards/EventList';
+import { EventCard } from '../../cards/EventCard';
+import { useCurrentUser } from '@/app/hooks/useCurrentUser';
+import { EventWithRelations } from '@/app/api/events/eventsRepository';
+import { ofetch } from 'ofetch';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
+import { EventCardList } from '../../cards/EventCardList';
 
-import { EventList } from '../components/cards/EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
-import { EventCard } from './cards/EventCard';
+type ApiOk<T> = { success: true; data: T };
+type ApiError = { success: false; error: { code: string; message: string } };
+type ApiResponse<T> = ApiOk<T> | ApiError;
 
+type Filters = {
+    onlineOnly: boolean;
+    cities: string[];
+};
 
-export function SavedEventsTab() {
-    const { events: allEvents, loading } = useEventsContext(); 
+const defaultFilters: Filters = {
+    onlineOnly: false,
+    cities: [],
+};
+
+export function CreatedEventsTab() {
+    const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
     
-    const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isSavedByMe === true);
-    }, [allEvents]); 
- 
+    const [events, setEvents] = useState<EventWithRelations[]>([]);
+    const [eventsLoading, setEventsLoading] = useState(true)
 
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
+    const [filters, setFilters] = useState<Filters>(defaultFilters);
     const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('grid'); 
     
-    const defaultFilters = { onlineOnly: false, cities: [] as string[] };
-
     const handleLayoutToggle = () => {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
+    useEffect(() => {
+        if (!user) return;
 
-    if (loading) {
-        return (
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading your events...</p>
-            </main>
-        );
-    }
+        let cancelled = false;
+
+        (async () => {
+            try {
+                setEventsLoading(true);
+
+                const res = await ofetch<ApiResponse<EventWithRelations[]>>(
+                    "/api/v1/events"
+                );
+
+                if (!cancelled && "success" in res && res.success) {
+                    const allEvents = res.data;
+                    const myEvents = allEvents.filter((event) => event.host?.id === user.id);
+                    setEvents(myEvents);
+                }
+
+                if (!("success" in res) || !res.success) {
+                    console.error("Failed to load events:", res.error.message);
+                    if (!cancelled) setEvents([]);
+                }
+
+            } catch (e) {
+                console.error("Failed to load events.", e);
+                if (!cancelled) setEvents([]);
+            } finally {
+                if (!cancelled) setEventsLoading(false);
+            }
+        })();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [user]);
 
     const availableCities = useMemo(() => {
-        const toCity = (location: string) => {
-            if (!location) return '';
-            if (location.toLowerCase().includes('online')) return 'Online';
-            const [city] = location.split(',');
-            return city.trim();
-        };
-        const unique = new Set<string>();
-        myEventsSeed.forEach(e => {
-            const c = toCity(e.location);
-            if (c) unique.add(c);
-        });
-        return Array.from(unique);
-    }, [myEventsSeed]); 
+        const uniqueCities = new Set<string>();
+
+        events.forEach((event) => {
+            const city = getCity(event);
+            if (city) {
+                uniqueCities.add(city);
+            }
+        })
+        return Array.from(uniqueCities).sort();
+    }, [events]); 
 
 
     const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof myEventsSeed[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.location.toLowerCase().includes('online') : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.some(city => event.location.toLowerCase().includes(city.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity;
-        };
+        const q = searchQuery.trim().toLowerCase();
+        if (events.length === 0) return [];
 
-        if (!searchQuery) {
-            return myEventsSeed.filter(baseFilter);
-        }
-        const query = searchQuery.toLowerCase();
-        return myEventsSeed.filter(event => {
-            const matchesSearch =
-                event.title.toLowerCase().includes(query) ||
-                event.location.toLowerCase().includes(query);
-            
-            return matchesSearch && baseFilter(event);
+        return events.filter((event) => {
+            const addressLabel = getAddressLabel(event).toLowerCase();
+            const cityName = getCity(event);
+            const cityLower = cityName.toLowerCase();
+            const isOnline = addressLabel.includes("online");
+
+            const matchesOnline = filters.onlineOnly ? isOnline : true;
+
+            const matchesCity =
+                filters.cities.length > 0
+                ? filters.cities.some(
+                    (selectedCity) =>
+                        cityLower === selectedCity.toLowerCase()
+                    )
+                : true;
+
+            const matchesSearch = q
+                ? event.title.toLowerCase().includes(q) || addressLabel.includes(q)
+                : true;
+                
+            return matchesOnline && matchesCity && matchesSearch;
         });
-    }, [searchQuery, filters, myEventsSeed]);
+    }, [searchQuery, filters, events]);
 
     useEffect(() => {
         if (!isFilterOpen) return;
@@ -83,20 +126,37 @@ export function SavedEventsTab() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
 
+    if (userLoading || eventsLoading) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10">Loading your events...</p>
+            </article>
+        );
+    }
+
+    if (!isAuthenticated || !user) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10 text-red-600">
+                    You must be logged in to view this tab.
+                </p>
+            </article>
+        );
+    }
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
-                    Saved Events
+                    My Events
                 </h3>
                 <div className="flex w-full sm:w-auto gap-3">
                 
                     <div className="relative flex-grow sm:flex-grow-0">
                         <input
                             type="text"
-                            placeholder="Search saved events ..."
+                            placeholder="Search my events ..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full sm:w-80 pl-10 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500" 
@@ -116,7 +176,6 @@ export function SavedEventsTab() {
                         )}
                         {currentLayout === 'grid' ? 'List View' : 'Grid View'}
                     </button>
-
                     <button onClick={() => setIsFilterOpen(true)} className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer">
                         <FunnelIcon className="h-4 w-4" />
                         Filter
@@ -126,16 +185,25 @@ export function SavedEventsTab() {
 
             <div className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
-                        events={filteredEvents} 
-                        Card={EventCard} 
-                    />
+                    currentLayout === "grid" ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredEvents.map((event) => (
+                                <EventCard key={event.id} event={event} />
+                            ))}
+                        </div>
+                    ) : (
+                        <EventList
+                            events={filteredEvents}
+                            Card={EventCardList}
+                        />
+                    )
                 ) : (
                     <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No saved events found.
+                        No events found.
                     </div>
                 )}
             </div>
+
             
             {isFilterOpen && (
                 <div className="fixed inset-0 z-50">
@@ -160,7 +228,7 @@ export function SavedEventsTab() {
                                         type="checkbox"
                                         checked={filters.onlineOnly}
                                         onChange={(e) =>
-                                            setFilters((prev) => ({ ...prev, onlineOnly: e.target.checked }))
+                                            setFilters((prev) => ({ ...defaultFilters, ...(prev || {}), onlineOnly: e.target.checked }))
                                         }
                                         className="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" 
                                     />
@@ -214,14 +282,13 @@ export function SavedEventsTab() {
                                     >
                                         Apply
                                     </button>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
-        </main>
+        </article>
     );
 }
-
-export default SavedEventsTab;

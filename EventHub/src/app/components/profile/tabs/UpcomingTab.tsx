@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
-import { EventList } from '../components/cards/EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
-import{FilterBar, FilterState, defaultFilters} from './FilterBar';
-import { EventCard } from './cards/EventCard';
+import { useEventsContext } from '@/app/context/EventsProvider';
+import { defaultFilters, FilterBar, FilterState } from '@/app/components/FilterBar';
+import { EventList } from '@/app/components/cards/EventList';
+import { EventCard } from '@/app/components/cards/EventCard';
 
 export function UpcomingTab() {
     const { events: allEvents, loading } = useEventsContext(); 
@@ -35,7 +35,6 @@ export function UpcomingTab() {
     const handleApplyFilters = (filters: FilterState) => {
         setActiveFilters(filters);
     };
-
     const filteredEvents = useMemo(() => {
     if (allEvents.length === 0) return [];
 
@@ -71,7 +70,7 @@ export function UpcomingTab() {
 }, [searchQuery, activeFilters, allEvents]);
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
@@ -115,7 +114,7 @@ export function UpcomingTab() {
 
             <div className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
+                    <EventList
                     events={filteredEvents}  
                     Card={EventCard} 
                     />
@@ -133,6 +132,6 @@ export function UpcomingTab() {
                 isFilterOpen={isFilterOpen}
                 setIsFilterOpen={setIsFilterOpen}
             />
-        </main>
+        </article>
     );
 }

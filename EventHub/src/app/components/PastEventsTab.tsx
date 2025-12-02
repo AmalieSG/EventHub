@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
-import { EventList } from './EventList'; 
+import { EventList } from '../components/cards/EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
+import { EventCard } from './cards/EventCard';
 
 export function PastEventsTab() {
     const { events: allEvents, loading } = useEventsContext(); 
@@ -116,8 +117,7 @@ export function PastEventsTab() {
                 {filteredEvents.length > 0 ? (
                     <EventList 
                       events={filteredEvents} 
-                      layout={currentLayout} 
-                      action="ended"
+                      Card={EventCard}
                   />
                 ) : (
                     <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">

@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline'; // Added layout icons
 
-import { EventList } from './EventList'; 
+import { EventList } from '../components/cards/EventList'; 
 import { useEventsContext } from "../context/EventsProvider";
+import { EventCard } from './cards/EventCard';
 
 
 export function JoinedEventsTab() {
@@ -129,8 +130,7 @@ export function JoinedEventsTab() {
                 {filteredEvents.length > 0 ? (
                     <EventList 
                     events={filteredEvents} 
-                    layout={currentLayout} 
-                    action="remove" 
+                    Card={EventCard}
                     />
                 ) : (
                     <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">

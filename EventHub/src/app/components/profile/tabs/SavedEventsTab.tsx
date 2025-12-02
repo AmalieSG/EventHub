@@ -1,16 +1,25 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { useEventsContext } from '@/app/context/EventsProvider';
+import { EventCard } from '../../cards/EventCard';
+import { EventList } from '../../cards/EventList';
+import { useCurrentUser } from '@/app/hooks/useCurrentUser';
+ 
+type Filters = {
+    onlineOnly: boolean;
+    cities: string[];
+};
 
-import { EventList } from '../components/cards/EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
-import { EventCard } from './cards/EventCard';
-
+const defaultFilters: Filters = {
+    onlineOnly: false,
+    cities: [],
+};
 
 export function SavedEventsTab() {
     const { events: allEvents, loading } = useEventsContext(); 
     
     const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isSavedByMe === true);
+        return allEvents.filter(event => event. === true);
     }, [allEvents]); 
  
 
@@ -224,4 +233,3 @@ export function SavedEventsTab() {
     );
 }
 
-export default SavedEventsTab;
