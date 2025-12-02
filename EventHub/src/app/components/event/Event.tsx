@@ -152,58 +152,58 @@ export function EventDetail({ id }: EventProps) {
     ]
 
     return (
-        <div className="font-sans">
-            <section className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
-                <img
-                    className="absolute inset-0 w-full h-full object-cover"
-                    src={event.imageUrl}
-                    alt={`Image of ${event.title}`}
-                />
-
-                <div className="absolute mt-8 ml-5">
-                    <span className="rounded-lg bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
-                        {event.category}
-                    </span>
-                </div>
-
-                <div className="absolute inset-x-0 bottom-5 flex justify-center">
-                    <div className="bg-black/30 py-6 px-12 w-full">
-                        <h1 className="text-white text-5xl sm:text-6xl font-bold text-center">
-                            {event.title}
-                        </h1>
-                    </div>
-                </div>
-            </section>
-
-            <section className="max-w-7xl mx-auto px-4 mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
-                        <EventDetailBox
-                            date={formattedDate}
-                            time={formattedTime}
-                            locationName={locationName}
-                            address={formattedAddress}
-                            organizerName={hostName}
-                            organizerDetails={organizerDetails}
+        <article className="font-sans">
+                    <figure className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
+                        <img
+                            className="absolute inset-0 w-full h-full object-cover"
+                            src={event.imageUrl}
+                            alt={`Image of ${event.title}`}
                         />
-
-                        <EventDescription
-                            title="About the Event"
-                            content={descriptionData}
-                        />
-
-                        <ArtistLineup artists={JazzLineup} />
-                    </div>
-
-                    <div className="lg:col-span-1">
-                        <PriceBox
-                            price={priceData.price}
-                            description={priceData.description}
-                            features={priceData.features}
-                        />
-                    </div>
-                </div>
-            </section>
-        </div>
+        
+                        <span className="absolute mt-8 ml-5">
+                            <mark className="rounded-lg bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
+                                {event.category}
+                            </mark>
+                        </span>
+        
+                        <span className="absolute inset-x-0 bottom-5 flex justify-center">
+                            <hgroup className="bg-black/30 py-6 px-12 w-full">
+                                <h1 className="text-white text-5xl sm:text-6xl font-bold text-center">
+                                    {event.title}
+                                </h1>
+                            </hgroup>
+                        </span>
+                    </figure>
+        
+                    <section className="max-w-7xl mx-auto px-4 mt-8">
+                        <p className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <span className="lg:col-span-2">
+                                <EventDetailBox
+                                    date={formattedDate}
+                                    time={formattedTime}
+                                    locationName={locationName}
+                                    address={formattedAddress}
+                                    organizerName={hostName}
+                                    organizerDetails={organizerDetails}
+                                />
+        
+                                <EventDescription
+                                    title="About the Event"
+                                    content={descriptionData}
+                                />
+        
+                                <ArtistLineup artists={JazzLineup} />
+                            </span>
+        
+                            <aside className="lg:col-span-1">
+                                <PriceBox
+                                    price={priceData.price}
+                                    description={priceData.description}
+                                    features={priceData.features}
+                                />
+                            </aside>
+                        </p>
+                    </section>
+                </article>
     )
 }
