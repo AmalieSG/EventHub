@@ -7,7 +7,7 @@ interface EventDescriptionProps {
 
 export default function EventDescription({title, content}: EventDescriptionProps) {
   return (
-    <div className="mt-8 p-6">
+    <section className="mt-8 p-6">
 
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
             {title}
@@ -19,7 +19,7 @@ export default function EventDescription({title, content}: EventDescriptionProps
         </p>
       ))}
             
-    </div>
+    </section>
 
     
 

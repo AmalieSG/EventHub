@@ -44,18 +44,19 @@ export const Registration = () => {
   );
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-      <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <header className="text-center">
+    <section className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+     
+      <article className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
+      
+        <div className="text-center">
           <p className="text-sm text-gray-600">Join our community and discover amazing events</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
             Create your Account
           </h1>
-        </header>
+        </div>
 
-        {/*Google og facebook, som må gjøres noe med */}
-
-        <section className="space-y-4">
+        
+        <aside className="space-y-4">
           <button
             type="button"
             className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -68,16 +69,16 @@ export const Registration = () => {
           >
             <span className="ml-2">Sign up with Facebook</span>
           </button>
-        </section>
+        </aside>
 
-        <section className="relative my-6">
+        <div className="relative my-6">
           <span className="absolute inset-0 flex items-center" aria-hidden="true">
             <span className="w-full border-t border-gray-300" />
           </span>
           <p className="relative flex justify-center text-sm">
             <span className="bg-white px-2 text-gray-500">Or sign up with email</span>
           </p>
-        </section>
+        </div>
 
         <form action={formAction} className="space-y-4">
           <fieldset className="space-y-4">
@@ -202,7 +203,7 @@ export const Registration = () => {
             Sign In
           </a>
         </p>
-      </section>
-    </main>
+      </article>
+    </section>
   );
 };

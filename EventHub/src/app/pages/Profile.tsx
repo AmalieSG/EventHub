@@ -41,22 +41,21 @@ export const Profile = () => {
         return <p className="text-center py-8">Loading events...</p>;
     }
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10">
-            <div>
-                <ProfileHeader />
-                <div className="max-w-7xl mx-auto mt-4">
-                    <ProfileNav 
-                        activeTabName={activeTabName} 
-                        setActiveTab={setActiveTab} 
-                    />
-                </div>
-            </div>
-            
-           
-            <div className="mt-6">
-                {renderTabContent()}
-            </div>
-            
-        </main>
-    );
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10">
+        <article>
+            <ProfileHeader />
+            <nav className="max-w-7xl mx-auto mt-4">
+                <ProfileNav 
+                    activeTabName={activeTabName} 
+                    setActiveTab={setActiveTab} 
+                />
+            </nav>
+        </article>
+        
+        <section className="mt-6">
+            {renderTabContent()}
+        </section>
+        
+    </section>
+);
 };
