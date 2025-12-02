@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
-import { Artist } from '../ArtistLineup';
 import { EventDetailBox } from './EventDetailBox';
 import EventDescription from './EventDescription';
-import { ArtistLineup } from './ArtistLineup';
+import { Artist, ArtistLineup } from './ArtistLineup';
 import { PriceBox } from './PriceBox';
 
 interface EventProps {

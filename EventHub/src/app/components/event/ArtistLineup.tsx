@@ -1,4 +1,4 @@
-type Artist = {
+export type Artist = {
     name: string;
     description: string;
     role: string;
