@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SettingsHeader } from '../components/SettingsHeader';
 import { SettingsNav} from '../components/SettingsNav';
 import { AccountTab} from '../components/AccountTab';

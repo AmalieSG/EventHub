@@ -1,9 +1,10 @@
 import { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
-import { useEventsContext } from '@/app/context/EventsProvider';
+import { useEventsContext } from '@/app/context/EventsProviderv2';
 import { defaultFilters, FilterBar, FilterState } from '@/app/components/FilterBar';
 import { EventList } from '@/app/components/cards/EventList';
 import { EventCard } from '@/app/components/cards/EventCard';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
 
 export function UpcomingTab() {
     const { events: allEvents, loading } = useEventsContext(); 
@@ -17,58 +18,72 @@ export function UpcomingTab() {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-    if (loading) {
-        return (
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading upcoming events...</p>
-            </main>
-        );
-    }
-    
-    const toCity = (location: string) => {
-        if (!location) return '';
-        if (location.toLowerCase().includes('online')) return 'Online';
-        const [city] = location.split(',');
-        return city.trim();
-    };
-
     const handleApplyFilters = (filters: FilterState) => {
         setActiveFilters(filters);
     };
+
+    if (loading) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10">Loading upcoming events...</p>
+            </article>
+        );
+    }
+    
+
     const filteredEvents = useMemo(() => {
-    if (allEvents.length === 0) return [];
+        if (allEvents.length === 0) return [];
+        
+        const now = new Date();
+        const q = searchQuery.trim().toLowerCase();
 
-    return allEvents.filter(event => {
-        // Compute derived properties from EventWithRelations
-        const isPast = new Date(event.eventStart) < new Date();
-        const isOnline = event.address?.toLowerCase().includes('online') || false;
-        const city = event.address?.split(',')[0]?.trim() || '';
+        return allEvents.filter((event) => {
+        
+            const raw =
+            event.eventStart instanceof Date
+            ? event.eventStart
+            : event.eventStart
+            ? new Date(event.eventStart)
+            : null;
 
-        if (isPast) return false;
+            if (!raw || isNaN(raw.getTime())) return false;
+            const isPast = raw < now;
+            if (isPast) return false;
 
-        const matchesOnline = activeFilters.onlineOnly ? isOnline : true;
+            const addressLabel = getAddressLabel(event).toLowerCase();
+            const cityName = getCity(event);
+            const cityLower = cityName.toLowerCase();
+            const isOnline = addressLabel.includes("online");
 
-        const matchesCity = activeFilters.cities.length > 0
-            ? activeFilters.cities.some((selectedCity: string) => {
-                return city.toLowerCase() === selectedCity.toLowerCase(); 
-            })
+            const matchesOnline = activeFilters.onlineOnly ? isOnline : true;
+
+            const matchesCity =
+                activeFilters.cities.length > 0
+                ? activeFilters.cities.some(
+                    (selectedCity) =>
+                        cityLower === selectedCity.toLowerCase()
+                    )
+                : true;
+
+            const matchesCategory =
+                activeFilters.categories.length > 0
+                ? activeFilters.categories.some(
+                    (selectedCategory) =>
+                        event.category?.toLowerCase() ===
+                        selectedCategory.toLowerCase()
+                )
             : true;
 
-        const matchesCategory = activeFilters.categories.length > 0
-            ? activeFilters.categories.some((selectedCategory: string) => {
-                return event.category?.toLowerCase() === selectedCategory.toLowerCase();
-            })
-            : true;
+            const matchesSearch = q
+                ? event.title.toLowerCase().includes(q) ||
+                addressLabel.includes(q)
+                : true;
 
-        const matchesSearch = searchQuery 
-            ? event.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              event.address?.toLowerCase().includes(searchQuery.toLowerCase())
-            : true;
 
-        return matchesOnline && matchesCity && matchesCategory && matchesSearch;
-    });
-}, [searchQuery, activeFilters, allEvents]);
-
+            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
+        });
+    }, [searchQuery, activeFilters, allEvents]);
+    
     return (
         <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 

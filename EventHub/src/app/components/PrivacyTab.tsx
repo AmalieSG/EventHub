@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Switch } from '@headlessui/react';
-import { LockClosedIcon, EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
@@ -62,15 +62,15 @@ export function PrivacyTab() {
     
    
     const [privacySettings, setPrivacySettings] = useState<SecuritySetting[]>([
-        { id: 'profile_visibility', title: 'Public Profile Visibility', description: 'Allow anyone to see your profile details and activity.', enabled: true },
-        { id: 'discoverability', title: 'Allow Discovery by Email/Phone', description: 'Allow other users to find you if they have your contact information.', enabled: false },
-        { id: 'activity_sharing', title: 'Share Activity Status', description: 'Let contacts see when you are currently active in the app.', enabled: true },
+        { id: 1, title: 'Public Profile Visibility', description: 'Allow anyone to see your profile details and activity.', enabled: true },
+        { id: 2, title: 'Allow Discovery by Email/Phone', description: 'Allow other users to find you if they have your contact information.', enabled: false },
+        { id: 3, title: 'Share Activity Status', description: 'Let contacts see when you are currently active in the app.', enabled: true },
     ]);
 
     const [securitySettings, setSecuritySettings] = useState<SecuritySetting[]>([
-        { id: '2fa', title: 'Two-Factor Authentication (2FA)', description: 'Add an extra layer of security to your account. (Recommended)', enabled: false },
-        { id: 'login_alerts', title: 'Email Alerts for New Logins', description: 'Receive an email every time your account is logged into from a new device.', enabled: true },
-        { id: 'strong_password', title: 'Require Strong Password', description: 'Enforce strong password rules for all linked accounts.', enabled: true, disabled: true },
+        { id: 1, title: 'Two-Factor Authentication (2FA)', description: 'Add an extra layer of security to your account. (Recommended)', enabled: false },
+        { id: 2, title: 'Email Alerts for New Logins', description: 'Receive an email every time your account is logged into from a new device.', enabled: true },
+        { id: 3, title: 'Require Strong Password', description: 'Enforce strong password rules for all linked accounts.', enabled: true, disabled: true },
     ]);
 
  
@@ -85,7 +85,7 @@ export function PrivacyTab() {
     };
 
     return (
-        <main className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
+        <article className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
             <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
                 <section aria-labelledby="security-heading" className="space-y-8">
                     <h1 className="text-2xl font-bold text-gray-900">Privacy & Security</h1>
@@ -166,6 +166,6 @@ export function PrivacyTab() {
                     </footer>
                 </section>
             </section>
-        </main>
+        </article>
     );
 }

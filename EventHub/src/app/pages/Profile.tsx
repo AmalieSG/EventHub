@@ -9,6 +9,7 @@ import {PastEventsTab} from '../components/profile/tabs/PastEventsTab';
 import {SavedEventsTab} from '../components/profile/tabs/SavedEventsTab';
 import {AchievementsTab} from '../components/profile/tabs/AchievementsTab';
 import { useCurrentUser } from '../hooks/useCurrentUser';
+import { EventsProvider } from '../context/EventsProviderv2';
 
 export const Profile = () => {
     const [activeTabName, setActiveTab] = useState<string>('Upcoming');
@@ -68,10 +69,12 @@ export const Profile = () => {
                 />
             </nav>
         </article>
-        
+
+        <EventsProvider>        
         <section className="mt-6">
             {renderTabContent()}
         </section>
+        </EventsProvider>
         
     </section>
 );

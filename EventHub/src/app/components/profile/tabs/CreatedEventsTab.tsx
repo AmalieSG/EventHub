@@ -4,13 +4,9 @@ import { EventList } from '../../cards/EventList';
 import { EventCard } from '../../cards/EventCard';
 import { useCurrentUser } from '@/app/hooks/useCurrentUser';
 import { EventWithRelations } from '@/app/api/events/eventsRepository';
-import { ofetch } from 'ofetch';
 import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
 import { EventCardList } from '../../cards/EventCardList';
-
-type ApiOk<T> = { success: true; data: T };
-type ApiError = { success: false; error: { code: string; message: string } };
-type ApiResponse<T> = ApiOk<T> | ApiError;
+import { useEventsContext } from '@/app/context/EventsProviderv2';
 
 type Filters = {
     onlineOnly: boolean;
@@ -24,10 +20,8 @@ const defaultFilters: Filters = {
 
 export function CreatedEventsTab() {
     const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
+    const { events: allEvents, loading: eventsLoading } = useEventsContext();
     
-    const [events, setEvents] = useState<EventWithRelations[]>([]);
-    const [eventsLoading, setEventsLoading] = useState(true)
-
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState<Filters>(defaultFilters);
@@ -37,61 +31,29 @@ export function CreatedEventsTab() {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-    useEffect(() => {
-        if (!user) return;
-
-        let cancelled = false;
-
-        (async () => {
-            try {
-                setEventsLoading(true);
-
-                const res = await ofetch<ApiResponse<EventWithRelations[]>>(
-                    "/api/v1/events"
-                );
-
-                if (!cancelled && "success" in res && res.success) {
-                    const allEvents = res.data;
-                    const myEvents = allEvents.filter((event) => event.host?.id === user.id);
-                    setEvents(myEvents);
-                }
-
-                if (!("success" in res) || !res.success) {
-                    console.error("Failed to load events:", res.error.message);
-                    if (!cancelled) setEvents([]);
-                }
-
-            } catch (e) {
-                console.error("Failed to load events.", e);
-                if (!cancelled) setEvents([]);
-            } finally {
-                if (!cancelled) setEventsLoading(false);
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [user]);
+    const myEvents = useMemo<EventWithRelations[]>(() => {
+        if (!user) return [];
+        return allEvents.filter(event => event.host?.id === user.id);
+    }, [allEvents, user]);
 
     const availableCities = useMemo(() => {
         const uniqueCities = new Set<string>();
 
-        events.forEach((event) => {
-            const city = getCity(event);
-            if (city) {
-                uniqueCities.add(city);
-            }
-        })
+        myEvents.forEach((event) => {
+        const city = getCity(event);
+        if (city) {
+            uniqueCities.add(city);
+        }
+        });
         return Array.from(uniqueCities).sort();
-    }, [events]); 
+    }, [myEvents]); 
 
-
+    
     const filteredEvents = useMemo(() => {
         const q = searchQuery.trim().toLowerCase();
-        if (events.length === 0) return [];
+        if (myEvents.length === 0) return [];
 
-        return events.filter((event) => {
+        return myEvents.filter((event) => {
             const addressLabel = getAddressLabel(event).toLowerCase();
             const cityName = getCity(event);
             const cityLower = cityName.toLowerCase();
@@ -108,12 +70,13 @@ export function CreatedEventsTab() {
                 : true;
 
             const matchesSearch = q
-                ? event.title.toLowerCase().includes(q) || addressLabel.includes(q)
+                ? event.title.toLowerCase().includes(q) || 
+                    addressLabel.includes(q)
                 : true;
                 
             return matchesOnline && matchesCity && matchesSearch;
         });
-    }, [searchQuery, filters, events]);
+    }, [searchQuery, filters, myEvents]);
 
     useEffect(() => {
         if (!isFilterOpen) return;

@@ -1,75 +1,80 @@
 import { useState, useMemo, useEffect } from 'react';
-import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
-import { useEventsContext } from '@/app/context/EventsProvider';
+import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline'; // Added layout icons
+import { useEventsContext } from '@/app/context/EventsProviderv2';
 import { EventList } from '../../cards/EventList';
 import { EventCard } from '../../cards/EventCard';
+import { useCurrentUser } from '@/app/hooks/useCurrentUser';
+import { EventWithRelations } from '@/app/api/events/eventsRepository';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
+import { EventCardList } from '../../cards/EventCardList';
+
+type Filters = {
+  onlineOnly: boolean;
+  cities: string[];
+};
+
+const defaultFilters: Filters = {
+  onlineOnly: false,
+  cities: [],
+};
 
 export function JoinedEventsTab() {
     const { events: allEvents, loading } = useEventsContext(); 
-    
-    
-    const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isJoinedByMe === true);
-    }, [allEvents]); 
- 
+    const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
 
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
     const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('list'); // Changed to useState with setter
     
-    const defaultFilters = { onlineOnly: false, cities: [] as string[] };
-
-   
     const handleLayoutToggle = () => {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-    if (loading) {
-        return (
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading your events...</p>
-            </main>
+    const joinedEvents = useMemo<EventWithRelations[]>(() => {
+        if (!user) return [];
+        return allEvents.filter((event) =>
+        event.attendees?.some((a) => a.userId === user.id)
         );
-    }
-
+    }, [allEvents, user]);
+    
     const availableCities = useMemo(() => {
-        const toCity = (location: string) => {
-            if (!location) return '';
-            if (location.toLowerCase().includes('online')) return 'Online';
-            const [city] = location.split(',');
-            return city.trim();
-        };
         const unique = new Set<string>();
-        myEventsSeed.forEach(e => {
-            const c = toCity(e.location);
-            if (c) unique.add(c);
+        joinedEvents.forEach((e) => {
+        const c = getCity(e);
+        if (c) unique.add(c);
         });
-        return Array.from(unique);
-    }, [myEventsSeed]); 
+        return Array.from(unique).sort();
+    }, [joinedEvents]); 
 
 
     const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof myEventsSeed[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.location.toLowerCase().includes('online') : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.some(city => event.location.toLowerCase().includes(city.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity;
-        };
+    const q = searchQuery.trim().toLowerCase();
+    if (joinedEvents.length === 0) return [];
 
-        if (!searchQuery) {
-            return myEventsSeed.filter(baseFilter);
-        }
-        const query = searchQuery.toLowerCase();
-        return myEventsSeed.filter(event => {
-            const matchesSearch =
-                event.title.toLowerCase().includes(query) ||
-                event.location.toLowerCase().includes(query);
-            
-            return matchesSearch && baseFilter(event);
+    return joinedEvents.filter((event) => {
+        const addressLabel = getAddressLabel(event).toLowerCase();
+        const cityName = getCity(event);
+        const cityLower = cityName.toLowerCase();
+        const isOnline = addressLabel.includes("online");
+
+        const matchesOnline = filters.onlineOnly ? isOnline : true;
+
+        const matchesCity =
+            filters.cities.length > 0
+            ? filters.cities.some(
+                (selectedCity) =>
+                    cityLower === selectedCity.toLowerCase()
+                )
+            : true;
+
+        const matchesSearch = q
+            ? event.title.toLowerCase().includes(q) || addressLabel.includes(q)
+            : true;
+
+        return matchesOnline && matchesCity && matchesSearch;
         });
-    }, [searchQuery, filters, myEventsSeed]);
+    }, [searchQuery, filters, joinedEvents]);
 
     useEffect(() => {
         if (!isFilterOpen) return;
@@ -82,17 +87,34 @@ export function JoinedEventsTab() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
 
+    if (loading) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10">Loading your events...</p>
+            </article>
+        );
+    }
 
-    return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+    if (!isAuthenticated || !user) {
+        return (
+        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+            <p className="text-center py-10 text-red-600">
+            You must be logged in to view this tab.
+            </p>
+        </article>
+        );
+    }
 
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+   return (
+        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+
+            <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
                     My Joined Events
                 </h3>
-                <div className="flex w-full sm:w-auto gap-3">
+                <menu className="flex w-full sm:w-auto gap-3">
                 
-                    <div className="relative flex-grow sm:flex-grow-0">
+                    <figure className="relative flex-grow sm:flex-grow-0">
                         <input
                             type="text"
                             placeholder="Search my events ..."
@@ -101,7 +123,7 @@ export function JoinedEventsTab() {
                             className="w-full sm:w-80 pl-10 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500" 
                         />
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    </div>
+                    </figure>
 
                   
                     <button
@@ -117,44 +139,57 @@ export function JoinedEventsTab() {
                         {currentLayout === 'grid' ? 'List View' : 'Grid View'}
                     </button>
 
-                    <button onClick={() => setIsFilterOpen(true)} className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer">
+                    <button 
+                        onClick={() => setIsFilterOpen(true)} 
+                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
+                    >
                         <FunnelIcon className="h-4 w-4" />
                         Filter
                     </button>
-                </div>
-            </div>
+                </menu>
+            </section>
 
-            <div className="mb-20">
+            <section className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
-                    events={filteredEvents} 
-                    Card={EventCard}
-                    />
-                ) : (
-                    <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No events found.
-                    </div>
+                    currentLayout === "grid" ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredEvents.map((event) => (
+                                <EventCard key={event.id} event={event} />
+                            ))}
+                        </div>
+                    ) : (
+                        <EventList events={filteredEvents} Card={EventCardList} />
+                    )
+                    ) : (
+                        <figure className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                            No events found.
+                        </figure>
                 )}
-            </div>
+            </section>
+
             
             {isFilterOpen && (
-                <div className="fixed inset-0 z-50">
-                    <div
+                <aside className="fixed inset-0 z-50">
+                    <section
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
+                        aria-hidden="true"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                        <div className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
-                            <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-                                <h4 className="text-base font-semibold text-gray-900">Filters</h4>
+                    
+                    <section className="absolute inset-0 flex items-center justify-center p-4">
+                        <article className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100" role="dialog" aria-modal="true" aria-labelledby="filter-modal-title">
+                            
+                            <nav className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                                <h4 id="filter-modal-title" className="text-base font-semibold text-gray-900">Filters</h4>
                                 <button
                                     onClick={() => setIsFilterOpen(false)}
                                     className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                                 >
                                     Close
                                 </button>
-                            </div>
-                            <div className="p-5 space-y-4">
+                            </nav>
+                            
+                            <fieldset className="p-5 space-y-4">
                                 <label className="flex items-center gap-3">
                                     <input
                                         type="checkbox"
@@ -167,9 +202,9 @@ export function JoinedEventsTab() {
                                     <span className="text-sm text-gray-800">Online events only</span>
                                 </label>
 
-                                <div>
+                                <section>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Cities</label>
-                                    <div className="flex flex-wrap gap-2">
+                                    <menu className="flex flex-wrap gap-2">
                                         {availableCities.map((city) => {
                                             const selected = filters.cities.includes(city);
                                             return (
@@ -191,17 +226,18 @@ export function JoinedEventsTab() {
                                                 </button>
                                             );
                                         })}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
+                                    </menu>
+                                </section>
+                            </fieldset>
+                            
+                            <nav className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
                                 <button
                                     onClick={() => setFilters(defaultFilters)}
                                     className="text-sm text-gray-600 hover:text-gray-800 cursor-pointer"
                                 >
                                     Clear
                                 </button>
-                                <div className="flex items-center gap-2">
+                                <menu className="flex items-center gap-2">
                                     <button
                                         onClick={() => setIsFilterOpen(false)}
                                         className="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 cursor-pointer"
@@ -214,13 +250,14 @@ export function JoinedEventsTab() {
                                     >
                                         Apply
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </menu>
+                            </nav>
+                            
+                        </article>
+                    </section>
+                </aside>
             )}
-        </main>
+        </article>
     );
 }
 

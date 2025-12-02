@@ -1,10 +1,10 @@
-"use client";
+/*"use client";
 import { createContext, useContext, ReactNode } from "react"
-import { useEnrichedEvents } from "../hooks/useEnrichedEvents"
+import { EventWithHost, useEnrichedEvents } from "../hooks/useEnrichedEvents"
 import { EventWithRelations } from "@/app/api/events/eventsRepository"
 
 interface EventContextType {
-  events: EventWithRelations[]
+  events: EventWithHost[]
   loading: boolean
 }
 
@@ -26,4 +26,4 @@ export function useEventsContext() {
     throw new Error("useEventsContext must be used within an EventsProvider")
   }
   return context
-}
+}*/
