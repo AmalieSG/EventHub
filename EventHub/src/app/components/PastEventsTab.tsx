@@ -127,7 +127,11 @@ export function PastEventsTab() {
             </section>
             
             {isFilterOpen && (
+<<<<<<< HEAD
                 <section className="fixed inset-0 z-50">
+=======
+                <dialog open={isFilterOpen} className="fixed inset-0 z-50 bg-transparent">
+>>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
                     <section
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
@@ -210,7 +214,11 @@ export function PastEventsTab() {
                             </section>
                         </article>
                     </section>
+<<<<<<< HEAD
                 </section>
+=======
+                </dialog>
+>>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
             )}
         </article>
     );
