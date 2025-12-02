@@ -179,24 +179,23 @@ export function FilterBar({
 
 
     return (
-        
-        <div className="fixed inset-0 z-50">
+        <aside className="fixed inset-0 z-50">
             
-            <div
+            <section
                 className="absolute inset-0 bg-black/40"
                 onClick={() => setIsFilterOpen(false)}
                 aria-hidden="true"
             />
             
-        
-            <div className="absolute inset-y-0 right-0 w-full max-w-xs">
-                <div 
+            <section className="absolute inset-y-0 right-0 w-full max-w-xs">
+                <article 
                     className="h-full bg-white shadow-xl border-l border-gray-100 transform transition-transform duration-300 ease-in-out"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="filter-modal-title"
                 >
-                    <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                    
+                    <nav className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                         <h4 id="filter-modal-title" className="text-lg font-semibold text-gray-900">Filters</h4>
                         <button
                             onClick={() => setIsFilterOpen(false)}
@@ -205,11 +204,11 @@ export function FilterBar({
                         >
                             <XMarkIcon className="h-6 w-6" />
                         </button>
-                    </div>
+                    </nav>
 
-                    <div className="p-5 space-y-6 overflow-y-auto h-[calc(100%-100px)]">
+                    <section className="p-5 space-y-6 overflow-y-auto h-[calc(100%-100px)]">
                         
-                        <div>
+                        <fieldset>
                             <label className="flex items-center gap-3">
                                 <input
                                     type="checkbox"
@@ -219,12 +218,11 @@ export function FilterBar({
                                 />
                                 <span className="text-sm font-medium text-gray-800">Online events only</span>
                             </label>
-                        </div>
+                        </fieldset>
 
-                        
-                        <div>
+                        <fieldset>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Cities</label>
-                            <div className="flex flex-wrap gap-2">
+                            <menu className="flex flex-wrap gap-2">
                                 {availableCities.map((city) => {
                                     const selected = currentFilters.cities.includes(city);
                                     return (
@@ -239,12 +237,12 @@ export function FilterBar({
                                         </button>
                                     );
                                 })}
-                            </div>
-                        </div>
+                            </menu>
+                        </fieldset>
                         
-                        <div>
+                        <fieldset>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                            <div className="flex flex-wrap gap-2">
+                            <menu className="flex flex-wrap gap-2">
                                 {availableCategories.map((category) => {
                                     const selected = currentFilters.categories.includes(category);
                                     return (
@@ -259,23 +257,22 @@ export function FilterBar({
                                         </button>
                                     );
                                 })}
-                            </div>
-                        </div>
+                            </menu>
+                        </fieldset>
 
-                    </div>
+                    </section>
                     
-                    
-                    <div className="px-5 py-4 border-t border-gray-100 flex justify-center">
+                    <nav className="px-5 py-4 border-t border-gray-100 flex justify-center">
                         <button
                             onClick={handleClear}
                             className="text-sm text-gray-600 hover:text-red-700 font-medium cursor-pointer underline transition-colors"
                         >
                             Reset All Filters
                         </button>
-                    </div>
+                    </nav>
 
-                </div>
-            </div>
-        </div>
+                </article>
+            </section>
+        </aside>
     );
-}
+};

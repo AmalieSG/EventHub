@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useMemo, useEffect } from 'react';
 import { EventList } from '../components/EventList'
@@ -129,7 +129,7 @@ export default function Home() {
             </section>
 
             <section className="mb-16">
-                <div className="flex justify-between px-4 items-center mb-4">
+                <p className="flex justify-between px-4 items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
                     <button 
                         onClick={() => navigate('/events')}
@@ -137,7 +137,7 @@ export default function Home() {
                     >
                         View All Events
                     </button>
-                </div>
+                </p>
              
                 {loading ? (
                     <SkeletonEventList />

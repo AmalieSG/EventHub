@@ -84,35 +84,38 @@ const AchievementCard: React.FC<{ achievement: AchievementType }> = ({ achieveme
           : 'Locked';
 
     return (
-        <div className="flex bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-gray-100">
-            <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full border-4 border-white shadow-md mr-4" style={{ backgroundColor: achievement.status === 'Locked' ? '#E5E7EB' : '#D1D5DB' }}>
+        <article className="flex bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-gray-100">
+            <figure className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full border-4 border-white shadow-md mr-4" style={{ backgroundColor: achievement.status === 'Locked' ? '#E5E7EB' : '#D1D5DB' }}>
                 {statusIcon}
-            </div>
+            </figure>
 
-            <div className="flex-grow flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-1">
+            <section className="flex-grow flex flex-col justify-center">
+                <hgroup className="flex items-center gap-3 mb-1">
                     <h4 className="text-lg font-semibold text-gray-900">
                         {achievement.title}
                     </h4>
                     <span className={`text-xs px-2 py-0.5 rounded-full ${badgeClasses}`}>
                         {achievement.status}
                     </span>
-                </div>
-                
+                </hgroup>
+            
                 <p className="text-sm text-gray-500 mb-3">{achievement.description}</p>
                 
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                    <div 
+                <section className="w-full bg-gray-200 rounded-full h-2.5">
+                    <meter 
                         className={`h-2.5 rounded-full ${progressColor}`} 
                         style={{ width: `${achievement.progress}%` }}
+                        value={achievement.progress}
+                        min="0"
+                        max="100"
                     />
-                </div>
+                </section>
                 <p className={`text-xs mt-1 font-medium ${statusColor}`}>
                     {progressText}
                 </p>
-            </div>
+            </section>
 
-            <div className="flex flex-col justify-center items-end ml-4 space-y-2">
+            <aside className="flex flex-col justify-center items-end ml-4 space-y-2">
                 {achievement.status === 'Completed' ? (
                     <button 
                         className="w-28 text-center px-4 py-2 text-xs sm:text-sm font-medium text-white bg-red-600 rounded-full shadow hover:bg-red-500 transition duration-150 cursor-pointer"
@@ -125,8 +128,8 @@ const AchievementCard: React.FC<{ achievement: AchievementType }> = ({ achieveme
                         Details
                     </button>
                 )}
-            </div>
-        </div>
+            </aside>
+        </article>
     );
 };
 
@@ -169,13 +172,13 @@ export function AchievementsTab() {
     }, [isFilterOpen]);
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+            <article className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex items-center gap-2 flex-shrink-0">
                     <TrophyIcon className="w-6 h-6 text-yellow-600"/> My Achievements
                 </h3>
-                <div className="flex w-full sm:w-auto gap-3">
-                    <div className="relative flex-grow sm:flex-grow-0">
+                <nav className="flex w-full sm:w-auto gap-3">
+                    <section className="relative flex-grow sm:flex-grow-0">
                         <input
                             type="text"
                             placeholder="Search achievements..."
@@ -184,7 +187,7 @@ export function AchievementsTab() {
                             className="w-full sm:w-80 pl-10 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500"
                         />
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    </div>
+                    </section>
 
                     <button
                         onClick={() => setIsFilterOpen(true)}
@@ -193,30 +196,30 @@ export function AchievementsTab() {
                         <FunnelIcon className="h-4 w-4" />
                         Filter
                     </button>
-                </div>
-            </div>
+                </nav>
+            </article>
 
-            <div className="grid grid-cols-1 gap-6 mb-20">
+            <section className="grid grid-cols-1 gap-6 mb-20">
                 {filteredAchievements.length > 0 ? (
                     filteredAchievements.map((achievement) => (
                         <AchievementCard key={achievement.id} achievement={achievement} />
                     ))
                 ) : (
-                    <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                    <aside className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
                         {'No achievements match your search or filter criteria.'}
-                    </div>
+                    </aside>
                 )}
-            </div>
+            </section>
 
             {isFilterOpen && (
-                <div className="fixed inset-0 z-50">
-                    <div
+                <aside className="fixed inset-0 z-50">
+                    <section
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                        <div className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
-                            <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <section className="absolute inset-0 flex items-center justify-center p-4">
+                        <article className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
+                            <header className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                                 <h4 className="text-base font-semibold text-gray-900">Filter by Status</h4>
                                 <button
                                     onClick={() => setIsFilterOpen(false)}
@@ -224,10 +227,10 @@ export function AchievementsTab() {
                                 >
                                     Close
                                 </button>
-                            </div>
-                            <div className="p-5 space-y-4">
+                            </header>
+                            <section className="p-5 space-y-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                                <div className="flex flex-wrap gap-2">
+                                <nav className="flex flex-wrap gap-2">
                                     {ACHIEVEMENT_STATUSES.map((status) => {
                                         const selected = filters.status.includes(status);
                                         return (
@@ -249,29 +252,29 @@ export function AchievementsTab() {
                                             </button>
                                         );
                                     })}
-                                </div>
-                            </div>
-                            <div className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
+                                </nav>
+                            </section>
+                            <footer className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
                                 <button
                                     onClick={() => setFilters(defaultFilters)}
                                     className="text-sm text-gray-600 hover:text-gray-800 cursor-pointer"
                                 >
                                     Clear
                                 </button>
-                                <div className="flex items-center gap-2">
+                                <section className="flex items-center gap-2">
                                     <button
                                         onClick={() => setIsFilterOpen(false)}
                                         className="px-4 py-2 text-sm rounded-full bg-gray-900 text-white hover:bg-gray-800 cursor-pointer"
                                     >
                                         Apply Filters
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </section>
+                            </footer>
+                        </article>
+                    </section>
+                </aside>
             )}
-        </main>
+        </section>
     );
 }
 

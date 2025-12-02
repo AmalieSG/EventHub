@@ -50,26 +50,24 @@ export function EventDetail({ id }: EventProps) {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
+            <section className="flex items-center justify-center min-h-screen">
                 <p className="text-xl text-gray-400">Loading event details...</p>
-            </div>
+            </section>
         )
     }
 
     if (error || !event) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
+            <section className="flex items-center justify-center min-h-screen">
                 <p className="text-xl text-red-500">{error || 'Event not found.'}</p>
-            </div>
+            </section>
         )
     }
 
-    // Get host name
     const hostName = event.host
         ? `${event.host.firstName} ${event.host.lastName}`
         : 'Unknown Host'
 
-    // Format the event date
     const eventDate = new Date(event.eventStart)
     const formattedDate = eventDate.toLocaleDateString('en-US', {
         weekday: 'short',
@@ -92,7 +90,7 @@ export function EventDetail({ id }: EventProps) {
         organizerDetails: `Hosted by ${hostName}`,
     }
 
-     const priceData = {
+    const priceData = {
         price: '$189',
         description: 'Full day pass (incl. lunch and coffee)',
         features: [
@@ -133,32 +131,32 @@ export function EventDetail({ id }: EventProps) {
     ]
 
     return (
-        <div className="font-sans">
-            <div className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
+        <article className="font-sans">
+            <figure className="relative w-full xl:w-full max-w-screen-2xl mx-auto h-96">
                 <img
                     className="absolute inset-0 w-full h-full object-cover"
                     src={event.imageUrl}
                     alt={`Image of ${event.title}`}
                 />
 
-                <div className="absolute mt-8 ml-5">
-                    <span className="rounded-lg bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
+                <span className="absolute mt-8 ml-5">
+                    <mark className="rounded-lg bg-black/70 text-white text-lg font-semibold px-6 py-5 uppercase tracking-widest shadow-md">
                         {event.category}
-                    </span>
-                </div>
+                    </mark>
+                </span>
 
-                <div className="absolute inset-x-0 bottom-5 flex justify-center">
-                    <div className="bg-black/30 py-6 px-12 w-full">
+                <span className="absolute inset-x-0 bottom-5 flex justify-center">
+                    <hgroup className="bg-black/30 py-6 px-12 w-full">
                         <h1 className="text-white text-5xl sm:text-6xl font-bold text-center">
                             {event.title}
                         </h1>
-                    </div>
-                </div>
-            </div>
+                    </hgroup>
+                </span>
+            </figure>
 
-            <div className="max-w-7xl mx-auto px-4 mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+            <section className="max-w-7xl mx-auto px-4 mt-8">
+                <p className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <span className="lg:col-span-2">
                         <EventDetailBox
                             date={eventData.date}
                             time={eventData.time}
@@ -174,17 +172,17 @@ export function EventDetail({ id }: EventProps) {
                         />
 
                         <ArtistLineup artists={JazzLineup} />
-                    </div>
+                    </span>
 
-                    <div className="lg:col-span-1">
+                    <aside className="lg:col-span-1">
                         <PriceBox
                             price={priceData.price}
                             description={priceData.description}
                             features={priceData.features}
                         />
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </aside>
+                </p>
+            </section>
+        </article>
     )
 }

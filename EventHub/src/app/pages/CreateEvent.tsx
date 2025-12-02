@@ -43,12 +43,10 @@ export const CreateEvent = () => {
 };
 
   return (
-    <main className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-      <header>
-        <h1 className="text-3xl font-bold leading-tight text-gray-900 mb-8">
-          Create an event
-        </h1>
-      </header>
+    <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
+      <h1 className="text-3xl font-bold leading-tight text-gray-900 mb-8">
+        Create an event
+      </h1>
 
       {!state.success && state.error && (
         <div className="mb-6 p-4 rounded-md bg-red-50 border border-red-200 text-red-600">
@@ -116,10 +114,8 @@ export const CreateEvent = () => {
           </section>
         </article>
 
-        <article className="bg-white shadow sm:rounded-lg p-6">
-          <header>
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">Date & Time</h2>
-          </header>
+        <fieldset className="bg-white shadow sm:rounded-lg p-6">
+          <legend className="text-xl font-semibold mb-4 text-gray-800">Date & Time</legend>
 
           <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <section>
@@ -134,7 +130,7 @@ export const CreateEvent = () => {
                 defaultValue={getOldValue('startDate')}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
               />
-            </section>
+            </p>
 
             <section>
               <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
@@ -148,11 +144,11 @@ export const CreateEvent = () => {
                 defaultValue={getOldValue('startTime')}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
               />
-            </section>
-          </section>
-        </article>
+            </p>
+          </div>
+        </fieldset>
 
-        <footer className="flex justify-end space-x-3">
+        <p className="flex justify-end space-x-3">
           <button
             type="button"
             className="rounded-md bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -163,6 +159,6 @@ export const CreateEvent = () => {
           <SubmitButton />
         </footer>
       </form>
-    </main>
+    </section>
   );
 };

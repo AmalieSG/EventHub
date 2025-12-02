@@ -23,7 +23,7 @@ function SubmitButton() {
 export const Login = () => { 
 
   const [state, formAction] = useActionState(
-		// Uses any for simplicity here
+    
     async (prevState: any, formData: FormData) => {
       const result = await login(prevState, formData);
       console.log(result);
@@ -43,16 +43,17 @@ export const Login = () => {
     }
   );
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+    <section className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
       <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <header className="text-center">
+       
+        <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Welcome Back
           </h1>
           <p className="mt-2 text-sm text-gray-600">
             Enter your credentials to access your account
           </p>
-        </header>
+        </div>
 
         <section className="space-y-4">
           <button
@@ -113,7 +114,8 @@ export const Login = () => {
             </p>
           </fieldset>
 
-          <footer className="flex items-center justify-between">
+         
+          <div className="flex items-center justify-between">
             <p className="flex items-center">
               <input
                 id="remember-me"
@@ -131,14 +133,12 @@ export const Login = () => {
                 Forgot Password?
               </a>
             </p>
-          </footer>
+          </div>
 
           <SubmitButton />
-
-     
         </form>
 
-               {!state.success && "error" in state && state.error && (
+        {!state.success && "error" in state && state.error && (
           <div className='px-5 py-5 rounded bg-red-600 text-white text-center'>
             {state.error}
           </div>
@@ -152,11 +152,12 @@ export const Login = () => {
         </p>
       </section>
 
-       <footer className="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-500">
+    
+      <div className="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-500">
         <a href="#" className="hover:underline px-2">Privacy policy</a>
         <a href="#" className="hover:underline px-2">Term of Service</a>
         <a href="#" className="hover:underline px-2">Help</a>
-      </footer>
-    </main>
+      </div>
+    </section>
   );
 };

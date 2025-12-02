@@ -41,10 +41,10 @@ export function InterestModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 transition-opacity duration-300">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto transform scale-100 transition-transform duration-300 ease-out">
+    <section className="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 transition-opacity duration-300">
+      <section className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto transform scale-100 transition-transform duration-300 ease-out">
       
-        <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white">
+        <p className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white">
           <h3 className="text-xl font-semibold text-gray-900">
             Select Your Interests
           </h3>
@@ -55,9 +55,9 @@ export function InterestModal({
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
-        </div>
+        </p>
 
-        <div className="p-6 space-y-4">
+        <section className="p-6 space-y-4">
           <p className="text-sm text-gray-600">Click to add or remove interests from your profile.</p>
           <div className="flex flex-wrap gap-3">
             {AVAILABLE_INTERESTS.map((interest) => {
@@ -81,10 +81,10 @@ export function InterestModal({
               );
             })}
           </div>
-        </div>
+        </section>
 
         
-        <div className="p-4 border-t border-gray-200 flex justify-end sticky bottom-0 bg-white">
+        <section className="p-4 border-t border-gray-200 flex justify-end sticky bottom-0 bg-white">
           <button
             type="button"
             className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
@@ -92,10 +92,10 @@ export function InterestModal({
           >
             Done
           </button>
-        </div>
+        </section>
 
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 
@@ -122,10 +122,9 @@ export function AccountTab() {
   };
 
   return (
-
-    <main className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
+    <section className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
     
-      <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
+      <article className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
         <section aria-labelledby="profile-heading" className="space-y-6">
           <h1 className="text-2xl font-bold text-gray-900">Account Settings</h1>
           <p className="text-sm text-gray-600">Manage your personal information and preferences</p>
@@ -136,16 +135,15 @@ export function AccountTab() {
             <fieldset>
               <legend className="sr-only text-sm font-medium text-gray-700 mb-2">Profile Picture</legend>
 
-              <div className="flex items-start gap-6">
-                {/* Updated this div to an img tag with the provided source */}
+              <section className="flex items-start gap-6">
                 <img 
                     className="size-16 rounded-full object-cover flex-shrink-0"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
                     alt="Current Profile"
                 />
 
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-4">
+                <article className="flex flex-col gap-2">
+                  <section className="flex items-center gap-4">
                     <input
                       type="file"
                       id="profile-picture-hidden"
@@ -154,7 +152,7 @@ export function AccountTab() {
                       onChange={handleFileChange}
                       className="sr-only"
                     />
-                
+                  
                     <button
                       type="button"
                       onClick={handleButtonClick} 
@@ -164,21 +162,21 @@ export function AccountTab() {
                       Change Profile Picture
                     </button>
                     
-                  </div>
+                  </section>
 
                   
 
                   <p className="mt-2 text-sm text-gray-500">
                       JPG, PNG or GIF. Max 5MB.
                   </p>
-                </div>
-              </div>
+                </article>
+              </section>
 
               
             </fieldset>
 
             <fieldset className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
+              <section>
                 <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
                   First Name
                 </label>
@@ -188,8 +186,8 @@ export function AccountTab() {
                   defaultValue={user?.firstName}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
-              </div>
-              <div>
+              </section>
+              <section>
                 <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
                   Last Name
                 </label>
@@ -199,8 +197,8 @@ export function AccountTab() {
                   defaultValue={user?.lastName}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
-              </div>
-              <div>
+              </section>
+              <section>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
@@ -210,8 +208,8 @@ export function AccountTab() {
                   defaultValue={user?.email}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
-              </div>
-              <div>
+              </section>
+              <section>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
                   Phone Number
                 </label>
@@ -221,10 +219,10 @@ export function AccountTab() {
                   defaultValue="+47 123 45 678"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
-              </div>
+              </section>
             </fieldset>
 
-            <div>
+            <section>
               <label htmlFor="about" className="block text-sm font-medium text-gray-700">
                 About Me
               </label>
@@ -234,9 +232,9 @@ export function AccountTab() {
                 defaultValue="Full-stack developer passionate about creating amazing experiences"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
-            </div>
+            </section>
 
-            <div>
+            <section>
               <label htmlFor="location" className="block text-sm font-medium text-gray-700">
                 Location
               </label>
@@ -246,7 +244,7 @@ export function AccountTab() {
                 defaultValue="San Francisco, CA"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
-            </div>
+            </section>
 
             <fieldset>
               <legend className="text-sm font-medium text-gray-700 mb-2">Interests</legend>
@@ -271,26 +269,26 @@ export function AccountTab() {
               </ul>
             </fieldset>
 
-            <footer className="pt-6">
+            <aside className="pt-6">
               <button
                 type="submit"
                 className="rounded-md bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               >
                 Save Changes
               </button>
-                <InterestModal
+              <InterestModal
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
                 currentInterests={interests} 
                 setInterests={setInterests} 
                 /> 
-            </footer>
+            </aside>
 
           </form>
         </section>
         
-      </section>
+      </article>
       
-    </main>
+    </section>
   )
 }
