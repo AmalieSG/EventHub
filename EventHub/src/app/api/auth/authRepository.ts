@@ -1,5 +1,3 @@
-// src/app/api/auth/authRepository.ts
-
 import { getDb, type DB } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -90,6 +88,7 @@ export function createAuthRepository(db: DB): AuthRepository {
                     deletedAt: users.deletedAt,
                     isActive: users.isActive,
                     lastLoginAt: users.lastLoginAt,
+                    bio: users.bio,
                 });
 
                 return ResultHandler.success(newUser);
