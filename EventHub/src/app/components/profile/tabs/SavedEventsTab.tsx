@@ -135,15 +135,6 @@ export function SavedEventsTab() {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-
-    if (loading) {
-        return (
-            <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading your events...</p>
-            </section>
-        );
-    }
-
     const availableCities = useMemo(() => {
         const unique = new Set<string>();
         savedEvents.forEach((e) => {
