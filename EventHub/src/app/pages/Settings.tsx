@@ -40,20 +40,21 @@ export const Settings = () => {
         }
         
       
-  return (
-    <main className="h-full">
-      <div> <SettingsHeader/></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SettingsNav 
-              activeTabName={activeTabName} 
-              setActiveTab={setActiveTab} 
+ return (
+    <section className="h-full">
+        <article>
+            <SettingsHeader/>
+        </article>
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SettingsNav 
+                activeTabName={activeTabName} 
+                setActiveTab={setActiveTab} 
             />
-        </div>
-     
+        </nav>
         
-
-      <div className="bg-gray-50 pb-20" >{renderTabContent()}</div>
-    </main>
-    
-  );
+        <section className="bg-gray-50 pb-20" >
+            {renderTabContent()}
+        </section>
+    </section>
+);
 }

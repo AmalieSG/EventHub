@@ -23,7 +23,7 @@ interface SecurityToggleProps {
 const SecurityToggle: React.FC<SecurityToggleProps> = ({ setting, onToggle }) => {
     return (
         <li className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0">
-            <div className="flex flex-col">
+            <section className="flex flex-col">
                 <span className={classNames(
                     "text-sm font-medium text-gray-900",
                     setting.disabled ? "text-gray-400" : "text-gray-900"
@@ -31,7 +31,7 @@ const SecurityToggle: React.FC<SecurityToggleProps> = ({ setting, onToggle }) =>
                     {setting.title}
                 </span>
                 <span className="text-xs text-gray-500 max-w-sm">{setting.description}</span>
-            </div>
+            </section>
             <Switch
                 checked={setting.enabled}
                 disabled={setting.disabled}

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { EventList } from '../components/EventList'
@@ -31,7 +31,6 @@ export default function Home() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     
-    // Hent fra API-laget
     useEffect(() => {
         let cancelled = false;
         (async () => {
@@ -61,48 +60,10 @@ export default function Home() {
     }
     }
 
-    /*const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof events[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.isOnline : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.includes(event.city)
-                : true;
-            const matchesCategory = filters.categories.length > 0
-                ? filters.categories.includes(event.category)
-                : true;
-            const matchesSearch = searchQuery
-                ? event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (event.city && event.city.toLowerCase().includes(searchQuery.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
-        };
-        return events.filter(baseFilter);
-    }, [events, filters, searchQuery]);*/
-    
-    /*useEffect(() => {
-        if (!isFilterOpen) return;
-            const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') setIsFilterOpen(false);
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isFilterOpen]);
+    if (loading) return <p>Loading events...</p>;
 
-    if (loading) return <p>Loading events...</p>;
-
-    const availableCities = useMemo(() => {
-        const unique = new Set<string>();
-        events.forEach(e => { if (e.city) unique.add(e.city); });
-        return Array.from(unique);
-    }, [events]);
-    const availableCategories = useMemo(() => {
-        const unique = new Set<string>();
-        events.forEach(e => { if (e.category) unique.add(e.category); });
-    return Array.from(unique);
-    }, [events]);*/
-
-     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
+    return (
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
                     Discover events in your area
@@ -110,8 +71,8 @@ export default function Home() {
                 <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
                     From concerts and workshops to networking events and food festivals - find perfect experiences that match your interests
                 </p>
-                <div className="flex justify-center">
-                    <div className="relative w-full max-w-xl">
+                <form className="flex justify-center" role="search">
+                    <p className="relative w-full max-w-xl">
                         <input
                             type="text"
                             placeholder="Search for events..."
@@ -120,18 +81,18 @@ export default function Home() {
                             className="w-full pl-5 pr-14 py-3 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-gray-800 focus:border-gray-800"
                         />
                         <button 
-                            type="button" 
+                            type="submit" 
                             onClick={handleSearch}
                             className="absolute right-0 top-0 h-full px-5 bg-red-600 text-white rounded-r-lg hover:bg-black hover:cursor-pointer transition duration-150"
                         >
                             Search
                         </button>
-                    </div>
-                </div>
+                    </p>
+                </form>
             </section>
 
             <section className="mb-16">
-                <div className="flex justify-between px-4 items-center mb-4">
+                <p className="flex justify-between px-4 items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
                     <a 
                         href="/all-events"
@@ -139,15 +100,13 @@ export default function Home() {
                     >
                         See all events
                     </a>
-                </div>
+                </p>
                 
-             
                 {popularEvents.length > 0 ? (
                     <EventList 
                         events={popularEvents} 
                         layout="grid" 
                         action="join"
-                       
                         className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                     />
                 ) : (
@@ -157,36 +116,34 @@ export default function Home() {
 
             <hr className="my-10 border-gray-200" /> 
             
-           
-            <section className="mb-16 bg-gray-100 w-full p-8 rounded-xl">
+            <nav aria-label="Explore event categories" className="mb-16 bg-gray-100 w-full p-8 rounded-xl">
                 <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
                     Explore categories
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
                     {categories.map(cat => (
-                        <a 
-                            key={cat.name}
-                           
-                            className="flex flex-col items-center p-4 bg-gray-800 border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group "
-                        >
-                            <div className="p-3 mb-2 bg-gray-200  text-gray-800  rounded-xl text-2xl   transition">
-                                <cat.icon className="w-8 h-8 " />
-                            </div>
-                            <p className="text-sm font-semibold text-gray-200 pb-2 uppercase text-center">
-                                {cat.name}
-                            </p>
-                            <p className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 font-bold transition duration-300 group text-xs text-gray-200 bg-red-600 py-3 px-10  rounded-xl mt-0.5">
-                                {cat.count} Events
-                            </p>
-                        </a>
+                        <li key={cat.name}>
+                            <a 
+                                href={`/category/${cat.name.toLowerCase()}`}
+                                className="flex flex-col items-center p-4 bg-gray-800 border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group "
+                            >
+                                <p className="p-3 mb-2 bg-gray-200 text-gray-800 rounded-xl text-2xl transition">
+                                    <cat.icon className="w-8 h-8" />
+                                </p>
+                                <h3 className="text-sm font-semibold text-gray-200 pb-2 uppercase text-center">
+                                    {cat.name}
+                                </h3>
+                                <p className="cursor-pointer hover:bg-gray-200 hover:text-gray-800 font-bold transition duration-300 group text-xs text-gray-200 bg-red-600 py-3 px-10 rounded-xl mt-0.5">
+                                    {cat.count} Events
+                                </p>
+                            </a>
+                        </li>
                     ))}
-                </div>
-            </section>
+                </ul>
+            </nav>
 
             <hr className="my-10 border-gray-200" />
-
-       
-            
-        </main>
-    );
+            
+        </section>
+    );
 }

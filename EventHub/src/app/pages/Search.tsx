@@ -82,22 +82,24 @@ export function Search() {
 
   if (loading) {
     return (
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <section className="max-w-5xl mx-auto px-4 py-8">
         <p>Loading events…</p>
-      </div>
+      </section>
     );
   }
 
-      function handleClear(event: React.MouseEvent): void {
-          setSearchTerm("");
-          setFilters(defaultFilters);
-      }
-  
+  function handleClear(event: React.MouseEvent): void {
+    setSearchTerm("");
+    setFilters(defaultFilters);
+  }
+
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-      <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+    <section className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    
+      <article className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      
+        <section>
           <p className="text-sm text-gray-500">
             {filteredEvents.length} Event(er) funnet
           </p>
@@ -107,11 +109,10 @@ export function Search() {
               <span className="font-semibold">"{searchTerm}"</span>
             </p>
           )}
-             
-        </div>
+        </section>
         
-
-        <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 p-1">
+       
+        <nav className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 p-1">
           <button
             type="button"
             onClick={() => setViewMode("list")}
@@ -135,27 +136,28 @@ export function Search() {
           >
             Kart
           </button>
-        </div>
-      </header>
+        </nav>
+      </article>
 
-      <section className="flex row gap-5">
-        <button 
-                        onClick={() => setIsFilterOpen(true)} 
-                        className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
-                    >
-                        <FunnelIcon className="h-4 w-4" />
-                      Open Filter
-                    </button>
-                     <button 
-                            type="button" 
-                            onClick={handleClear}
-                            className="flex items-center gap-1.5 px-4 py-2 bg-red-600 border border-gray-200 text-white rounded-full text-sm shadow-sm transition duration-150 flex-shrink-0 cursor-pointer"
-                        >
-                            Nullstill filter
-                        </button> 
-      </section>
       
-
+      <aside className="flex row gap-5">
+        <button 
+          onClick={() => setIsFilterOpen(true)} 
+          className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
+        >
+          <FunnelIcon className="h-4 w-4" />
+          Open Filter
+        </button>
+        <button 
+          type="button" 
+          onClick={handleClear}
+          className="flex items-center gap-1.5 px-4 py-2 bg-red-600 border border-gray-200 text-white rounded-full text-sm shadow-sm transition duration-150 flex-shrink-0 cursor-pointer"
+        >
+          Nullstill filter
+        </button> 
+      </aside>
+      
+     
       <section className="space-y-4">
         {filteredEvents.length === 0 ? (
           <p className="text-sm text-gray-500">
@@ -173,7 +175,7 @@ export function Search() {
         isFilterOpen={isFilterOpen}
         setIsFilterOpen={setIsFilterOpen}
       />
-    </div>
+    </section>
   );
 }
 

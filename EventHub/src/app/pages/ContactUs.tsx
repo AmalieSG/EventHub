@@ -2,13 +2,19 @@ import React from "react";
 
 export const ContactUs = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-6">
-      <div className="w-full max-w-lg bg-white shadow-lg rounded-xl p-8">
-        <h1 className="text-3xl font-extrabold text-gray-800 mb-4">Contact Us</h1>
-        <p className="text-gray-800 mb-6">Fill out the form below to get in touch.</p>
+    <section className="min-h-screen flex items-center justify-center bg-white p-6">
+      <section className="w-full max-w-lg bg-white shadow-lg rounded-xl p-8">
+        <section>
+          <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
+            Contact Us
+          </h1>
+          <p className="text-gray-800 mb-6">
+            Fill out the form below to get in touch.
+          </p>
+        </section>
 
         <form className="space-y-4">
-          <div>
+          <fieldset>
             <label className="block text-gray-800 mb-1" htmlFor="name">
               Name
             </label>
@@ -18,9 +24,9 @@ export const ContactUs = () => {
               placeholder="Your Name"
               className="w-full px-3 py-2 border border-gray-800 rounded bg-white text-gray-800"
             />
-          </div>
+          </fieldset>
 
-          <div>
+          <fieldset>
             <label className="block text-gray-800 mb-1" htmlFor="email">
               Email
             </label>
@@ -30,9 +36,9 @@ export const ContactUs = () => {
               placeholder="you@example.com"
               className="w-full px-3 py-2 border border-gray-800 rounded bg-white text-gray-800"
             />
-          </div>
+          </fieldset>
 
-          <div>
+          <fieldset>
             <label className="block text-gray-800 mb-1" htmlFor="message">
               Message
             </label>
@@ -42,7 +48,7 @@ export const ContactUs = () => {
               rows={4}
               className="w-full px-3 py-2 border border-gray-800 rounded bg-white text-gray-800 resize-none"
             ></textarea>
-          </div>
+          </fieldset>
 
           <button
             type="submit"
@@ -51,7 +57,7 @@ export const ContactUs = () => {
             Send
           </button>
         </form>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
