@@ -130,7 +130,7 @@ export const CreateEvent = () => {
                 defaultValue={getOldValue('startDate')}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
               />
-            </p>
+            </section>
 
             <section>
               <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
@@ -144,11 +144,11 @@ export const CreateEvent = () => {
                 defaultValue={getOldValue('startTime')}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border"
               />
-            </p>
-          </div>
+            </section>
+          </section>
         </fieldset>
 
-        <p className="flex justify-end space-x-3">
+        <footer className="flex justify-end space-x-3">
           <button
             type="button"
             className="rounded-md bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
