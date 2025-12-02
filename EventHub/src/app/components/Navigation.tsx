@@ -143,7 +143,7 @@ export function Navigation() {
                                           className="size-8 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                                       />
                                   ) : (
-                                      <UserIcon className="cursor-pointer size-8 rounded-full text-gray-400 " />
+                                      <UserIcon className="cursor-pointer size-6 rounded-full text-gray-400 " />
 
                                   )}
                               </MenuButton>
