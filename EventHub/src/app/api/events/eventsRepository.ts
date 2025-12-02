@@ -180,3 +180,4 @@ export function createEventsRepository(db: DB): EventsRepository {
   };
 }
 
+export const eventsRepository = createEventsRepository(await getDb());

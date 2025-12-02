@@ -1,4 +1,3 @@
-// src/app/api/auth/authServerActions.ts
 "use server";
 
 import { authService } from "./authService";
@@ -144,6 +143,43 @@ export async function logout(): Promise<ServerResult<null>> {
     return {
       success: false,
       error: "Utlogging feilet",
+      code: Errors.INTERNAL_SERVER_ERROR,
+    };
+  }
+}
+
+
+export async function getCurrentUser(): Promise<ServerResult<SafeUser>> {
+  try {
+    const ctxUser = requestInfo.ctx.user;
+
+    if (!ctxUser) {
+      return {
+        success: false,
+        error: "Not authenticated",
+        code: Errors.UNAUTHORIZED,
+      };
+    }
+
+    const result = await authService.currentUser(ctxUser.id);
+
+    if (!result.success) {
+      return {
+        success: false,
+        error: result.error.message,
+        code: result.error.code ?? Errors.INTERNAL_SERVER_ERROR,
+      };
+    }
+
+    return {
+      success: true,
+      data: result.data,
+    };
+  } catch (error) {
+    console.error("getCurrentUser error:", error);
+    return {
+      success: false,
+      error: "Failed to load current user",
       code: Errors.INTERNAL_SERVER_ERROR,
     };
   }

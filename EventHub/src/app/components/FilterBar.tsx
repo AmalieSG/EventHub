@@ -88,7 +88,7 @@ export function FilterBar({ className }: FilterBarProps) {
   );
 } */
 
-import React, { useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { XMarkIcon, } from '@heroicons/react/24/outline';
 import { EventWithRelations } from '../api/events/eventsRepository';
 export type LayoutType = 'grid' | 'list';
@@ -120,7 +120,7 @@ export function FilterBar({
     const availableCities = useMemo(() => {
         const unique = new Set<string>();
         events.forEach(e => {
-            if (e.city) unique.add(e.city); 
+            if (e.address?.city) unique.add(e.address.city); 
         });
         return Array.from(unique).sort();
     }, [events]); 

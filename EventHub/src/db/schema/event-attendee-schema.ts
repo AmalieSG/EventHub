@@ -1,4 +1,4 @@
-import { int, integer, sqliteTable, text, uniqueIndex, index } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text, uniqueIndex, index } from "drizzle-orm/sqlite-core";
 import { events } from "./event-schema";
 import { users } from "./user-schema";
 import { relations } from "drizzle-orm/relations";
