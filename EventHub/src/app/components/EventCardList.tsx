@@ -81,78 +81,66 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
 
     if (isGrid) {
         return (
-        <article className={articleClasses} aria-label={`Event: ${event.title}`}>
-            <figure className="relative w-full h-48">
-                <img src={event.imageUrl} alt={`Image of ${event.title}`} className="w-full h-full object-cover rounded-lg" />
-                {SaveButton}
-            </figure>
+            <article className={articleClasses} aria-label={`Event: ${event.title}`}>
+                <figure className="relative w-full h-48">
+                    <img src={event.imageUrl} alt={`Image of ${event.title}`} className="w-full h-full object-cover rounded-lg" />
+                    {SaveButton}
+                </figure>
 
-            <section className="flex justify-between items-start pt-2 border-t border-gray-700/50">
-                <hgroup className="flex-1">
+                <section className="flex justify-between items-start pt-2 border-t border-gray-700/50">
                     <h2 className="text-xl font-bold text-white line-clamp-2 mr-4 h-[3.5rem] overflow-hidden">{event.title}</h2>
-                </hgroup>
-                <span className="text-xs bg-red-600 px-3 py-1 rounded-full font-bold text-white flex-shrink-0 mt-1">{event.category}</span>
-            </section>
+                    <span className="text-xs bg-red-600 px-3 py-1 rounded-full font-bold text-white flex-shrink-0 mt-1">{event.category}</span>
+                </section>
 
-            <p className="text-gray-300 line-clamp-2 h-[3rem] overflow-hidden">{event.summary}</p>
+                <p className="text-gray-300 line-clamp-2 h-[3rem] overflow-hidden">{event.summary}</p>
 
-            <section className="flex flex-col gap-2 text-sm text-gray-400 mt-2">
-                <dl className="flex flex-wrap gap-x-6 gap-y-2">
-                    <div className="flex items-center gap-1">
-                        <dt className='text-red-400'>🗓️</dt>
-                        <dd>{DateInfo}</dd>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <dt className='text-red-400'>⏰</dt>
-                        <dd className='font-medium'>{time}</dd>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <dt className='text-red-400'>📍</dt>
-                        <address className="not-italic line-clamp-1">{event.address}</address>
-                    </div>
-                </dl>
-            </section>
+                <ul className="flex flex-col gap-2 text-sm text-gray-400 mt-2 ">
+                    <li className="flex flex-wrap gap-x-6 gap-y-2">
+                        <span className="flex items-center gap-1"><p className='text-red-400'>🗓️</p>{DateInfo}</span>
+                        <span className="flex items-center gap-1"><p className='text-red-400'>⏰</p><p className='font-medium'>{time}</p></span>
+                    </li>
+                    <div className="flex items-center gap-1"><p className='text-red-400'>📍</p><address className="not-italic line-clamp-1">{event.address}</address></div>
+                </ul>
 
-            <section className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">
-                <p className="text-sm text-gray-400 "><span className='font-bold text-white'>{attendeeCount}</span> attending</p>
-                {PriceInfo}
-            </section>
+                <section className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">
+                    <p className="text-sm text-gray-400 "><span className='font-bold text-white'>{attendeeCount}</span> attending</p>
+                    {PriceInfo}
+                </section>
 
-            <p className="text-xs text-gray-500 ">Hosted by <span className='font-medium text-gray-400'>{hostName}</span></p>
+                <p className="text-xs text-gray-500 ">Hosted by <span className='font-medium text-gray-400'>{hostName}</span></p>
 
-            <section className="flex gap-3 mt-4 items-center">
-                <button
-                    onClick={handleActionClick}
-                    className={`flex-1 px-4 py-2 rounded-lg text-center text-white text-sm ${
+                <menu className="flex gap-3 mt-4 items-center">
+                    <button
+                        onClick={handleActionClick}
+                        className={`flex-1 px-4 py-2 rounded-lg text-center text-white text-sm ${
                         action === 'ended'
                             ? 'bg-gray-400 cursor-default select-none'
                             : 'bg-red-600 hover:bg-red-700 transition duration-150 shadow-md cursor-pointer'
-                    }`}
-                >
-                    {action === 'edit' ? 'Edit' : action === 'remove' ? 'Remove' : action === 'ended' ? 'Event Ended' : 'Join'}
-                </button>
-                <a href={`/events/${event.id}`} className="rounded-lg border border-red-600 bg-gray-800 px-4 py-2 text-base font-medium text-white shadow-md hover:bg-gray-700 transition duration-150 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 cursor-pointer">
-                    See details
-                </a>
-            </section>
-        </article>
-    );
+                        }`}
+                    >
+                        {action === 'edit' ? 'Edit' : action === 'remove' ? 'Remove' : action === 'ended' ? 'Event Ended' : 'Join'}
+                    </button>
+                    <a href={`/events/${event.id}`} className="rounded-lg border border-red-600 bg-gray-800 px-4 py-2 text-base font-medium text-white shadow-md hover:bg-gray-700 transition duration-150 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 cursor-pointer">
+                        See details
+                    </a>
+                </menu>
+            </article>
+        );
     }
 
 
-   return (
-        <article className={articleClasses} aria-label={`Event: ${event.title}`}>
-            
-            <figure className="relative w-1/3 h-full overflow-hidden rounded-l-xl">
+return (
+    <article className={articleClasses} aria-label={`Event: ${event.title}`}>
+        <figure className="flex w-full h-48">
+            <a href={`/events/${event.id}`}  className="relative w-1/3 h-full overflow-hidden rounded-l-xl">
                 <img
                     src={event.imageUrl}
                     alt={`Image of ${event.title}`}
                     className="w-full h-full object-cover object-center"
                 />
                 {SaveButton}
-            </figure>
+            </a>
 
-            
             <section className="flex-1 flex flex-col justify-between p-4">
                 
              
@@ -189,14 +177,13 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
                     <div className="flex items-center gap-3">
                         <span className="text-sm font-medium text-gray-400">Price:</span>
                         <p className="font-extrabold text-xl text-red-500">{formattedPrice}</p>
-                    </div>
-                    
-                 
-                    <div className="flex items-stretch gap-2">
+                    </p>
+
+                    <menu className="flex items-stretch gap-2">
                         <button
                             onClick={handleActionClick}
                             className={`font-bold w-32 h-10 flex flex-col sm:flex-row items-center justify-center rounded-lg text-white text-sm
-${
+                            ${
                                 action === 'ended'
                                     ? 'bg-gray-400 cursor-default select-none'
                                     : 'bg-red-600 hover:bg-red-700 transition duration-150 shadow-md cursor-pointer'
@@ -213,6 +200,8 @@ ${
                     </div>
                 </section>
             </section>
-        </article>
+        </figure>
+    </article>
+
     );
 }

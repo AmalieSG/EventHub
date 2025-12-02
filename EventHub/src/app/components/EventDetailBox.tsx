@@ -16,7 +16,6 @@ interface PriceBoxProps {
 const PriceBox: React.FC<PriceBoxProps> = ({ price, description, features }) => {
     return (
         <aside className="bg-white p-6 rounded-xl shadow-lg border border-indigo-100 sticky top-4">
-            
             <h3 className="text-4xl font-extrabold text-indigo-600 mb-2">{price}</h3>
             <p className="text-sm text-gray-500 mb-4">{description}</p>
 
@@ -116,9 +115,9 @@ interface EventDescriptionProps {
 const EventDescription: React.FC<EventDescriptionProps> = ({ title, content }) => {
     return (
         <article className="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <header>
+            <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">{title}</h2>
-            </header>
+            </section>
             
             <section className="space-y-4 text-gray-700 text-lg">
                 {content.map((paragraph, index) => (
