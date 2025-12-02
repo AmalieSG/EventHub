@@ -15,7 +15,7 @@ type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
 type ApiResponse<T> = ApiOk<T> | ApiErr;
 
-type ViewMode = "list" | "map";
+type ViewMode = "list" | "grid";
 
 export function Search() {
   const [events, setEvents] = useState<EventWithRelations[]>([]);
@@ -124,23 +124,23 @@ export function Search() {
               onClick={() => setViewMode("list")}
               className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
                 viewMode === "list"
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-600 hover:bg-gray-50"
+                  ? "bg-gray-900 text-white hover:cursor-pointer"
+                  : "text-gray-600 hover:bg-gray-50 hover:cursor-pointer "
               }`}
             >
               List
             </button>
             <button
               type="button"
-              onClick={() => setViewMode("map")}
+              onClick={() => setViewMode("grid")}
               className={`px-3 py-1.5 text-xs sm:text-sm rounded-full transition ${
-                viewMode === "map"
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-600 hover:bg-gray-50"
+                viewMode === "grid"
+                  ? "bg-gray-900 text-white hover:cursor-pointer"
+                  : "text-gray-600 hover:bg-gray-50 hover:cursor-pointer"
               }`}
-              disabled
+            
             >
-              Map
+              Grid
             </button>
           </div>
         </div>
@@ -157,7 +157,7 @@ export function Search() {
             <FaceFrownIcon className="inline w-5 h-5" />
           </p>
         ) : (
-          <EventList events={filteredEvents} />
+          <EventList events={filteredEvents} layout={viewMode} />
         )}
       </section>
     </section>
