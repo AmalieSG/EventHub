@@ -129,7 +129,7 @@ export default function Home() {
             </section>
 
             <section className="mb-16">
-                <article className="f">
+                <article className="flex justify-between px-4 items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
                     <button 
                         onClick={() => navigate('/events')}
