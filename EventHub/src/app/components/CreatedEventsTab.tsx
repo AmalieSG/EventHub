@@ -22,11 +22,9 @@ export function CreatedEventsTab() {
 
     if (loading) {
         return (
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-            
+            <address className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
                 <p className="text-center py-10">Loading your events...</p>
-            </div>
-            
+            </address>
         );
     }
 
@@ -40,7 +38,6 @@ export function CreatedEventsTab() {
         const unique = new Set<string>();
         myEventsSeed.forEach(e => {
             const c = toCity(e.address);
-           
             if (c) unique.add(c);
         });
         return Array.from(unique);
@@ -64,7 +61,6 @@ export function CreatedEventsTab() {
             const matchesSearch =
                 event.title.toLowerCase().includes(query) ||
                 event.address.toLowerCase().includes(query);
-                
             
             return matchesSearch && baseFilter(event);
         });
@@ -83,7 +79,7 @@ export function CreatedEventsTab() {
 
 
     return (
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+        <form className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 
             <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4" aria-label="Event management tools">
                 <hgroup>
@@ -103,25 +99,20 @@ export function CreatedEventsTab() {
                         />
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     </search>
-                   
 
                     <button
                         onClick={handleLayoutToggle}
                         aria-label={currentLayout === 'grid' ? 'Switch to List View' : 'Switch to Grid View'}
-                        
                         className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
                     >
                         
                         {currentLayout === 'grid' ? (
                             <Bars3Icon className="h-4 w-4" aria-hidden="true" /> 
-                            
                         ) : (
                             <Squares2X2Icon className="h-4 w-4" aria-hidden="true" /> 
-                            
                         )}
                         {currentLayout === 'grid' ? 'List View' : 'Grid View'}
                     </button>
-                    
                     <button 
                         onClick={() => setIsFilterOpen(true)} 
                         aria-expanded={isFilterOpen}
@@ -129,14 +120,12 @@ export function CreatedEventsTab() {
                         className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm shadow-sm hover:bg-gray-100 transition duration-150 flex-shrink-0 cursor-pointer"
                     >
                         <FunnelIcon className="h-4 w-4" aria-hidden="true" />
+                        Filter
                     </button>
-
-                    </nav>
-                
+                </nav>
             </nav>
 
             <ul className="mb-20" aria-live="polite">
-          
                 {filteredEvents.length > 0 ? (
                     <EventList 
                         events={filteredEvents} 
@@ -148,23 +137,21 @@ export function CreatedEventsTab() {
                         No events found.
                     </li>
                 )}
-            
             </ul>
             
             {isFilterOpen && (
-                <span 
+                <aside 
                     id="filter-dialog"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="filter-dialog-title"
-                    className="fixed inset-0 z-50">
-                
-                <span
+                    className="fixed inset-0 z-50"
+                >
+                    <span
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
-                        aria-label="Close filter">
-                       
-               
+                        aria-label="Close filter"
+                    />
                     <section className="absolute inset-0 flex items-center justify-center p-4">
                         <form className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
                             <dl className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
@@ -193,7 +180,6 @@ export function CreatedEventsTab() {
                                     <span className="text-sm text-gray-800">Online events only</span>
                                 </label>
 
-                                
                                 <section>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Cities</label>
                                     <ul className="flex flex-wrap gap-2" role="group" aria-label="City Filters">
@@ -220,10 +206,10 @@ export function CreatedEventsTab() {
                                                 </li>
                                             );
                                         })}
-                                        </ul>
+                                    </ul>
                                 </section>
                             </fieldset>
-                            <div className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
+                            <address className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
                                 <button
                                     type="reset"
                                     onClick={() => setFilters(defaultFilters)}
@@ -232,7 +218,6 @@ export function CreatedEventsTab() {
                                     Clear
                                 </button>
                                 <span className="flex items-center gap-2">
-                               
                                     <button
                                         type="button"
                                         onClick={() => setIsFilterOpen(false)}
@@ -249,15 +234,13 @@ export function CreatedEventsTab() {
                                     </button>
                                     
                                 </span>
-                            </div>
+                            </address>
                         </form>
                     </section>
-                        </span>
-                    </span>
-                    )}
-                </section>
-                );
-        }
-
+                </aside>
+            )}
+        </form>
+    );
+}
 
 export default CreatedEventsTab;
