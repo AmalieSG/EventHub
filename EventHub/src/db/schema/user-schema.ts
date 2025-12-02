@@ -38,7 +38,6 @@ export const usersRelations = relations(users, ({ many }) => ({
   savedEvents: many(savedEvents),
 }))
 
-// Sessions table for server-side session management
 export const sessions = sqliteTable("sessions", {
   id: text("id")
     .primaryKey()
