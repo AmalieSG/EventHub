@@ -2,10 +2,13 @@ CREATE TABLE `addresses` (
 	`id` text PRIMARY KEY NOT NULL,
 	`label` text,
 	`formatted_address` text NOT NULL,
-	`google_place_id` text,
+	`city` text,
+	`area` text,
+	`country` text,
 	`lat` real,
 	`lng` real,
-	`created_at` integer NOT NULL
+	`created_at` integer NOT NULL,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `event_attendees` (
@@ -30,6 +33,7 @@ CREATE TABLE `events` (
 	`hostId` integer NOT NULL,
 	`category` text NOT NULL,
 	`imageUrl` text NOT NULL,
+	`included_features` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer,
 	`deleted_at` integer,
@@ -66,7 +70,8 @@ CREATE TABLE `users` (
 	`updated_at` integer,
 	`deleted_at` integer,
 	`is_active` integer DEFAULT true NOT NULL,
-	`last_login_at` integer
+	`last_login_at` integer,
+	`bio` text
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_username_unique` ON `users` (`username`);--> statement-breakpoint

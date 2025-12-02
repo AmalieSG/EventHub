@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1764578355223,
-      "tag": "0000_complete_onslaught",
+      "when": 1764701890284,
+      "tag": "0000_cultured_goliath",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "6",
-      "when": 1764594014719,
-      "tag": "0001_sudden_grim_reaper",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1764608508612,
-      "tag": "0002_lovely_toad_men",
+      "when": 1764701989646,
+      "tag": "0001_sudden_blizzard",
       "breakpoints": true
     }
   ]

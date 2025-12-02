@@ -28,17 +28,17 @@ export function ArtistLineup({ artists }: ArtistLineupProps) {
 
                     <article>
                   
-                    <h3 className="text-lg font-bold text-gray-900 leading-tight">{artist.name}</h3>
-                    <p
-                        className={`text-xs font-semibold uppercase tracking-wider ${
-                        artist.role === 'Headliner' ? 'text-indigo-600' : 'text-gray-500'
-                        }`}
-                    >
-                        {artist.role}
-                    </p>
+                        <h3 className="text-lg font-bold text-gray-900 leading-tight">{artist.name}</h3>
+                        <p
+                            className={`text-xs font-semibold uppercase tracking-wider ${
+                            artist.role === 'Headliner' ? 'text-indigo-600' : 'text-gray-500'
+                            }`}
+                        >
+                            {artist.role}
+                        </p>
 
-                 
-                    <p className="text-sm text-gray-600 mt-1">{artist.description}</p>
+                    
+                        <p className="text-sm text-gray-600 mt-1">{artist.description}</p>
                     </article>
                 </li>
                 ))}
