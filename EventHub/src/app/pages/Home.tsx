@@ -137,7 +137,7 @@ export default function Home() {
                     >
                         View All Events
                     </button>
-                </div>
+                </p>
              
                 {loading ? (
                     <SkeletonEventList />

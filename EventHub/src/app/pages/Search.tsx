@@ -106,8 +106,8 @@ export function Search() {
               <span className="font-semibold">"{searchTerm}"</span>
             </p>
           )}
-        </div>
-      </header>
+        </section>
+      </article>
 
       <section className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -160,6 +160,6 @@ export function Search() {
           <EventList events={filteredEvents} />
         )}
       </section>
-    </div>
+    </section>
   );
 }

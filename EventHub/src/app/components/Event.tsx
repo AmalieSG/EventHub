@@ -186,5 +186,3 @@ export function EventDetail({ id }: EventProps) {
         </article>
     )
 }
-
-export default EventDetail;
