@@ -187,7 +187,7 @@ export default function Home() {
                                     
                                     navigate(`/events?${params.toString()}`);
                                 }}
-                                className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
+                                className="flex flex-col items-center p-4 bg-white hover:cursor-pointer border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
                             >
                                 <Icon
                                     className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform"
