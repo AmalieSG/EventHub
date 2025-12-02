@@ -148,10 +148,10 @@ const ArtistLineup: React.FC<ArtistLineupProps> = ({ artists }) => {
                         </figure>
                         
                         <article className="flex-grow">
-                            <header>
+                            <div>
                                 <h3 className="text-xl font-semibold text-gray-900">{artist.name}</h3>
                                 <p className="text-sm font-medium text-indigo-600 mb-1 uppercase tracking-wider">{artist.role}</p>
-                            </header>
+                            </div>
                             <p className="text-gray-600">{artist.description}</p>
                         </article>
                     </li>

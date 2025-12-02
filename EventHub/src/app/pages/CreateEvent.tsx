@@ -56,11 +56,11 @@ export const CreateEvent = () => {
 
       <form action={formAction} className="space-y-8">
         <article className="bg-white shadow sm:rounded-lg p-6">
-          <header>
+          <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-800">
               Basic Information
             </h2>
-          </header>
+          </div>
 
           <section className="space-y-4">
             <section>

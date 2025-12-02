@@ -124,7 +124,7 @@ export function Navigation() {
 
                           <button
                               type="button"
-                              className="relative shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                              className="hover:cursor-pointer relative shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
                               aria-label="View notifications"
                           >
                               <span className="absolute -inset-1.5" />
@@ -134,7 +134,7 @@ export function Navigation() {
 
                           <Menu as="figure" className="relative ml-4 shrink-0">
                               <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                  <span className="absolute -inset-1.5" />
+                                  <span className="hover:cursor-pointer absolute -inset-1.5" />
                                   <span className="sr-only">Open user menu</span>
                                   {isAuthenticated ? (
                                       <img
