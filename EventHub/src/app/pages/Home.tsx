@@ -166,7 +166,7 @@ export default function Home() {
                         No categories available yet.
                     </p>
                 ) : (
-                    <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-7">
                         {categories.map(({ slug, label, Icon, count }) => (
                             <button
                                 key={slug}
