@@ -26,6 +26,6 @@ export const setCommonHeaders =
       // Defines trusted sources for content loading and script execution:
       response.headers.set(
         "Content-Security-Policy",
-        `default-src 'self'; script-src 'self' 'unsafe-eval' 'nonce-${nonce}' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'self'; frame-src 'self' https://challenges.cloudflare.com; object-src 'none'; img-src 'self' https://picsum.photos https://unsplash.com https://images.unsplash.com https://tailwindcss.com; connect-src 'self';`
+        `default-src 'self'; script-src 'self' 'unsafe-eval' 'nonce-${nonce}' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'self'; frame-src 'self' https://challenges.cloudflare.com; object-src 'none'; img-src 'self' https://fastly.picsum.photos https://picsum.photos https://unsplash.com https://images.unsplash.com https://tailwindcss.com; connect-src 'self';`
       );
     };

@@ -41,10 +41,10 @@ export function InterestModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 transition-opacity duration-300">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto transform scale-100 transition-transform duration-300 ease-out">
+    <section className="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 transition-opacity duration-300">
+      <section className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto transform scale-100 transition-transform duration-300 ease-out">
       
-        <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white">
+        <p className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white">
           <h3 className="text-xl font-semibold text-gray-900">
             Select Your Interests
           </h3>
@@ -55,9 +55,9 @@ export function InterestModal({
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
-        </div>
+        </p>
 
-        <div className="p-6 space-y-4">
+        <section className="p-6 space-y-4">
           <p className="text-sm text-gray-600">Click to add or remove interests from your profile.</p>
           <div className="flex flex-wrap gap-3">
             {AVAILABLE_INTERESTS.map((interest) => {
@@ -81,10 +81,10 @@ export function InterestModal({
               );
             })}
           </div>
-        </div>
+        </section>
 
         
-        <div className="p-4 border-t border-gray-200 flex justify-end sticky bottom-0 bg-white">
+        <section className="p-4 border-t border-gray-200 flex justify-end sticky bottom-0 bg-white">
           <button
             type="button"
             className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
@@ -92,10 +92,10 @@ export function InterestModal({
           >
             Done
           </button>
-        </div>
+        </section>
 
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

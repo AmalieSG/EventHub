@@ -157,7 +157,7 @@ export function PastEventsTab() {
             </section>
             
             {isFilterOpen && (
-                <dialog open={isFilterOpen} className="fixed inset-0 z-50 bg-transparent">
+                <section className="fixed inset-0 z-50">
                     <section
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
@@ -240,7 +240,7 @@ export function PastEventsTab() {
                             </section>
                         </article>
                     </section>
-                </dialog>
+                </section>
             )}
         </article>
     );

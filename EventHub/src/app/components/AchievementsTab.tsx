@@ -219,7 +219,7 @@ export function AchievementsTab() {
                     />
                     <section className="absolute inset-0 flex items-center justify-center p-4">
                         <article className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
-                            <header className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <section className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                                 <h4 className="text-base font-semibold text-gray-900">Filter by Status</h4>
                                 <button
                                     onClick={() => setIsFilterOpen(false)}
@@ -227,7 +227,7 @@ export function AchievementsTab() {
                                 >
                                     Close
                                 </button>
-                            </header>
+                            </section>
                             <section className="p-5 space-y-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                                 <nav className="flex flex-wrap gap-2">
