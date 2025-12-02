@@ -65,7 +65,6 @@ const InfoLinkItem: React.FC<{ link: InfoLink }> = ({ link }) => {
     const Icon = link.icon;
     return (
         <a 
-<<<<<<< HEAD
             href={link.href} 
             className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0 group hover:bg-gray-50 transition duration-100 -mx-6 px-6 cursor-pointer"
         >
@@ -83,25 +82,6 @@ const InfoLinkItem: React.FC<{ link: InfoLink }> = ({ link }) => {
                 View
             </span>
         </a>
-=======
-        href={link.href} 
-        className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0 group hover:bg-gray-50 transition duration-100 -mx-6 px-6 cursor-pointer"
-    >
-        <hgroup className="flex items-start gap-4">
-            <Icon className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transition" aria-hidden="true" />
-            <figcaption className="flex flex-col">
-                <span className="text-sm font-medium text-gray-900 group-hover:text-indigo-600">
-                    {link.title}
-                </span>
-                <p className="text-xs text-gray-500 max-w-sm">{link.description}</p>
-            </figcaption>
-        </hgroup>
-        
-        <p className="text-indigo-600 text-sm font-medium ml-4">
-            View
-        </p>
-    </a>
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
     );
 };
 
@@ -112,22 +92,15 @@ export function SupportTab() {
     const appVersion = "1.7.3";
 
     return (
-<<<<<<< HEAD
         <section className="py-8 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
-=======
-        <article className="py-8 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
             <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
                 <section aria-labelledby="support-heading" className="space-y-8">
                     
-                    <hgroup>
-                        <h1 id="support-heading" className="text-2xl font-bold text-gray-900">Support & Information</h1>
-                        <p className="text-sm text-gray-600 max-w-2xl">
-                            Find resources for help, view legal documents, and check the app version.
-                        </p>
-                    </hgroup>
+                    <h1 className="text-2xl font-bold text-gray-900">Support & Information</h1>
+                    <p className="text-sm text-gray-600 max-w-2xl">
+                        Find resources for help, view legal documents, and check the app version.
+                    </p>
 
-<<<<<<< HEAD
                    
                     <article className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
                         <section className="flex items-center gap-3 mb-4 border-b pb-4">
@@ -135,21 +108,9 @@ export function SupportTab() {
                             <h2 className="text-xl font-semibold text-gray-900">Get Help</h2>
                         </section>
                         <ul role="list">
-=======
-                    
-                    <figure className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <figcaption className="flex items-center gap-3 mb-4 border-b pb-4">
-                            <LifebuoyIcon className="w-6 h-6 text-indigo-600" />
-                            <h2 className="text-xl font-semibold text-gray-900">Get Help</h2>
-                        </figcaption>
-                        <menu role="list">
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
                             {supportLinks.map(link => (
-                                <li key={link.id}>
-                                    <InfoLinkItem link={link} />
-                                </li>
+                                <InfoLinkItem key={link.id} link={link} />
                             ))}
-<<<<<<< HEAD
                         </ul>
                     </article>
 
@@ -160,34 +121,13 @@ export function SupportTab() {
                             <h2 className="text-xl font-semibold text-gray-900">Legal</h2>
                         </section>
                         <ul role="list">
-=======
-                        </menu>
-                    </figure>
-
-                    
-                    <figure className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <figcaption className="flex items-center gap-3 mb-4 border-b pb-4">
-                            <DocumentTextIcon className="w-6 h-6 text-indigo-600" />
-                            <h2 className="text-xl font-semibold text-gray-900">Legal</h2>
-                        </figcaption>
-                        <menu role="list">
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
                             {legalLinks.map(link => (
-                                <li key={link.id}>
-                                    <InfoLinkItem link={link} />
-                                </li>
+                                <InfoLinkItem key={link.id} link={link} />
                             ))}
-<<<<<<< HEAD
                         </ul>
                     </article>
                     
                    
-=======
-                        </menu>
-                    </figure>
-                    
-                    
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
                     <p className="pt-4 text-sm text-gray-500 flex justify-between max-w-lg">
                         <span className="font-medium text-gray-700">App Version</span>
                         <span>{appVersion}</span>
@@ -195,10 +135,6 @@ export function SupportTab() {
 
                 </section>
             </section>
-<<<<<<< HEAD
         </section>
-=======
-        </article>
->>>>>>> 3208a5c4e6f84f52e7b55134b4ab881ba8814c1f
     );
 }
