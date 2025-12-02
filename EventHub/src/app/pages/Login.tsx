@@ -146,7 +146,7 @@ export const Login = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{' '}
-          <a href="/registrering" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <a href="/registration" className="font-medium text-indigo-600 hover:text-indigo-500">
             Sign up for free.
           </a>
         </p>
