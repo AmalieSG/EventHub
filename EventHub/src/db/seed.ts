@@ -1,4 +1,3 @@
-// src/db/seed.ts
 import { defineScript } from "rwsdk/worker";
 import { getDb, setupDb } from ".";
 import {
@@ -8,6 +7,7 @@ import {
   savedEvents,
   addresses,
 } from "./schema";
+import { hashPassword } from "@/app/lib/auth/password";
 
 export default defineScript(async ({ env }) => {
   try {
@@ -21,7 +21,8 @@ export default defineScript(async ({ env }) => {
     await db.delete(addresses);
     await db.delete(users);
 
-    const fixedCreatedAt = new Date(1763377533000); // vilkårlig fast dato
+    const fixedCreatedAt = new Date(1763377533000); 
+    const knownPasswordHash = await hashPassword("Test1234");
 
     // ---- Users ----
     const [admin, user1, user2, user3, user4] = await db
@@ -54,7 +55,7 @@ export default defineScript(async ({ env }) => {
           firstName: "Bjørn",
           lastName: "Berg",
           email: "user2@example.com",
-          passwordHash: "hashed_password_here",
+          passwordHash: knownPasswordHash,
           role: "user",
           createdAt: fixedCreatedAt,
           isActive: true,
