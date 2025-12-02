@@ -58,21 +58,21 @@ export const Profile = () => {
     };
 
     return (
-        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10">
-            <div>
-                <ProfileHeader user={user} stats={stats} />
-                <div className="max-w-7xl mx-auto mt-4">
-                    <ProfileNav 
-                        activeTabName={activeTabName} 
-                        setActiveTab={setActiveTab} 
-                    />
-                </div>
-            </div>
-            
-           
-            <div className="mt-6">
-                {renderTabContent()}
-            </div>
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10">
+        <article>
+            <ProfileHeader user={user} stats={stats} />
+            <nav className="max-w-7xl mx-auto mt-4">
+                <ProfileNav 
+                    activeTabName={activeTabName} 
+                    setActiveTab={setActiveTab} 
+                />
+            </nav>
         </article>
-    );
+        
+        <section className="mt-6">
+            {renderTabContent()}
+        </section>
+        
+    </section>
+);
 };

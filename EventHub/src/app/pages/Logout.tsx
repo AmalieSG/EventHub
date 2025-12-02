@@ -31,15 +31,15 @@ export function Logout() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <section className="flex flex-col items-center justify-center min-h-screen">
       {error ? (
-        <div className="text-red-500">
+        <section className="text-red-500">
           <p>{error}</p>
           <p className="text-sm mt-2">Redirecting to login...</p>
-        </div>
+        </section>
       ) : (
         <p className="text-lg">Logging out...</p>
       )}
-    </div>
+    </section>
   );
 }

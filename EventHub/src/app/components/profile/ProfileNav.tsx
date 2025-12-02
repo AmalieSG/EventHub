@@ -20,7 +20,7 @@ interface ProfileNavProps {
 export const ProfileNav: React.FC<ProfileNavProps> = ({ activeTabName, setActiveTab}) => {
   
   return (
-    <div className="bg-white p-2 shadow-md rounded-3xl p-2  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-4">
+    <section className="bg-white p-2 shadow-md rounded-3xl p-2  mx-8 mt-4 mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-4">
 
       <nav className="flex space-x-4 overflow-x-auto">
         {navItems.map((item) => {
@@ -44,6 +44,6 @@ export const ProfileNav: React.FC<ProfileNavProps> = ({ activeTabName, setActive
           );
         })}
       </nav>
-    </div>
+    </section>
   );
 };
