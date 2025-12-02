@@ -156,12 +156,12 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
             <section className="flex-1 flex flex-col justify-between p-4">
                 
              
-                <header className="flex justify-between items-start mb-2">
+                <section className="flex justify-between items-start mb-2">
                     <hgroup>
                         <h2 className="text-xl font-extrabold text-white line-clamp-1 mr-4">{event.title}</h2>
                     </hgroup>
                     <span className="text-xs bg-gray-700 px-10 py-2 bg-opacity-25 font-bold text-gray-200 flex-shrink-0">{event.category}</span>
-                </header>
+                </section>
                 
                
                 <p className="text-gray-400 line-clamp-1 text-sm mb-3">{event.summary}</p>
@@ -185,7 +185,7 @@ export function EventCardList({ event, layout = 'grid', action = 'join' }: Event
                 </section>
 
                 
-                <footer className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">
+                <section className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700/50">
                     <div className="flex items-center gap-3">
                         <span className="text-sm font-medium text-gray-400">Price:</span>
                         <p className="font-extrabold text-xl text-red-500">{formattedPrice}</p>
@@ -211,7 +211,7 @@ ${
                             See details
                         </a>
                     </div>
-                </footer>
+                </section>
             </section>
         </article>
     );

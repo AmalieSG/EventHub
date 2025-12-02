@@ -152,7 +152,7 @@ export function CreatedEventsTab() {
                         onClick={() => setIsFilterOpen(false)}
                         aria-label="Close filter"
                     />
-                    <main className="absolute inset-0 flex items-center justify-center p-4">
+                    <section className="absolute inset-0 flex items-center justify-center p-4">
                         <form className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100">
                             <dl className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                                 <dt className="text-base font-semibold text-gray-900" id="filter-dialog-title">Filters</dt>
@@ -236,7 +236,7 @@ export function CreatedEventsTab() {
                                 </span>
                             </address>
                         </form>
-                    </main>
+                    </section>
                 </aside>
             )}
         </form>

@@ -109,7 +109,7 @@ export default function Home() {
     }
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
                     Discover events in your area
@@ -207,6 +207,6 @@ export default function Home() {
 
 
             <hr className="my-10 border-gray-200" />
-        </main>
+        </section>
     );
 }
