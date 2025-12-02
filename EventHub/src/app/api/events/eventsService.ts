@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ResultHandler } from "@/app/lib/utils/result";
 import { Errors } from "@/app/types/errors";
 import type { Result } from "@/app/types/result";
-import type { EventsRepository, EventWithRelations } from "./eventsRepository";
+import { eventsRepository, type EventsRepository, type EventWithRelations } from "./eventsRepository";
 import { CreateEventSchema, UpdateEventSchema } from "@/app/lib/schema/events";
 
 export interface EventsService {
@@ -164,3 +164,5 @@ export function createEventsService(repo: EventsRepository): EventsService {
     },
   };
 }
+
+//export const eventsService = createEventsService(eventsRepository);

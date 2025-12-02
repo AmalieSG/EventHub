@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ofetch } from "ofetch";
-import { EventList } from "../components/EventList";
+import { EventList } from "../components/cards/EventList";
 import type { EventWithRelations } from "@/app/api/events/eventsRepository";
 import { FaceFrownIcon } from "@heroicons/react/24/outline";
 import { defaultFilters, filterAndSortEvents, FilterState, getAvailableCategories, getAvailableCities } from "@/app/lib/utils/filtering";
@@ -10,6 +10,7 @@ import { FilterBar } from "../components/filter/FilterBar";
 import { ActiveFilters } from "../components/filter/ActiveFilters";
 import { SkeletonEventCard } from "../components/shared/SkeletonEventCard";
 import { filtersToSearchParams, parseFiltersFromSearchParams } from "../lib/utils/filterParams";
+import { EventCardList } from "../components/cards/EventCardList";
 
 type ApiOk<T> = { success: true; data: T };
 type ApiErr = { success: false; error: { code: string; message: string } };
@@ -157,7 +158,7 @@ export function Search() {
             <FaceFrownIcon className="inline w-5 h-5" />
           </p>
         ) : (
-          <EventList events={filteredEvents} />
+          <EventList events={filteredEvents} Card={EventCardList} />
         )}
       </section>
     </section>

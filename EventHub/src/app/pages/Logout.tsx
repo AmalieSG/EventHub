@@ -1,4 +1,3 @@
-// src/app/pages/Logout.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { logout as logoutAction } from "@/app/api/auth/authServerActions";

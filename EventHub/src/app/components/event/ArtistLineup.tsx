@@ -1,4 +1,3 @@
-import React from "react";
 import { SparklesIcon } from '@heroicons/react/24/solid';
 
 export interface Artist {
@@ -11,7 +10,7 @@ interface ArtistLineupProps {
     artists: Artist[];
 }
 
-export default function ArtistLineup({ artists }: ArtistLineupProps) {
+export function ArtistLineup({ artists }: ArtistLineupProps) {
     return (
         <section className="bg-white p-6 rounded-lg shadow-lg mt-8">
             <h2 className="text-2xl p-6 font-bold text-gray-800 exmb-6 flex items-center">
@@ -29,17 +28,17 @@ export default function ArtistLineup({ artists }: ArtistLineupProps) {
 
                     <article>
                   
-                    <h3 className="text-lg font-bold text-gray-900 leading-tight">{artist.name}</h3>
-                    <p
-                        className={`text-xs font-semibold uppercase tracking-wider ${
-                        artist.role === 'Headliner' ? 'text-indigo-600' : 'text-gray-500'
-                        }`}
-                    >
-                        {artist.role}
-                    </p>
+                        <h3 className="text-lg font-bold text-gray-900 leading-tight">{artist.name}</h3>
+                        <p
+                            className={`text-xs font-semibold uppercase tracking-wider ${
+                            artist.role === 'Headliner' ? 'text-indigo-600' : 'text-gray-500'
+                            }`}
+                        >
+                            {artist.role}
+                        </p>
 
-                 
-                    <p className="text-sm text-gray-600 mt-1">{artist.description}</p>
+                    
+                        <p className="text-sm text-gray-600 mt-1">{artist.description}</p>
                     </article>
                 </li>
                 ))}

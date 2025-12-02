@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Switch } from '@headlessui/react';
-import { LockClosedIcon, EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { EyeSlashIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ');
@@ -62,15 +62,15 @@ export function PrivacyTab() {
     
    
     const [privacySettings, setPrivacySettings] = useState<SecuritySetting[]>([
-        { id: 'profile_visibility', title: 'Public Profile Visibility', description: 'Allow anyone to see your profile details and activity.', enabled: true },
-        { id: 'discoverability', title: 'Allow Discovery by Email/Phone', description: 'Allow other users to find you if they have your contact information.', enabled: false },
-        { id: 'activity_sharing', title: 'Share Activity Status', description: 'Let contacts see when you are currently active in the app.', enabled: true },
+        { id: 1, title: 'Public Profile Visibility', description: 'Allow anyone to see your profile details and activity.', enabled: true },
+        { id: 2, title: 'Allow Discovery by Email/Phone', description: 'Allow other users to find you if they have your contact information.', enabled: false },
+        { id: 3, title: 'Share Activity Status', description: 'Let contacts see when you are currently active in the app.', enabled: true },
     ]);
 
     const [securitySettings, setSecuritySettings] = useState<SecuritySetting[]>([
-        { id: '2fa', title: 'Two-Factor Authentication (2FA)', description: 'Add an extra layer of security to your account. (Recommended)', enabled: false },
-        { id: 'login_alerts', title: 'Email Alerts for New Logins', description: 'Receive an email every time your account is logged into from a new device.', enabled: true },
-        { id: 'strong_password', title: 'Require Strong Password', description: 'Enforce strong password rules for all linked accounts.', enabled: true, disabled: true },
+        { id: 1, title: 'Two-Factor Authentication (2FA)', description: 'Add an extra layer of security to your account. (Recommended)', enabled: false },
+        { id: 2, title: 'Email Alerts for New Logins', description: 'Receive an email every time your account is logged into from a new device.', enabled: true },
+        { id: 3, title: 'Require Strong Password', description: 'Enforce strong password rules for all linked accounts.', enabled: true, disabled: true },
     ]);
 
  
@@ -85,7 +85,7 @@ export function PrivacyTab() {
     };
 
     return (
-        <section className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
+        <article className="mx-auto max-w-7xl pt-8 lg:flex lg:gap-x-16 lg:px-8">
             <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
                 <section aria-labelledby="security-heading" className="space-y-8">
                     <h1 className="text-2xl font-bold text-gray-900">Privacy & Security</h1>
@@ -94,11 +94,11 @@ export function PrivacyTab() {
                     </p>
 
                    
-                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <span className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
                             <EyeSlashIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Privacy Controls</h2>
-                        </span>
+                        </div>
                         <ul role="list" className="divide-y divide-gray-100">
                             {privacySettings.map(setting => (
                                 <SecurityToggle 
@@ -108,14 +108,14 @@ export function PrivacyTab() {
                                 />
                             ))}
                         </ul>
-                    </section>
+                    </div>
 
                    
-                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <span className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
                             <ShieldCheckIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Account Security</h2>
-                        </span>
+                        </div>
                         <ul role="list" className="divide-y divide-gray-100">
                             {securitySettings.map(setting => (
                                 <SecurityToggle 
@@ -125,20 +125,20 @@ export function PrivacyTab() {
                                 />
                             ))}
                         </ul>
-                        <span className="mt-4 pt-4 border-t text-right">
+                        <div className="mt-4 pt-4 border-t text-right">
                             <button className="text-sm text-emerald-600 hover:text-indigo-800 font-medium cursor-pointer">
                                 View Connected Devices
                             </button>
-                        </span>
-                    </section>
+                        </div>
+                    </div>
 
                   
-                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
                         <h2 className="text-xl font-semibold text-gray-900 mb-2">Data Management</h2>
                         <p className="text-sm text-gray-500 mb-4">
                             Control and download your account data.
                         </p>
-                        <section className="flex justify-start gap-4">
+                        <div className="flex justify-start gap-4">
                             <button
                                 type="button"
                                 className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150 cursor-pointer"
@@ -151,11 +151,11 @@ export function PrivacyTab() {
                             >
                                 Deactivate Account
                             </button>
-                        </section>
-                    </section>
+                        </div>
+                    </div>
 
                   
-                    <section className="pt-4 flex justify-start">
+                    <footer className="pt-4 flex justify-start">
                         <button
                             type="button"
                             className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
@@ -163,9 +163,9 @@ export function PrivacyTab() {
                         >
                             Save Settings
                         </button>
-                    </section>
+                    </footer>
                 </section>
             </section>
-        </section>
+        </article>
     );
 }

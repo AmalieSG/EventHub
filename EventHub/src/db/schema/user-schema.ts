@@ -30,6 +30,7 @@ export const users = sqliteTable("users", {
     .notNull()
     .default(true),
   lastLoginAt: int("last_login_at", { mode: "timestamp" }),
+  bio: text("bio"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

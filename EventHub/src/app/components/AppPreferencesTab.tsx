@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Sun, Moon, Languages, Volume2 } from 'lucide-react';
 
 export const AppPreferencesTab = () => {

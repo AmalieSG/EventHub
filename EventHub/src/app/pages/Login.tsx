@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { login } from "@/app/api/auth/authServerActions";
@@ -43,7 +43,7 @@ export const Login = () => {
     }
   );
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+    <article className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
       <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
        
         <div className="text-center">
@@ -158,6 +158,6 @@ export const Login = () => {
         <a href="#" className="hover:underline px-2">Term of Service</a>
         <a href="#" className="hover:underline px-2">Help</a>
       </div>
-    </section>
+    </article>
   );
 };

@@ -1,75 +1,177 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { useState, useMemo, useEffect } from 'react';
+import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline'; 
+import { useEventsContext } from '@/app/context/EventsProviderv2';
+import { EventWithRelations } from '@/app/api/events/eventsRepository';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
+import { EventCard } from '../../cards/EventCard';
+import { EventList } from '../../cards/EventList';
+import { EventCardList } from '../../cards/EventCardList';
 
-import { EventList } from './EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
+const MOCK_SAVED_EVENTS: EventWithRelations[] = [
+  {
+    id: "saved-1",
+    title: "Frontend Workshop",
+    description: "Hands-on React and TypeScript workshop.",
+    summary: "Bring your laptop and build a small app.",
+    eventStart: new Date("2025-04-01T18:00:00"),
+    address: {
+      id: "addr-1",
+      formattedAddress:
+        "MESH Youngstorget, Møllergata 6, 0179 Oslo, Norway",
+      label: "Cowork Space, Oslo",
+      city: "Oslo",
+      area: null,
+      country: "Norway",
+      latitude: null,
+      longitude: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any,
+    price: 900,
+    host: {
+      id: 1,
+      username: "user1",
+      firstName: "Anna",
+      lastName: "Andersen",
+      email: "user1@example.com",
+      passwordHash: "",
+      phoneNumber: null,
+      city: "Oslo",
+      country: "Norway",
+      profilePicture: null,
+      role: "user",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+      isActive: 1,
+      lastLoginAt: null,
+      bio: "Tech enthusiast.",
+    } as any,
+    category: "Technology",
+    imageUrl: "https://via.placeholder.com/600x400?text=Frontend+Workshop",
+    includedFeatures: "Workshop materials,Coffee and snacks",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: null,
+    status: "upcoming",
+    addressId: "addr-1",
+    hostId: 1,
+    attendees: [],
+    savedBy: [],
+  } as EventWithRelations,
+  {
+    id: "saved-2",
+    title: "Wine & Cheese Evening",
+    description: "Tasting of selected wines and local cheeses.",
+    summary: "Guided tasting with sommelier.",
+    eventStart: new Date("2025-05-10T19:30:00"),
+    address: {
+      id: "addr-2",
+      formattedAddress:
+        "Vinbaren på Grand, Nedre Ole Bulls plass 1, 5012 Bergen, Norway",
+      label: "Tasting Room, Bergen",
+      city: "Bergen",
+      area: null,
+      country: "Norway",
+      latitude: null,
+      longitude: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as any,
+    price: 650,
+    host: {
+      id: 4,
+      username: "user4",
+      firstName: "David",
+      lastName: "Dahl",
+      email: "user4@example.com",
+      passwordHash: "",
+      phoneNumber: null,
+      city: "Bergen",
+      country: "Norway",
+      profilePicture: null,
+      role: "user",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+      isActive: 1,
+      lastLoginAt: null,
+      bio: "Food and wine lover.",
+    } as any,
+    category: "Food & Drink",
+    imageUrl: "https://via.placeholder.com/600x400?text=Wine+%26+Cheese",
+    includedFeatures: "Wine tasting,Cheese pairing",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: null,
+    status: "upcoming",
+    addressId: "addr-2",
+    hostId: 4,
+    attendees: [],
+    savedBy: [],
+  } as EventWithRelations,
+];
 
+type Filters = {
+  onlineOnly: boolean;
+  cities: string[];
+};
+
+const defaultFilters: Filters = {
+  onlineOnly: false,
+  cities: [],
+};
 
 export function SavedEventsTab() {
-    const { events: allEvents, loading } = useEventsContext(); 
+    const savedEvents = MOCK_SAVED_EVENTS;
     
-    const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isSavedByMe === true);
-    }, [allEvents]); 
- 
-
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
     const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('grid'); 
     
-    const defaultFilters = { onlineOnly: false, cities: [] as string[] };
 
     const handleLayoutToggle = () => {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-
-    if (loading) {
-        return (
-            <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading your events...</p>
-            </section>
-        );
-    }
-
     const availableCities = useMemo(() => {
-        const toCity = (address: string) => {
-            if (!address) return '';
-            if (address.toLowerCase().includes('online')) return 'Online';
-            const [city] = address.split(',');
-            return city.trim();
-        };
         const unique = new Set<string>();
-        myEventsSeed.forEach(e => {
-            const c = toCity(e.address);
+        savedEvents.forEach((e) => {
+            const c = getCity(e);
             if (c) unique.add(c);
         });
-        return Array.from(unique);
-    }, [myEventsSeed]); 
+        return Array.from(unique).sort();
+    }, [savedEvents]); 
 
 
     const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof myEventsSeed[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.address.toLowerCase().includes('online') : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.some(city => event.address.toLowerCase().includes(city.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity;
-        };
-
-        if (!searchQuery) {
-            return myEventsSeed.filter(baseFilter);
-        }
         const query = searchQuery.toLowerCase();
-        return myEventsSeed.filter(event => {
-            const matchesSearch =
-                event.title.toLowerCase().includes(query) ||
-                event.address.toLowerCase().includes(query);
+        if (savedEvents.length === 0) return [];
+
+        return savedEvents.filter((event) => {
+            const addressLabel = getAddressLabel(event).toLowerCase();
+            const cityName = getCity(event).toLowerCase();
+            const isOnline = addressLabel.includes('online');
+
+            const matchesOnline = filters.onlineOnly ? isOnline : true;
+
+            const matchesCities =
+                filters.cities.length > 0
+                    ? filters.cities.some(
+                        (selectedCity) =>
+                            cityName === selectedCity.toLowerCase()        
+                    )
+                : true;
+        
+            const matchesSearch = query
+                ? event.title.toLowerCase().includes(query) ||
+                    addressLabel.includes(query)
+                : true;
             
-            return matchesSearch && baseFilter(event);
+            return matchesOnline && matchesCities && matchesSearch;
         });
-    }, [searchQuery, filters, myEventsSeed]);
+    }, [searchQuery, filters, savedEvents]);
 
     useEffect(() => {
         if (!isFilterOpen) return;
@@ -91,6 +193,9 @@ export function SavedEventsTab() {
                     <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
                         Saved Events
                     </h3>
+                    <p className='text-sm text-gray-500'>
+                        Statick demo
+                    </p>
                 </hgroup>
                 <menu role="list" className="flex w-full sm:w-auto gap-3">
                 
@@ -132,16 +237,24 @@ export function SavedEventsTab() {
 
             <section className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
-                        events={filteredEvents} 
-                        layout={currentLayout} 
-                    />
+                currentLayout === "grid" ? (
+                    // Grid: bare EventCard
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredEvents.map((event) => (
+                        <EventCard key={event.id} event={event} />
+                    ))}
+                    </div>
                 ) : (
-                    <article className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No saved events found.
-                    </article>
+                    // Liste: EventList + EventCardList
+                    <EventList events={filteredEvents} Card={EventCardList} />
+                )
+                ) : (
+                <article className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                    No saved events found.
+                </article>
                 )}
             </section>
+
             
             {isFilterOpen && (
                 <section className="fixed inset-0 z-50" aria-modal="true" role="dialog">

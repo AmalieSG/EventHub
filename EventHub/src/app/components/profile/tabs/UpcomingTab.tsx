@@ -1,8 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
-import { EventList } from './EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
-import{FilterBar, FilterState, defaultFilters} from './FilterBar';
+import { useEventsContext } from '@/app/context/EventsProviderv2';
+import { defaultFilters, FilterBar, FilterState } from '@/app/components/FilterBar';
+import { EventList } from '@/app/components/cards/EventList';
+import { EventCard } from '@/app/components/cards/EventCard';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
 
 export function UpcomingTab() {
     const { events: allEvents, loading } = useEventsContext(); 
@@ -16,70 +18,82 @@ export function UpcomingTab() {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-    if (loading) {
-        return (
-            <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading upcoming events...</p>
-            </section>
-        );
-    }
-    
-    const toCity = (location: string) => {
-        if (!location) return '';
-        if (location.toLowerCase().includes('online')) return 'Online';
-        const [city] = location.split(',');
-        return city.trim();
-    };
-
     const handleApplyFilters = (filters: FilterState) => {
         setActiveFilters(filters);
     };
 
+    if (loading) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10">Loading upcoming events...</p>
+            </article>
+        );
+    }
+    
+
     const filteredEvents = useMemo(() => {
-    if (allEvents.length === 0) return [];
+        if (allEvents.length === 0) return [];
+        
+        const now = new Date();
+        const q = searchQuery.trim().toLowerCase();
 
-    return allEvents.filter(event => {
-        // Compute derived properties from EventWithRelations
-        const isPast = new Date(event.eventStart) < new Date();
-        const isOnline = event.address?.toLowerCase().includes('online') || false;
-        const city = event.address?.split(',')[0]?.trim() || '';
+        return allEvents.filter((event) => {
+        
+            const raw =
+            event.eventStart instanceof Date
+            ? event.eventStart
+            : event.eventStart
+            ? new Date(event.eventStart)
+            : null;
 
-        if (isPast) return false;
+            if (!raw || isNaN(raw.getTime())) return false;
+            const isPast = raw < now;
+            if (isPast) return false;
 
-        const matchesOnline = activeFilters.onlineOnly ? isOnline : true;
+            const addressLabel = getAddressLabel(event).toLowerCase();
+            const cityName = getCity(event);
+            const cityLower = cityName.toLowerCase();
+            const isOnline = addressLabel.includes("online");
 
-        const matchesCity = activeFilters.cities.length > 0
-            ? activeFilters.cities.some((selectedCity: string) => {
-                return city.toLowerCase() === selectedCity.toLowerCase(); 
-            })
+            const matchesOnline = activeFilters.onlineOnly ? isOnline : true;
+
+            const matchesCity =
+                activeFilters.cities.length > 0
+                ? activeFilters.cities.some(
+                    (selectedCity) =>
+                        cityLower === selectedCity.toLowerCase()
+                    )
+                : true;
+
+            const matchesCategory =
+                activeFilters.categories.length > 0
+                ? activeFilters.categories.some(
+                    (selectedCategory) =>
+                        event.category?.toLowerCase() ===
+                        selectedCategory.toLowerCase()
+                )
             : true;
 
-        const matchesCategory = activeFilters.categories.length > 0
-            ? activeFilters.categories.some((selectedCategory: string) => {
-                return event.category?.toLowerCase() === selectedCategory.toLowerCase();
-            })
-            : true;
+            const matchesSearch = q
+                ? event.title.toLowerCase().includes(q) ||
+                addressLabel.includes(q)
+                : true;
 
-        const matchesSearch = searchQuery 
-            ? event.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              event.address?.toLowerCase().includes(searchQuery.toLowerCase())
-            : true;
 
-        return matchesOnline && matchesCity && matchesCategory && matchesSearch;
-    });
-}, [searchQuery, activeFilters, allEvents]);
-
+            return matchesOnline && matchesCity && matchesCategory && matchesSearch;
+        });
+    }, [searchQuery, activeFilters, allEvents]);
+    
     return (
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+        <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 
-            <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 flex-shrink-0">
                     Upcoming Events
                 </h3>
-
-                <menu className="flex w-full sm:w-auto gap-3">
+                <div className="flex w-full sm:w-auto gap-3">
                     
-                    <form role="search" className="relative flex-grow sm:flex-grow-0">
+                    <div className="relative flex-grow sm:flex-grow-0">
                         <input
                             type="text"
                             placeholder="Search events ..."
@@ -88,7 +102,7 @@ export function UpcomingTab() {
                             className="w-full sm:w-80 pl-10 pr-4 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm focus:ring-red-500 focus:border-red-500"
                         />
                         <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    </form>
+                    </div>
                 
                     <button
                         onClick={handleLayoutToggle}
@@ -110,22 +124,21 @@ export function UpcomingTab() {
                         <FunnelIcon className="h-4 w-4" />
                         Filter
                     </button>
-                </menu>
-            </section>
+                </div>
+            </div>
 
-            <section className="mb-20">
+            <div className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
+                    <EventList
                     events={filteredEvents}  
-                    layout={currentLayout} 
-                    action="join" 
+                    Card={EventCard} 
                     />
                 ) : (
-                    <aside className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                    <div className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
                         No upcoming events match your search criteria.
-                    </aside>
+                    </div>
                 )}
-            </section>
+            </div>
             
             <FilterBar 
                 events={allEvents} 
@@ -134,6 +147,6 @@ export function UpcomingTab() {
                 isFilterOpen={isFilterOpen}
                 setIsFilterOpen={setIsFilterOpen}
             />
-        </section>
+        </article>
     );
 }

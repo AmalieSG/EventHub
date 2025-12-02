@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchAllEvents } from "../api/events/eventsService"
+import { fetchAllEvents } from "../api/events/eventsServicev1"
 import { Event } from "../types/event"
 
 export function useEvents() {

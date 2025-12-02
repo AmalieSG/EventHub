@@ -51,15 +51,15 @@ const NotificationToggle: React.FC<NotificationToggleProps> = ({ setting, onTogg
 export function NotificationsTab() {
    
     const [emailSettings, setEmailSettings] = useState<NotificationSetting[]>([
-        { id: 'event_updates_email', title: 'Event Updates', description: 'Get notifications when events you are interested in are updated.', enabled: true },
-        { id: 'new_matches_email', title: 'New Matches', description: 'Be notified when new people match your interests in your area.', enabled: false },
-        { id: 'inactivity_reminders_email', title: 'Inactivity Reminders', description: 'Occasional reminders to check out new events.', enabled: true },
+        { id: 1, title: 'Event Updates', description: 'Get notifications when events you are interested in are updated.', enabled: true },
+        { id: 2, title: 'New Matches', description: 'Be notified when new people match your interests in your area.', enabled: false },
+        { id: 3, title: 'Inactivity Reminders', description: 'Occasional reminders to check out new events.', enabled: true },
     ]);
 
     const [pushSettings, setPushSettings] = useState<NotificationSetting[]>([
-        { id: 'messages_push', title: 'Direct Messages', description: 'Receive push notifications for new messages.', enabled: true },
-        { id: 'rsvp_status_push', title: 'RSVP Status Changes', description: 'Updates on your reservation status for booked events.', enabled: true },
-        { id: 'recommendations_push', title: 'Personalized Recommendations', description: 'Alerts for recommended events based on your activity.', enabled: false },
+        { id: 1, title: 'Direct Messages', description: 'Receive push notifications for new messages.', enabled: true },
+        { id: 2, title: 'RSVP Status Changes', description: 'Updates on your reservation status for booked events.', enabled: true },
+        { id: 3, title: 'Personalized Recommendations', description: 'Alerts for recommended events based on your activity.', enabled: false },
     ]);
     const handleToggle = (categoryId: 'email' | 'push', id: number, enabled: boolean) => {
         const setter = categoryId === 'email' ? setEmailSettings : setPushSettings;

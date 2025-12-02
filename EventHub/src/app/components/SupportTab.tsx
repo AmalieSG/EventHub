@@ -14,21 +14,21 @@ interface InfoLink {
 
 const supportLinks: InfoLink[] = [
     { 
-        id: 'help_center', 
+        id: 1, 
         title: 'Help Center & FAQ', 
         description: 'Find answers to common questions and tutorials on using the app.', 
         icon: LifebuoyIcon, 
         href: '/support/help-center' 
     },
     { 
-        id: 'contact_support', 
+        id: 2, 
         title: 'Contact Support Team', 
         description: 'Get in touch with a support agent for personalized assistance.', 
         icon: InformationCircleIcon, 
         href: '/support/contact' 
     },
     { 
-        id: 'report_bug', 
+        id: 3, 
         title: 'Report a Bug or Issue', 
         description: 'Help us improve by reporting any technical problems you encounter.', 
         icon: BugAntIcon, 
@@ -38,21 +38,21 @@ const supportLinks: InfoLink[] = [
 
 const legalLinks: InfoLink[] = [
     { 
-        id: 'terms', 
+        id: 1, 
         title: 'Terms of Service', 
         description: 'The legal agreement governing your use of our service.', 
         icon: DocumentTextIcon, 
         href: '/legal/terms' 
     },
     { 
-        id: 'privacy_policy', 
+        id: 2, 
         title: 'Privacy Policy', 
         description: 'Learn how we collect, use, and protect your personal data.', 
         icon: DocumentTextIcon, 
         href: '/legal/privacy' 
     },
     { 
-        id: 'license', 
+        id: 3, 
         title: 'Software Licenses', 
         description: 'Details on the open source and third-party software used.', 
         icon: DocumentTextIcon, 

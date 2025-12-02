@@ -1,12 +1,7 @@
 'use client';
-import React, { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 import { register } from "@/app/api/auth/authServerActions";
 import { useFormStatus } from "react-dom";
-
-type ApiResponse = {
-  message?: string;
-  error?: string;
-};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -44,9 +39,9 @@ export const Registration = () => {
   );
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+    <article className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
      
-      <article className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
+      <section className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
       
         <div className="text-center">
           <p className="text-sm text-gray-600">Join our community and discover amazing events</p>
@@ -203,7 +198,7 @@ export const Registration = () => {
             Sign In
           </a>
         </p>
-      </article>
-    </section>
+      </section>
+    </article>
   );
 };

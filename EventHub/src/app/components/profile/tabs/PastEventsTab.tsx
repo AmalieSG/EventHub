@@ -1,68 +1,86 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, Bars3Icon, Squares2X2Icon } from '@heroicons/react/24/outline';
-import { EventList } from './EventList'; 
-import { useEventsContext } from "../context/EventsProvider";
+import { EventList } from '../../cards/EventList'; 
+import { EventCard } from '../../cards/EventCard';
+import { useEventsContext } from '@/app/context/EventsProviderv2';
+import { EventWithRelations } from '@/app/api/events/eventsRepository';
+import { getAddressLabel, getCity } from '@/app/lib/utils/eventView';
+import { EventCardList } from '../../cards/EventCardList';
+
+type Filters = {
+    onlineOnly: boolean;
+    cities: string[];
+};
+
+const defaultFilters: Filters = {
+    onlineOnly: false,
+    cities: []
+};
 
 export function PastEventsTab() {
     const { events: allEvents, loading } = useEventsContext(); 
     
-    const myEventsSeed = useMemo(() => {
-        return allEvents.filter(event => event.isPast === true);
-    }, [allEvents]); 
-
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ onlineOnly: false, cities: [] as string[] });
     const [currentLayout, setCurrentLayout] = useState<'grid' | 'list'>('list'); 
-    const defaultFilters = { onlineOnly: false, cities: [] as string[] };
-
+    
     const handleLayoutToggle = () => {
         setCurrentLayout(prevLayout => (prevLayout === 'grid' ? 'list' : 'grid'));
     };
 
-    if (loading) {
-        return (
-            <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
-                <p className="text-center py-10">Loading your events...</p>
-            </section>
-        );
-    }
+    const pastEvents = useMemo<EventWithRelations[]>(() => {
+        const now = new Date();
+
+        return allEvents.filter(event => {
+            const raw = 
+                event.eventStart instanceof Date
+                    ? event.eventStart
+                    : event.eventStart
+                    ? new Date(event.eventStart)
+                    : null
+            
+            if (!raw || isNaN(raw.getTime())) return false; // <- Forslag fra Github Copilot
+            return raw < now;
+        })
+    }, [allEvents]);
 
     const availableCities = useMemo(() => {
-        const toCity = (address: string) => {
-            if (!address) return '';
-            if (address.toLowerCase().includes('online')) return 'Online';
-            const [city] = address.split(',');
-            return city.trim();
-        };
         const unique = new Set<string>();
-        myEventsSeed.forEach(e => {
-            const c = toCity(e.address);
+        pastEvents.forEach(e => {
+            const c = getCity(e);
             if (c) unique.add(c);
         });
-        return Array.from(unique);
-    }, [myEventsSeed]); 
+        return Array.from(unique).sort();
+    }, [pastEvents]); 
 
-    const filteredEvents = useMemo(() => {
-        const baseFilter = (event: typeof myEventsSeed[number]) => {
-            const matchesOnline = filters.onlineOnly ? event.address.toLowerCase().includes('online') : true;
-            const matchesCity = filters.cities.length > 0
-                ? filters.cities.some(city => event.address.toLowerCase().includes(city.toLowerCase()))
-                : true;
-            return matchesOnline && matchesCity;
-        };
-
-        if (!searchQuery) {
-            return myEventsSeed.filter(baseFilter);
-        }
+    const filteredEvents = useMemo(() => {    
         const query = searchQuery.toLowerCase();
-        return myEventsSeed.filter(event => {
-            const matchesSearch =
-                event.title.toLowerCase().includes(query) ||
-                event.address.toLowerCase().includes(query);
-            return matchesSearch && baseFilter(event);
+        if (pastEvents.length === 0) return [];
+
+        return pastEvents.filter(event => {
+            const addressLabel = getAddressLabel(event).toLowerCase();
+            const cityName = getCity(event)
+            const cityLower = cityName.toLowerCase();
+            const isOnline = addressLabel === 'online';
+
+            const matchesOnline = filters.onlineOnly ? isOnline : true;
+
+            const matchesCities =
+                filters.cities.length > 0
+                    ? filters.cities.some(
+                        (city) => 
+                            cityLower === city.toLowerCase()
+                    )
+                    : true;
+            const matchesSearch = query
+                ? event.title.toLowerCase().includes(query) ||
+                addressLabel.includes(query)
+                : true;
+
+            return matchesOnline && matchesCities && matchesSearch;
         });
-    }, [searchQuery, filters, myEventsSeed]);
+    }, [searchQuery, filters, pastEvents]);
 
     useEffect(() => {
         if (!isFilterOpen) return;
@@ -74,6 +92,14 @@ export function PastEventsTab() {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isFilterOpen]);
+
+    if (loading) {
+        return (
+            <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+                <p className="text-center py-10">Loading your events...</p>
+            </article>
+        );
+    }
 
     return (
         <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
@@ -114,20 +140,24 @@ export function PastEventsTab() {
 
             <section className="mb-20">
                 {filteredEvents.length > 0 ? (
-                    <EventList 
-                        events={filteredEvents} 
-                        layout={currentLayout} 
-                        action="ended"
-                    />
+                currentLayout === "grid" ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredEvents.map((event) => (
+                            <EventCard key={event.id} event={event} />
+                        ))}
+                    </div>
                 ) : (
-                    <figure className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
-                        No past events found matching your criteria.
-                    </figure>
+                    <EventList events={filteredEvents} Card={EventCardList} />
+                )
+                ) : (
+                <figure className="text-center p-10 bg-white rounded-xl shadow-md text-gray-500">
+                    No past events found matching your criteria.
+                </figure>
                 )}
             </section>
             
             {isFilterOpen && (
-                <section className="fixed inset-0 z-50">
+                <dialog open={isFilterOpen} className="fixed inset-0 z-50 bg-transparent">
                     <section
                         className="absolute inset-0 bg-black/40"
                         onClick={() => setIsFilterOpen(false)}
@@ -210,7 +240,7 @@ export function PastEventsTab() {
                             </section>
                         </article>
                     </section>
-                </section>
+                </dialog>
             )}
         </article>
     );

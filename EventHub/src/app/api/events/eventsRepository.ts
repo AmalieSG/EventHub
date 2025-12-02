@@ -1,14 +1,15 @@
 import { eq } from "drizzle-orm";
 import type { DB } from "@/db";
-import { CreateEvent, eventAttendees, events, UpdateEvent, users } from "@/db/schema";
-import type { Event, EventAttendee, User } from "@/db/schema";
+import { addresses, CreateEvent, eventAttendees, events, UpdateEvent, users } from "@/db/schema";
+import type { Address, Event, EventAttendee, User } from "@/db/schema";
 import { executeDbOperation } from "@/app/lib/db/operations";
 import { getDb } from "@/db";
 import type { Result } from "@/app/types/result";
 
 export interface EventWithRelations extends Event {
   attendees: EventAttendee[];
-  host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture"> | null;
+  host: Pick<User, "id" | "firstName" | "lastName" | "email" | "profilePicture" | "bio"> | null;
+  address?: Address | null;
 }
 
 export interface EventsRepository {
@@ -28,16 +29,19 @@ export function createEventsRepository(db: DB): EventsRepository {
           event: events, 
           attendee: eventAttendees,
           host: users,
+          address: addresses,
         })
         .from(events)
         .leftJoin(eventAttendees, eq(eventAttendees.eventId, events.id))
         .leftJoin(users, eq(users.id, events.hostId))
+        .leftJoin(addresses, eq(addresses.id, events.addressId))
         .orderBy(events.eventStart);
 
       const map = rows.reduce<Record<string, EventWithRelations>>((acc, row) => {
         const ev = row.event as Event;
         const attendee = row.attendee as EventAttendee | null;
         const hostRow = row.host as User | null;
+        const addressRow = row.address as Address | null;
 
         if (!acc[ev.id]) {
           acc[ev.id] = { 
@@ -50,8 +54,10 @@ export function createEventsRepository(db: DB): EventsRepository {
                   lastName: hostRow.lastName,
                   email: hostRow.email,
                   profilePicture: hostRow.profilePicture,
+                  bio: hostRow.bio,
                 }
               : null,
+            address: addressRow ?? null,
           };
         }
         if (attendee) acc[ev.id].attendees.push(attendee);
@@ -63,7 +69,12 @@ export function createEventsRepository(db: DB): EventsRepository {
             lastName: hostRow.lastName,
             email: hostRow.email,
             profilePicture: hostRow.profilePicture,
+            bio: hostRow.bio,
           };
+        }
+
+        if (!acc[ev.id].address && addressRow) {
+          acc[ev.id].address = addressRow;
         }
 
         return acc;
@@ -80,6 +91,7 @@ export function createEventsRepository(db: DB): EventsRepository {
           with: { 
             attendees: true,
             host: true,
+            address: true,
           },
         });
 
@@ -95,8 +107,10 @@ export function createEventsRepository(db: DB): EventsRepository {
                 lastName: row.host.lastName,
                 email: row.host.email,
                 profilePicture: row.host.profilePicture,
+                bio: row.host.bio,
               }
             : null,
+          address: row.address ?? null,
         }
         
         return full ?? null;
@@ -112,11 +126,13 @@ export function createEventsRepository(db: DB): EventsRepository {
           description: data.description,
           summary: data.summary,
           eventStart: data.eventStart,
-          address: data.address,
+          //address: data.address,
+          addressId: data.addressId,
           price: data.price,
           hostId: data.hostId,
           category: data.category,
           imageUrl: data.imageUrl,
+          includedFeatures: data.includedFeatures,
           status: data.status ?? "upcoming",
         })
         .returning();
@@ -134,10 +150,12 @@ export function createEventsRepository(db: DB): EventsRepository {
             ...(data.description !== undefined && { description: data.description }),
             ...(data.summary !== undefined && { summary: data.summary }),
             ...(data.eventStart !== undefined && { eventStart: data.eventStart }),
-            ...(data.address !== undefined && { address: data.address }),
+            //...(data.address !== undefined && { address: data.address }),
+            ...(data.addressId !== undefined && { addressId: data.addressId }),
             ...(data.price !== undefined && { price: data.price }),
             ...(data.category !== undefined && { category: data.category }),
             ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),
+            ...(data.includedFeatures !== undefined && { includedFeatures: data.includedFeatures }),
             ...(data.status !== undefined && { status: data.status }),
             ...(data.hostId !== undefined && { hostId: data.hostId }),
           })
@@ -162,3 +180,4 @@ export function createEventsRepository(db: DB): EventsRepository {
   };
 }
 
+//export const eventsRepository = createEventsRepository(await getDb());

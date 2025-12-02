@@ -1,8 +1,42 @@
 import { MapPinIcon, CalendarIcon, PencilIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { useAuth } from '@/app/hooks/useAuth';
+import { SafeUser } from '@/db/schema';
 
-export function ProfileHeader() {
-  const {user} = useAuth();
+interface ProfileHeaderProps {
+  user: SafeUser | null;
+  stats?: {
+    eventsAttended: number;
+    eventsCreated: number;
+    upcomingEvents: number;
+  }
+}
+
+export function ProfileHeader({user, stats} : ProfileHeaderProps) {
+  const fullName = `${user?.firstName} ${user?.lastName}`;
+  const displayName =
+    user?.username?.trim() && user.username !== fullName
+      ? user.username
+      : fullName;
+  const cityCountry = 
+  [
+    user?.city, 
+    user?.country
+  ]
+  .filter(Boolean)
+  .join(', ') ??
+  "Location not set";
+  const joinedDateLabel = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'short',
+      })
+    : '-';
+  const bio = 
+      user?.bio?.trim() ??
+      'This user has not added a bio yet.';
+  const profilePicture = 
+      user?.profilePicture ??
+      'https://www.unspash.com/collections/220339/portrait-placeholder';
+
   return (
         <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-6 sm:my-8 lg:my-10 font-sans">
             <section className="bg-gray-800 p-4 sm:p-6 rounded-xl shadow-2xl mb-6 border border-gray-700">
@@ -15,17 +49,17 @@ export function ProfileHeader() {
                             alt="Aaron Warner profile"
                         />
                         <figcaption>
-                            <h2 className="mb-2 text-lg sm:text-xl font-semibold text-white">{user?.firstName} {user?.lastName} </h2>
-                            <p className="mb-2 text-gray-400 text-sm sm:text-base ml-4 ">Full-stack developer passionate about creating amazing experiences</p>
+                            <h2 className="mb-2 text-lg sm:text-xl font-semibold text-white">{displayName} </h2>
+                            <p className="mb-2 text-gray-400 text-sm sm:text-base ml-4 ">{bio}</p>
                             
                             <section className="ml-4 flex flex-col gap-2 md:flex-row md:gap-10 items-start md:items-center text-gray-400 text-sm sm:text-base">
                                 <figure className="flex items-center gap-1">
                                     <MapPinIcon className="w-4 h-4 text-gray-500" />
-                                    <p>San Francisco, CA</p>
+                                    <p>{cityCountry}</p>
                                 </figure>
                                 <figure className="flex items-center gap-1">
                                     <CalendarIcon className="w-4 h-4 text-gray-500" />
-                                    <p>Joined March 2023</p>
+                                    <p>Joined {joinedDateLabel}</p>
                                 </figure>
                             </section>
                         </figcaption>
@@ -42,15 +76,15 @@ export function ProfileHeader() {
                 
                 <menu role="list" className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-t border-gray-700 pt-4 mt-4">
                     <li>
-                        <p className="font-semibold text-base sm:text-lg text-white">47</p>
+                        <p className="font-semibold text-base sm:text-lg text-white">{stats?.eventsAttended ?? '-'}</p>
                         <p className="text-gray-400 text-xs sm:text-sm">Events Attended</p>
                     </li>
                     <li>
-                        <p className="font-semibold text-base sm:text-lg text-white">12</p>
+                        <p className="font-semibold text-base sm:text-lg text-white">{stats?.eventsCreated ?? '-'}</p>
                         <p className="text-gray-400 text-xs sm:text-sm">Events Created</p>
                     </li>
                     <li>
-                        <p className="font-semibold text-base sm:text-lg text-white">5</p>
+                        <p className="font-semibold text-base sm:text-lg text-white">{stats?.upcomingEvents ?? '-'}</p>
                         <p className="text-gray-400 text-xs sm:text-sm">Upcoming Events</p>
                     </li>
                     <li>
