@@ -11,7 +11,7 @@ export type ParsedFiltersResult = {
 export function parseFiltersFromSearchParams(
   searchParams: URLSearchParams
 ): ParsedFiltersResult {
-  const search = searchParams.get("q") ?? "";
+  const search = searchParams.get("q") ?? searchParams.get("query") ?? "";
   const rawFilters = searchParams.get("filters") ?? "";
 
   const tokens = rawFilters
