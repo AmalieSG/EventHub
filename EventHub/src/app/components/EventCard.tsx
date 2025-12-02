@@ -26,8 +26,8 @@ export default function EventCard({ event }: EventCardProps) {
     };
 
     return (
-       <main className="rounded-xl bg-gray-700 border border-gray-600 overflow-hidden transition duration-300 ease-in-out hover:shadow-2xl hover:border-red-600">
-            <section className="relative h-48 w-full">
+       <section className="rounded-xl bg-gray-700 border border-gray-600 overflow-hidden transition duration-300 ease-in-out hover:shadow-2xl hover:border-red-600">
+            <figure className="relative h-48 w-full">
                 <img
                     src={event.imageUrl}
                     alt={`Image of ${event.title}`}
@@ -52,11 +52,11 @@ export default function EventCard({ event }: EventCardProps) {
                         <HeartIconOutline className="h-6 w-6" />
                     )}
                 </button>
-            </section>
+            </figure>
 
             <section className="px-5 py-5 ">
 
-                <div className="flex items-center justify-between mb-3">
+                <section className="flex items-center justify-between mb-3">
                     <span className='text-xs bg-red-600 px-3 py-1 rounded-full font-bold text-white'>
                         {event.category}
                     </span>
@@ -67,33 +67,33 @@ export default function EventCard({ event }: EventCardProps) {
                             day: "numeric",
                         })}
                     </time>
-                </div>
+                </section>
 
                 <h3 className="text-2xl font-extrabold leading-snug text-white line-clamp-2 mb-3 max-h-14 overflow-hidden">
                     {event.title}
                 </h3>
 
-                <div className="flex flex-col space-y-2 text-sm text-gray-400">
-                    <div className="flex items-center">
+                <ul className="flex flex-col space-y-2 text-sm text-gray-400">
+                    <li className="flex items-center">
                         <span className="mr-2 text-red-400">📍</span>
                         <span className='line-clamp-1'>{event.location}</span>
-                    </div>
-                    <div className="flex items-center">
+                    </li>
+                    <li className="flex items-center">
                         <span className="mr-2 text-red-400">⏰</span>
                         <span>{event.time}</span>
-                    </div>
-                </div>
+                    </li>
+                </ul>
 
-                <div className="my-5 border-t border-gray-700 "></div>
+                <hr className="my-5 border-t border-gray-700 "/>
 
-                <div className="flex justify-between items-center mb-5">
+                <p className="flex justify-between items-center mb-5">
                     <span className="text-sm font-medium text-gray-400">
                         Price:
                     </span>
-                    <p className="text-2xl font-extrabold text-red-500 ">
+                    <span className="text-2xl font-extrabold text-red-500 ">
                         {displayPrice ? `${price} $` : 'Free'}
-                    </p>
-                </div>
+                    </span>
+                </p>
 
                 <a
                     href="/events/1"
@@ -103,6 +103,6 @@ export default function EventCard({ event }: EventCardProps) {
                 </a>
 
             </section>
-        </main>
+        </section>
     );
 }

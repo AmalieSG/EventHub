@@ -68,15 +68,15 @@ const InfoLinkItem: React.FC<{ link: InfoLink }> = ({ link }) => {
             href={link.href} 
             className="flex items-center justify-between py-4 border-b border-gray-50 last:border-b-0 group hover:bg-gray-50 transition duration-100 -mx-6 px-6 cursor-pointer"
         >
-            <div className="flex items-start gap-4">
+            <span className="flex items-start gap-4">
                 <Icon className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transition" aria-hidden="true" />
-                <div className="flex flex-col">
+                <p className="flex flex-col">
                     <span className="text-sm font-medium text-gray-900 group-hover:text-indigo-600">
                         {link.title}
                     </span>
                     <span className="text-xs text-gray-500 max-w-sm">{link.description}</span>
-                </div>
-            </div>
+                </p>
+            </span>
            
             <span className="text-indigo-600 text-sm font-medium ml-4">
                 View
@@ -92,7 +92,7 @@ export function SupportTab() {
     const appVersion = "1.7.3";
 
     return (
-        <main className="py-8 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
+        <section className="py-8 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
             <section className="px-4 py-4 sm:px-6 lg:flex-auto lg:px-0">
                 <section aria-labelledby="support-heading" className="space-y-8">
                     
@@ -102,39 +102,39 @@ export function SupportTab() {
                     </p>
 
                    
-                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <article className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <section className="flex items-center gap-3 mb-4 border-b pb-4">
                             <LifebuoyIcon className="w-6 h-6 text-indigo-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Get Help</h2>
-                        </div>
+                        </section>
                         <ul role="list">
                             {supportLinks.map(link => (
                                 <InfoLinkItem key={link.id} link={link} />
                             ))}
                         </ul>
-                    </div>
+                    </article>
 
                     
-                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <article className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <section className="flex items-center gap-3 mb-4 border-b pb-4">
                             <DocumentTextIcon className="w-6 h-6 text-indigo-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Legal</h2>
-                        </div>
+                        </section>
                         <ul role="list">
                             {legalLinks.map(link => (
                                 <InfoLinkItem key={link.id} link={link} />
                             ))}
                         </ul>
-                    </div>
+                    </article>
                     
                    
-                    <div className="pt-4 text-sm text-gray-500 flex justify-between max-w-lg">
+                    <p className="pt-4 text-sm text-gray-500 flex justify-between max-w-lg">
                         <span className="font-medium text-gray-700">App Version</span>
                         <span>{appVersion}</span>
-                    </div>
+                    </p>
 
                 </section>
             </section>
-        </main>
+        </section>
     );
 }
