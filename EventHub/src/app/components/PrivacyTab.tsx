@@ -94,11 +94,11 @@ export function PrivacyTab() {
                     </p>
 
                    
-                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <span className="flex items-center gap-3 mb-4 border-b pb-4">
                             <EyeSlashIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Privacy Controls</h2>
-                        </div>
+                        </span>
                         <ul role="list" className="divide-y divide-gray-100">
                             {privacySettings.map(setting => (
                                 <SecurityToggle 
@@ -108,14 +108,14 @@ export function PrivacyTab() {
                                 />
                             ))}
                         </ul>
-                    </div>
+                    </section>
 
                    
-                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                        <div className="flex items-center gap-3 mb-4 border-b pb-4">
+                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                        <span className="flex items-center gap-3 mb-4 border-b pb-4">
                             <ShieldCheckIcon className="w-6 h-6 text-emerald-600" />
                             <h2 className="text-xl font-semibold text-gray-900">Account Security</h2>
-                        </div>
+                        </span>
                         <ul role="list" className="divide-y divide-gray-100">
                             {securitySettings.map(setting => (
                                 <SecurityToggle 
@@ -125,20 +125,20 @@ export function PrivacyTab() {
                                 />
                             ))}
                         </ul>
-                        <div className="mt-4 pt-4 border-t text-right">
+                        <span className="mt-4 pt-4 border-t text-right">
                             <button className="text-sm text-emerald-600 hover:text-indigo-800 font-medium cursor-pointer">
                                 View Connected Devices
                             </button>
-                        </div>
-                    </div>
+                        </span>
+                    </section>
 
                   
-                    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
+                    <section className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
                         <h2 className="text-xl font-semibold text-gray-900 mb-2">Data Management</h2>
                         <p className="text-sm text-gray-500 mb-4">
                             Control and download your account data.
                         </p>
-                        <div className="flex justify-start gap-4">
+                        <section className="flex justify-start gap-4">
                             <button
                                 type="button"
                                 className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition duration-150 cursor-pointer"
@@ -151,11 +151,11 @@ export function PrivacyTab() {
                             >
                                 Deactivate Account
                             </button>
-                        </div>
-                    </div>
+                        </section>
+                    </section>
 
                   
-                    <footer className="pt-4 flex justify-start">
+                    <section className="pt-4 flex justify-start">
                         <button
                             type="button"
                             className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition duration-150 shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/50 cursor-pointer"
@@ -163,7 +163,7 @@ export function PrivacyTab() {
                         >
                             Save Settings
                         </button>
-                    </footer>
+                    </section>
                 </section>
             </section>
         </article>

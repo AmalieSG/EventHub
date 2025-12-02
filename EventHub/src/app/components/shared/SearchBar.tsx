@@ -47,7 +47,7 @@ export function SearchBar({ value, onChange, onSubmit }: SearchBarProps) {
 
       <button
         type="submit"
-        className="inline-flex items-center justify-center rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 transition"
+        className="inline-flex items-center justify-center rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 transition hover:cursor-pointer"
         onClick={()=>navigate(`/events?q=${encodeURIComponent(value)}`)} // <- opprettet med github-copilot
       >
         Search

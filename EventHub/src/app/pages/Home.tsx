@@ -109,7 +109,7 @@ export default function Home() {
     }
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 font-sans">
             <section className="text-center mb-16">
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
                     Discover events in your area
@@ -129,7 +129,7 @@ export default function Home() {
             </section>
 
             <section className="mb-16">
-                <p className="flex justify-between px-4 items-center mb-4">
+                <article className="flex justify-between px-4 items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
                     <button 
                         onClick={() => navigate('/events')}
@@ -137,7 +137,7 @@ export default function Home() {
                     >
                         View All Events
                     </button>
-                </p>
+                </article>
              
                 {loading ? (
                     <SkeletonEventList />
@@ -187,7 +187,7 @@ export default function Home() {
                                     
                                     navigate(`/events?${params.toString()}`);
                                 }}
-                                className="flex flex-col items-center p-4 bg-white border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
+                                className="flex flex-col items-center p-4 bg-white hover:cursor-pointer border rounded-xl shadow-sm hover:shadow-lg transition duration-300 group"
                             >
                                 <Icon
                                     className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform"
@@ -207,6 +207,6 @@ export default function Home() {
 
 
             <hr className="my-10 border-gray-200" />
-        </main>
+        </section>
     );
 }
