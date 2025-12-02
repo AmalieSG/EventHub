@@ -136,9 +136,9 @@ interface ArtistLineupProps {
 const ArtistLineup: React.FC<ArtistLineupProps> = ({ artists }) => {
     return (
         <section className="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <header>
+            <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Artist Lineup</h2>
-            </header>
+            </section>
             <ul className="space-y-8">
                 {artists.map((artist, index) => (
                     <li key={index} className="flex items-start space-x-4">
