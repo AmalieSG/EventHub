@@ -129,7 +129,7 @@ export default function Home() {
             </section>
 
             <section className="mb-16">
-                <p className="flex justify-between px-4 items-center mb-4">
+                <article className="f">
                     <h2 className="text-xl font-bold text-gray-900">Popular Events</h2>
                     <button 
                         onClick={() => navigate('/events')}
@@ -137,7 +137,7 @@ export default function Home() {
                     >
                         View All Events
                     </button>
-                </p>
+                </article>
              
                 {loading ? (
                     <SkeletonEventList />

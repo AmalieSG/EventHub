@@ -49,7 +49,7 @@ export const eventsController = {
   // GET: /api/v1/events/:id (get a specific event)
   async getEventById(ctx: RequestInfo) {
     try {
-      const { id } = ctx.params as { id: number };
+      const { id } = ctx.params as { id: string };
       const service = getEventsService(ctx);
       const result = await service.get(id);
 
@@ -112,7 +112,7 @@ export const eventsController = {
   // PUT/PATCH: /api/v1/events/:id (update a specific event)
   async updateEvent(ctx: RequestInfo) {
     try {
-      const { id } = ctx.params as { id: number };
+      const { id } = ctx.params as { id: string };
       const payload = await ctx.request.json();
       const service = getEventsService(ctx);
       const result = await service.update(id, payload);
@@ -149,7 +149,7 @@ export const eventsController = {
   // DELETE: /api/v1/events/:id (delete a specific event)
   async deleteEvent(ctx: RequestInfo) {
     try {
-      const { id } = ctx.params as { id: number };
+      const { id } = ctx.params as { id: string };
       const service = getEventsService(ctx);
       const result = await service.remove(id);
 
